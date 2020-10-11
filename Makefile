@@ -3,7 +3,8 @@ CFLAGS = -Wall -Wextra -Werror -g -std=c++17
 LINK = -I/usr/local/include `pkg-config --libs glfw3` `pkg-config --static --libs glfw3` `pkg-config --libs glew`
 
 SRC = $(shell ls src/*.cpp src/**/*.cpp)
-OBJ = $(SRC:.cpp=.o)
+OBJ_WD = $(SRC:.cpp=.o)
+OBJ = $(subst src,obj,$(OBJ_WD))
 
 ## Colours
 COL_OBJ = $(shell tput setaf 3 2>/dev/null)
@@ -17,7 +18,7 @@ COL_BLD = $(shell tput bold 2>/dev/null)
 all: options geas
 
 options:
-	@echo $(SRC)
+	@echo "Compiling at `date`"
 
 geas: $(OBJ) $(HDR)
 	@printf "$(COL_OBJ)LINKING OBJECTS TO EXECUTABLE $@$(COL_RST)\n"
