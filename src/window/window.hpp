@@ -18,10 +18,12 @@ class Window {
     ~Window();
 
     void run();
-    void process_events();
     void push_object(GLObject *objects);
+    void process_input(int key, int scancode, int action, int mods);
 
   private:
+
+    void process_events();
     Window(int w, int h, std::string title);
 
     GLFWwindow* glfw_window;

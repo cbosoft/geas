@@ -9,6 +9,12 @@ Window& window(int w, int h, std::string title)
   return win;
 }
 
+static void window_input_callback(GLFWwindow *win_ptr, int key, int scancode, int action, int mods)
+{
+  (void)win_ptr;
+  window(0, 0, "").process_input(key, scancode, action, mods);
+}
+
 Window::Window(int w, int h, std::string title)
 {
   if (!glfwInit()) {
@@ -43,6 +49,9 @@ Window::Window(int w, int h, std::string title)
   else {
     std::cout << "GLEW " << glewGetString(GLEW_VERSION) << " initialised" << std::endl;
   }
+
+  glfwSetKeyCallback(glfw_window, window_input_callback);
+
 }
 
 Window::~Window()
