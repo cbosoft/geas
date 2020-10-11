@@ -1,4 +1,5 @@
 #include <iostream>
+#include <chrono>
 
 #include "../globject/globject.hpp"
 #include "window.hpp"
@@ -61,8 +62,17 @@ Window::~Window()
 
 void Window::run()
 {
+
+  auto t0 = std::chrono::high_resolution_clock::now();
   while (!glfwWindowShouldClose(this->glfw_window)) {
+    auto t1 = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<float> fs = t1 - t0;
+    t0 = t1;
+    float dt = fs.count();
+    std::cout << "timeDelta: " << dt << "\n"
+      << "FPS: " << 1./dt << std::endl;
     this->process_events();
+
   }
 }
 
