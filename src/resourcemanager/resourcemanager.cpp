@@ -5,10 +5,15 @@
 
 ResourceManager::ResourceManager()
 {
-
+  // do nothing?
 }
 
-std::string read_text_file(std::string filename)
+ResourceManager::~ResourceManager()
+{
+  // do nothing?
+}
+
+std::string ResourceManager::read_text_file(std::string filename)
 {
   // TODO: abstract away filesystem
   std::ifstream ifs(filename);
