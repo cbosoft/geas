@@ -3,6 +3,7 @@
 
 #include "window/window.hpp"
 #include "globject/globject.hpp"
+#include "resourcemanager/resourcemanager.hpp"
 
 static unsigned int compile_shader(unsigned int type, const std::string& source)
 {
@@ -69,27 +70,9 @@ class TestGLObject final : public virtual GLObject
       glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
       glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), 0);
 
-      std::string vs_source = 
-        "#version 330 core\n"
-        "\n"
-        "layout(location = 0) in vec4 position;\n"
-        "\n"
-        "void main()\n"
-        "{\n"
-        "  gl_Position = position;\n"
-        "}\n"
-        ;
-
-      std::string fs_source =
-        "#version 330 core\n"
-        "\n"
-        "layout(location = 0) out vec4 color;\n"
-        "\n"
-        "void main()\n"
-        "{\n"
-        "  color = vec4(1.0, 0.0, 0.0, 1.0);\n"
-        "}\n"
-        ;
+      ResourceManager &rm = ResourceManager::GetSingleton();
+      std::string vs_source = rm.read_text_file("shaders/simple_vertex.glsl");
+      std::string fs_source = rm.read_text_file("shaders/simple_fragment.glsl");
       unsigned int shader = create_shader(vs_source, fs_source);
       glUseProgram(shader);
     }
