@@ -28,42 +28,41 @@ class VectorN {
       this->data[i] = value;
     }
 
-  private:
-
-    std::array<T, N> data;
-};
-
-//typedef VectorN<float, 2> Vec2;
-
-class Vec2 : public VectorN<float, 2> {
-
-  public:
-    Vec2(float x, float y) : VectorN({x,y}) { }
-
-    float x() const
+    VectorN<T,N> operator+(const VectorN<T,N> &rhs)
     {
-      return this->get(0);
+      VectorN<T,N> rv;
+      for (unsigned int i = 0; i < N; i++) {
+        rv.set(i, this->get(i)+rhs.get(i));
+      }
+      return rv;
     }
 
-    void x(float value)
+    VectorN<T,N> operator-(const VectorN<T,N> &rhs)
     {
-      this->set(0, value);
+      VectorN<T,N> rv;
+      for (unsigned int i = 0; i < N; i++) {
+        rv.set(i, this->get(i)-rhs.get(i));
+      }
+      return rv;
     }
 
-    float y() const
+    VectorN<T,N> operator*(const VectorN<T,N> &rhs)
     {
-      return this->get(1);
+      VectorN<T,N> rv;
+      for (unsigned int i = 0; i < N; i++) {
+        rv.set(i, this->get(i)*rhs.get(i));
+      }
+      return rv;
     }
 
-    void y(float value)
+    VectorN<T,N> operator/(const VectorN<T,N> &rhs)
     {
-      this->set(1, value);
+      VectorN<T,N> rv;
+      for (unsigned int i = 0; i < N; i++) {
+        rv.set(i, this->get(i)/rhs.get(i));
+      }
+      return rv;
     }
-};
-
-class Vec3 : public VectorN<float, 3> {
-  public:
-    Vec3(float x, float y, float z) : VectorN({x,y,z}) { }
 
     float x() const
     {
@@ -94,4 +93,11 @@ class Vec3 : public VectorN<float, 3> {
     {
       this->set(2, value);
     }
+
+  private:
+
+    std::array<T, N> data;
 };
+
+typedef VectorN<float, 2> Vec2;
+typedef VectorN<float, 3> Vec3;
