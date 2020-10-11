@@ -1,6 +1,7 @@
 #include <fstream>
 #include <sstream>
 
+#include "../util/exception.hpp"
 #include "resourcemanager.hpp"
 
 ResourceManager::ResourceManager()
@@ -17,6 +18,11 @@ std::string ResourceManager::read_text_file(std::string filename)
 {
   // TODO: abstract away filesystem
   std::ifstream ifs(filename);
+
+  if (!ifs) {
+    throw IOError(Formatter() << "Could not read file \"" << filename << "\"");
+  }
+
   std::string s;
   std::stringstream ss;
 

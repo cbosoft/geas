@@ -5,6 +5,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include "../util/exception.hpp"
 #include "../resourcemanager/resourcemanager.hpp"
 #include "shader.hpp"
 
@@ -53,7 +54,7 @@ Shader Shader::from_file(std::string filename)
 
   if (!assigned) {
     // could not determine shader type from filename!
-    // TODO: exception
+    throw ShaderError(Formatter() << "Could not determine shader type from file name \"" << filename << "\".");
   }
 
   return Shader::from_source(type, source);
@@ -75,10 +76,8 @@ unsigned int Shader::compile_source_to_shader(unsigned int type, std::string sou
     glGetShaderiv(id, GL_INFO_LOG_LENGTH, &len);
     char msg[len];
     glGetShaderInfoLog(id, len, &len, msg);
-    std::cout << "Failed to compile shader." << std::endl;
-    std::cout << msg << std::endl;
     glDeleteShader(id);
-    return 0;
+    throw ShaderCompileError(Formatter() << "Failed to compile shader: " << &(msg[0]));
   }
 
   return id;
