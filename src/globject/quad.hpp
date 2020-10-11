@@ -8,11 +8,16 @@
 class Quad: public GLObject {
 
   public:
-    Quad(Vec2 a, Vec2 b, Vec2 c, Vec2 d);
-    void update_vertices(Vec2 a, Vec2 b, Vec2 c, Vec2 d);
+    Quad();
+    Quad(Vec3 tr, Vec3 br, Vec3 bl, Vec3 tl);
+    Quad(Vec3 tr, Vec3 br, Vec3 bl, Vec3 tl, std::string texture_name);
+    void update_vertices(Vec3 tr, Vec3 br, Vec3 bl, Vec3 tl);
     void update_texture(Texture &texture);
+    void update_texture(std::string filename);
 
     bool draw(Window &win);
+
+    static Quad *square(float sidelength, float z=0.0f);
 
   private:
 

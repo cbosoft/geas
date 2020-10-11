@@ -4,34 +4,20 @@
 #include "../resourcemanager/resourcemanager.hpp"
 #include "quad.hpp"
 
-Quad::Quad(Vec2 a, Vec2 b, Vec2 c, Vec2 d)
+Quad::Quad()
 {
-  (void) a;
-  (void) b;
-  (void) c;
-  (void) d;
-  struct quad_vertex vertices[4] = {
-   /*  X     Y    Z      R    G    B    A      S    T   */
-    { 0.5,  0.5, 0.0,   1.0, 0.0, 0.0, 1.0,   1.0, 1.0},
-    { 0.5, -0.5, 0.0,   0.0, 1.0, 0.0, 1.0,   1.0, 0.0},
-    {-0.5, -0.5, 0.0,   0.0, 1.0, 0.0, 1.0,   0.0, 0.0},
-    {-0.5,  0.5, 0.0,   0.0, 1.0, 0.0, 1.0,   0.0, 1.0}
-  };
-
   unsigned int indices[] = {
     0, 1, 3,
     1, 2, 3
   };
 
   glGenBuffers(1, &buffer_id);
-  glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
   glGenBuffers(1, &indices_id);
+  glGenVertexArrays(1, &attrib_id);
+
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices_id);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-  glGenVertexArrays(1, &attrib_id);
   glBindVertexArray(attrib_id);
   glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
 
@@ -58,6 +44,31 @@ Quad::Quad(Vec2 a, Vec2 b, Vec2 c, Vec2 d)
   texture = rm.get_texture("textures/test2.png");
 }
 
+Quad::Quad(Vec3 tr, Vec3 br, Vec3 bl, Vec3 tl)
+  : Quad()
+{
+  update_vertices(tr, br, bl, tl);
+}
+
+Quad::Quad(Vec3 tr, Vec3 br, Vec3 bl, Vec3 tl, std::string texture_file)
+  : Quad(tr, br, bl, tl)
+{
+  this->update_texture(texture_file);
+}
+
+void Quad::update_texture(std::string filename)
+{
+  ResourceManager &rm = ResourceManager::singleton();
+  Texture t = rm.get_texture(filename);
+  this->update_texture(t);
+}
+
+void Quad::update_texture(Texture &texture)
+{
+  this->texture = texture;
+}
+
+
 bool Quad::draw(Window &win)
 {
   (void) win;
@@ -70,18 +81,25 @@ bool Quad::draw(Window &win)
   return false;
 }
 
-void Quad::update_vertices(Vec2 a, Vec2 b, Vec2 c, Vec2 d)
+void Quad::update_vertices(Vec3 tr, Vec3 br, Vec3 bl, Vec3 tl)
 {
-  (void) a;
-  (void) b;
-  (void) c;
-  (void) d;
-  // float positions[6] = {
-  //   a.x(), a.y(),
-  //   b.x(), b.y(),
-  //   c.x(), c.y()
-  // };
-  // glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
-  // glBufferData(GL_ARRAY_BUFFER, 6*sizeof(float), positions, GL_STATIC_DRAW);
+  glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
+  struct quad_vertex vertices[4] = {
+    {tr.x(), tr.y(), tr.z(),   1.0, 1.0, 1.0, 1.0,   1.0, 1.0},
+    {br.x(), br.y(), br.z(),   1.0, 1.0, 1.0, 1.0,   1.0, 0.0},
+    {bl.x(), bl.y(), bl.z(),   1.0, 1.0, 1.0, 1.0,   0.0, 0.0},
+    {tl.x(), tl.y(), tl.z(),   1.0, 1.0, 1.0, 1.0,   0.0, 1.0}
+  };
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 }
 
+Quad *Quad::square(float sidelength, float z)
+{
+  float hs = sidelength/2;
+  return new Quad(
+      Vec3({ hs,  hs, z}),
+      Vec3({ hs, -hs, z}),
+      Vec3({-hs, -hs, z}),
+      Vec3({-hs,  hs, z})
+  );
+}
