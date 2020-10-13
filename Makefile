@@ -2,6 +2,7 @@ CC = g++
 CFLAGS = -Wall -Wextra -Werror -g -std=c++17
 LINK = -I/usr/local/include `pkg-config --libs glfw3` `pkg-config --static --libs glfw3` `pkg-config --libs glew`
 
+HDR = $(shell ls src/*.hpp src/**/*.hpp)
 SRC = $(shell ls src/*.cpp src/**/*.cpp)
 OBJ_WD = $(SRC:.cpp=.o)
 OBJ = $(subst src,obj,$(OBJ_WD))
