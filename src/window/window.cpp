@@ -2,6 +2,7 @@
 #include <chrono>
 
 #include "../globject/globject.hpp"
+#include "../util/glerror.hpp"
 #include "window.hpp"
 
 Window& window(int w, int h, std::string title)
@@ -72,6 +73,8 @@ void Window::run()
     std::cout << "timeDelta: " << dt << "\n"
       << "FPS: " << 1./dt << std::endl;
     this->process_events();
+
+    gl_error_check("Window::run()");
 
   }
 }
