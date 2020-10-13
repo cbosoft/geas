@@ -28,6 +28,25 @@ class VectorN {
       this->data[i] = value;
     }
 
+    VectorN<T,N+1> promote(T fill)
+    {
+      VectorN<T,N+1> rv;
+      for (unsigned int i = 0; i < N; i++) {
+        rv.set(i, this->get(i));
+      }
+      rv.set(N, fill);
+      return rv;
+    }
+
+    VectorN<T,N-1> demote()
+    {
+      VectorN<T,N+1> rv;
+      for (unsigned int i = 0; i < N-1; i++) {
+        rv.set(i, this->get(i));
+      }
+      return rv;
+    }
+
     VectorN<T,N> operator+(const VectorN<T,N> &rhs)
     {
       VectorN<T,N> rv;
