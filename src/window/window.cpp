@@ -23,6 +23,7 @@ static void window_input_callback(GLFWwindow *win_ptr, int key, int scancode, in
 }
 
 Window::Window(int w, int h, std::string title)
+  : camera_position(Vec2({0.0, 0.0})), camera_aperture_size(Vec2({float(w), float(h)}))
 {
   if (!glfwInit()) {
     // could not init glfw!
@@ -75,8 +76,9 @@ void Window::run()
     std::chrono::duration<float> fs = t1 - t0;
     t0 = t1;
     float dt = fs.count();
-    std::cout << "timeDelta: " << dt << "\n"
-      << "FPS: " << 1./dt << std::endl;
+    (void) dt;
+    // std::cout << "timeDelta: " << dt << "\n"
+    //   << "FPS: " << 1./dt << std::endl;
     this->process_events();
 
     gl_error_check("Window::run()");
