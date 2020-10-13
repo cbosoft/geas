@@ -11,7 +11,10 @@ ResourceManager::ResourceManager()
 
 ResourceManager::~ResourceManager()
 {
-  // do nothing?
+  // clean up textures
+  for (auto kv : this->texture_cache) {
+    delete kv.second;
+  }
 }
 
 std::string ResourceManager::read_text_file(std::string filename)
