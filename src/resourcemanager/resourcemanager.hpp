@@ -25,5 +25,5 @@ class ResourceManager {
     ResourceManager();
 
     std::map<std::string, Shader> shader_cache;
-    std::map<std::string, Texture> texture_cache;
+    std::map<std::string, Texture *> texture_cache;
 };

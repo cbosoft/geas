@@ -7,7 +7,7 @@ class Texture {
   public:
     Texture();
 
-    static Texture from_file(std::string filename);
+    static Texture *from_file(std::string filename);
 
     unsigned int get_id();
     void use();

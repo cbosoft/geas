@@ -8,10 +8,11 @@ Texture::Texture()
 {
 }
 
-Texture Texture::from_file(std::string image_path)
+Texture *Texture::from_file(std::string image_path)
 {
   ImageData image(image_path);
-  return Texture(image);
+  Texture *texture = new Texture(image);
+  return texture;
 }
 
 Texture::Texture(const ImageData &image)
