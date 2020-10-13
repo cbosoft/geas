@@ -6,15 +6,17 @@ class Shader;
 class ShaderProgram {
 
   public:
-    ShaderProgram();
     ~ShaderProgram();
 
-    void add_shader(const Shader &shader);
+    static ShaderProgram *from_file(std::string vert_source_path, std::string frag_source_path);
+
     void use();
 
   private:
 
+    ShaderProgram();
     unsigned int link();
+    void add_shader(const Shader &shader);
 
     bool linked;
     unsigned int prog_id;
