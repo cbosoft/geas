@@ -5,16 +5,21 @@
 #include "../util/glerror.hpp"
 #include "window.hpp"
 
-Window& window(int w, int h, std::string title)
+Window &Window::singleton(int w, int h, std::string title)
 {
   static Window win(w, h, title);
   return win;
 }
 
+Window &Window::singleton()
+{
+  return Window::singleton(0, 0, "null");
+}
+
 static void window_input_callback(GLFWwindow *win_ptr, int key, int scancode, int action, int mods)
 {
   (void)win_ptr;
-  window(0, 0, "").process_input(key, scancode, action, mods);
+  Window::singleton().process_input(key, scancode, action, mods);
 }
 
 Window::Window(int w, int h, std::string title)

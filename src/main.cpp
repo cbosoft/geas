@@ -7,7 +7,7 @@
 
 int main(void)
 {
-  Window &w = window(640, 480, "geas");
+  Window &w = Window::singleton(640, 480, "geas");
 
   Quad *quad1 = Quad::square(2.0);
   quad1->update_texture("textures/bg.png");

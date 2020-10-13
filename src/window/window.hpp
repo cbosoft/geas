@@ -12,8 +12,9 @@ class GLObject;
 class Window {
 
   public:
-    friend Window& window(int w, int h, std::string title);
     friend class GLObject;
+    static Window &singleton(int w, int h, std::string title);
+    static Window &singleton();
 
     ~Window();
 
@@ -29,5 +30,3 @@ class Window {
     GLFWwindow* glfw_window;
     std::list<GLObject *> objects;
 };
-
-Window &window(int w, int h, std::string title);
