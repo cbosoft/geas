@@ -4,7 +4,6 @@
 Texture *ResourceManager::get_texture(std::string filename)
 {
   // TODO filesystem abstraction
-  ImageData image(filename);
   auto it = this->texture_cache.find(filename);
   if (it != this->texture_cache.end()) {
     return it->second;
