@@ -15,10 +15,10 @@ Quad::Quad()
     1, 2, 3
   };
 
-  vertices[0] = {/*  position: */ 0.0, 0.0, 0.0, /*  colour: */ 1.0, 1.0, 1.0, 1.0, /*  texture: */ 1.0, 1.0};
-  vertices[1] = {/*  position: */ 0.0, 0.0, 0.0, /*  colour: */ 1.0, 1.0, 1.0, 1.0, /*  texture: */ 1.0, 0.0};
+  vertices[0] = {/*  position: */ 1.0, 1.0, 0.0, /*  colour: */ 1.0, 1.0, 1.0, 1.0, /*  texture: */ 1.0, 1.0};
+  vertices[1] = {/*  position: */ 1.0, 0.0, 0.0, /*  colour: */ 1.0, 1.0, 1.0, 1.0, /*  texture: */ 1.0, 0.0};
   vertices[2] = {/*  position: */ 0.0, 0.0, 0.0, /*  colour: */ 1.0, 1.0, 1.0, 1.0, /*  texture: */ 0.0, 0.0};
-  vertices[3] = {/*  position: */ 0.0, 0.0, 0.0, /*  colour: */ 1.0, 1.0, 1.0, 1.0, /*  texture: */ 0.0, 1.0};
+  vertices[3] = {/*  position: */ 0.0, 1.0, 0.0, /*  colour: */ 1.0, 1.0, 1.0, 1.0, /*  texture: */ 0.0, 1.0};
 
   glGenBuffers(1, &buffer_id);
   glGenBuffers(1, &indices_id);
