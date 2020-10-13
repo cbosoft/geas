@@ -1,4 +1,6 @@
 #pragma once
+// vim: foldmethod=marker
+
 #include <array>
 
 template<typename T, unsigned int N>
@@ -47,6 +49,8 @@ class VectorN {
       return rv;
     }
 
+    // arithmetic operators {{{
+
     VectorN<T,N> operator+(const VectorN<T,N> &rhs)
     {
       VectorN<T,N> rv;
@@ -82,6 +86,9 @@ class VectorN {
       }
       return rv;
     }
+
+    // }}}
+    // named accessors {{{
 
     float x() const
     {
@@ -152,6 +159,7 @@ class VectorN {
     {
       this->set(3, value);
     }
+    // }}}
 
   private:
 
