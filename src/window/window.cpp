@@ -5,25 +5,24 @@
 #include "../util/glerror.hpp"
 #include "window.hpp"
 
-Window &Window::singleton(int w, int h, std::string title)
-{
-  static Window win(w, h, title);
-  return win;
-}
+static Window *singleton_ptr = nullptr;
 
-Window &Window::singleton()
+Window *Window::singleton()
 {
-  return Window::singleton(0, 0, "null");
-}
+  if (singleton_ptr == nullptr) {
+    // TODO: throw exception
+    std::cerr << "singleton not yet init" << std::endl;
+    exit(1);
+  }
 
-static void window_input_callback(GLFWwindow *win_ptr, int key, int scancode, int action, int mods)
-{
-  (void)win_ptr;
-  Window::singleton().process_input(key, scancode, action, mods);
+  return singleton_ptr;
 }
 
 Window::Window(int w, int h, std::string title)
-  : camera_position(Vec2({0.0, 0.0})), camera_aperture_size(Vec2({float(w), float(h)}))
+  :
+    _is_closed(false)
+    , camera_position(Vec2({0.0, 0.0}))
+    , camera_aperture_size(Vec2({float(w), float(h)}))
 {
   if (!glfwInit()) {
     // could not init glfw!
@@ -58,7 +57,8 @@ Window::Window(int w, int h, std::string title)
     std::cout << "GLEW " << glewGetString(GLEW_VERSION) << " initialised" << std::endl;
   }
 
-  glfwSetKeyCallback(glfw_window, window_input_callback);
+  singleton_ptr = this;
+  std::cerr << "window singleto @ " << singleton_ptr << std::endl;
 
 }
 
@@ -67,50 +67,57 @@ Window::~Window()
   glfwTerminate();
 }
 
-void Window::run()
+void Window::register_input_callback(key_callback func)
 {
-
-  auto t0 = std::chrono::high_resolution_clock::now();
-  while (!glfwWindowShouldClose(this->glfw_window)) {
-    auto t1 = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<float> fs = t1 - t0;
-    t0 = t1;
-    float dt = fs.count();
-    (void) dt;
-    // std::cout << "timeDelta: " << dt << "\n"
-    //   << "FPS: " << 1./dt << std::endl;
-    this->process_events();
-
-    gl_error_check("Window::run()");
-
-  }
+  glfwSetKeyCallback(this->glfw_window, func);
 }
 
-void Window::process_events()
+void Window::quit()
 {
+  glfwSetWindowShouldClose(this->glfw_window, true);
+  this->_is_closed = true;
+}
 
+// void Window::run()
+// {
+// 
+//   auto t0 = std::chrono::high_resolution_clock::now();
+//   while (!glfwWindowShouldClose(this->glfw_window)) {
+//     auto t1 = std::chrono::high_resolution_clock::now();
+//     std::chrono::duration<float> fs = t1 - t0;
+//     t0 = t1;
+//     float dt = fs.count();
+//     (void) dt;
+//     // std::cout << "timeDelta: " << dt << "\n"
+//     //   << "FPS: " << 1./dt << std::endl;
+//     this->process_events();
+// 
+//     gl_error_check("Window::run()");
+// 
+//   }
+// }
+
+void Window::prepaint()
+{
+  gl_error_check("pre-Window::prepaint()");
   glClear(GL_COLOR_BUFFER_BIT);
+  gl_error_check("pre-Window::prepaint()");
+}
 
-  // window events
-  std::list<GLObject *> remaining_objects;
-  for (auto object : this->objects) {
-    if (object->draw(*this)) {
-      delete object;
-    }
-    else {
-      remaining_objects.push_back(object);
-    }
-  }
-  this->objects = remaining_objects;
-
+void Window::postpaint()
+{
   // Swap front and back buffers
   glfwSwapBuffers(this->glfw_window);
 
   // GLFW events
   glfwPollEvents();
+
+  if (glfwWindowShouldClose(this->glfw_window)) {
+    this->_is_closed = true;
+  }
 }
 
-void Window::push_object(GLObject *object)
+bool Window::is_closed()
 {
-  this->objects.push_back(object);
+  return this->_is_closed;
 }
