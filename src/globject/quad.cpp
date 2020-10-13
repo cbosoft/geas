@@ -27,6 +27,10 @@ Quad::Quad()
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices_id);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
+  glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
+  GLVertex *vertices_array = this->get_vertices_arr();
+  glBufferData(GL_ARRAY_BUFFER, this->vertices.size()*sizeof(GLVertex), vertices_array, GL_STATIC_DRAW);
+
   glBindVertexArray(attrib_id);
   glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
 
