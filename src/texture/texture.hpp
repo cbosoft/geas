@@ -24,5 +24,5 @@ class Texture {
     Vec2 offset, size;
 
     unsigned int n_animation_frames;
-    std::map<std::string, std::pair<int, int>> animation_bounds_by_name;
+    std::map<std::string, std::pair<unsigned int, unsigned int>> animation_bounds_by_name;
 };

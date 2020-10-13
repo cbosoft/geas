@@ -1,5 +1,9 @@
+#include <iostream>
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+
+#include "../resourcemanager/resourcemanager.hpp"
 
 #include "texture.hpp"
 
@@ -13,10 +17,31 @@ Texture *Texture::from_file(std::string image_path)
 {
   ImageData image(image_path);
   Texture *texture = new Texture(image);
+  json meta = ResourceManager::singleton().get_metadata(image_path);
+
+  if (!meta.is_null()) {
+    std::cout << "found metadata for " << image_path << std::endl;
+    for (auto &[key, value] : meta.items()) {
+      if (key.compare("number_frames") == 0) {
+        texture->n_animation_frames = value;
+      }
+      else if (key.compare("named_loops") == 0) {
+        json named_loops = value;
+        for (auto &[name, lbub] : named_loops.items()) {
+          texture->animation_bounds_by_name[name] = std::make_pair(lbub[0], lbub[1]);
+        }
+      }
+      else {
+        // other information in meta file: ignore
+      }
+    }
+  }
+
   return texture;
 }
 
 Texture::Texture(const ImageData &image)
+  : Texture()
 {
   glGenTextures(1, &this->texture_id);
   glBindTexture(GL_TEXTURE_2D, this->texture_id);
@@ -46,16 +71,21 @@ void Texture::use()
 
 void Texture::request_animation_bounds(std::string name, unsigned int &lb, unsigned int &ub)
 {
-  (void) name;
-  lb = 0;
-  ub = n_animation_frames;
-  // TODO get lb/ub from map
+  auto it = this->animation_bounds_by_name.find(name);
+  if (it != this->animation_bounds_by_name.end()) {
+    auto lbub = it->second;
+    lb = lbub.first;
+    ub = lbub.second;
+  }
+  else {
+    std::cerr << "Warning: failed to set loop with name " << name << std::endl;
+  }
 }
 
 float Texture::get_inv_n_frames()
 {
-  static float inv_n = 0;
-  static unsigned int prev_n = 0;
+  static float inv_n = 1.0;
+  static unsigned int prev_n = -1;
 
   if (this->n_animation_frames != prev_n) {
     inv_n = 1.0/float(this->n_animation_frames);
