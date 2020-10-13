@@ -6,6 +6,7 @@
 
 #include "colour.hpp"
 #include "formatter.hpp"
+#include "glerror.hpp"
 
 
 
@@ -101,7 +102,9 @@ EXCEPTION(InitialisationError, "InitialisationError");
 EXCEPTION(ShaderError, "ShaderError");
 EXCEPTION(ShaderCompileError, "ShaderCompileError");
 EXCEPTION(OutOfRange, "OutOfRange");
+EXCEPTION(GLError, "GLError");
 EXCEPTION_ERRNO(IOError, "IOError");
+EXCEPTION(SizeMismatch, "SizeMismatch");
 
 
 
