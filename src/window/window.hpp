@@ -27,8 +27,8 @@ class Window {
     void prepaint();
     void postpaint();
 
-    Vec2 world_to_win(Vec2);
-    Vec3 world_to_win(Vec3);
+    unsigned int get_w() const;
+    unsigned int get_h() const;
 
   private:
 
@@ -38,5 +38,4 @@ class Window {
     bool _is_closed;
 
     GLFWwindow* glfw_window;
-    Vec2 camera_position, camera_aperture_size;
 };

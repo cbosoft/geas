@@ -1,5 +1,5 @@
 #include "world_position.hpp"
-#include "../window/window.hpp"
+#include "../camera/camera.hpp"
 
 WorldPosition::WorldPosition(float x, float y, float z)
   : WorldPosition(Vec3({x, y, z}))
@@ -15,6 +15,5 @@ WorldPosition::WorldPosition(Vec3 position)
 
 Vec3 WorldPosition::in_window_coords() const
 {
-  Window &win = Window::singleton();
-  return win.world_to_win(position);
+  return Camera::main()->world_to_window(position);
 }

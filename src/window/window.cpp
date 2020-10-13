@@ -20,9 +20,8 @@ Window *Window::singleton()
 
 Window::Window(int w, int h, std::string title)
   :
+    w(w), h(h),
     _is_closed(false)
-    , camera_position(Vec2({0.0, 0.0}))
-    , camera_aperture_size(Vec2({float(w), float(h)}))
 {
   if (!glfwInit()) {
     // could not init glfw!
@@ -120,4 +119,14 @@ void Window::postpaint()
 bool Window::is_closed()
 {
   return this->_is_closed;
+}
+
+unsigned int Window::get_w() const
+{
+  return this->w;
+}
+
+unsigned int Window::get_h() const
+{
+  return this->h;
 }
