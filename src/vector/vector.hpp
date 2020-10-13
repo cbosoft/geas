@@ -94,6 +94,46 @@ class VectorN {
       this->set(2, value);
     }
 
+    float r() const
+    {
+      return this->get(0);
+    }
+
+    void r(float value)
+    {
+      this->set(0, value);
+    }
+
+    float g() const
+    {
+      return this->get(1);
+    }
+
+    void g(float value)
+    {
+      this->set(1, value);
+    }
+
+    float b() const
+    {
+      return this->get(2);
+    }
+
+    void b(float value)
+    {
+      this->set(2, value);
+    }
+
+    float a() const
+    {
+      return this->get(3);
+    }
+
+    void a(float value)
+    {
+      this->set(3, value);
+    }
+
   private:
 
     std::array<T, N> data;
@@ -101,3 +141,4 @@ class VectorN {
 
 typedef VectorN<float, 2> Vec2;
 typedef VectorN<float, 3> Vec3;
+typedef VectorN<float, 4> Vec4;
