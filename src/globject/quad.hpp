@@ -6,7 +6,7 @@
 #include "../shader/shader.hpp"
 #include "../texture/texture.hpp"
 #include "globject.hpp"
-#include "gldata.hpp"
+#include "glvertex.hpp"
 
 class Quad: public GLObject {
 

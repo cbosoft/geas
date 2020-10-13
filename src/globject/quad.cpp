@@ -6,7 +6,6 @@
 #include "../resourcemanager/resourcemanager.hpp"
 #include "../util/exception.hpp"
 #include "quad.hpp"
-#include "gldata.hpp"
 
 Quad::Quad()
   : animation_index(0), animation_lb(0), animation_ub(50)
