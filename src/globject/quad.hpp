@@ -27,6 +27,8 @@ class Quad: public GLObject {
     void update_colour(std::array<Vec4, 4> colours);
     void update_texture_coords(std::array<Vec2, 4> texcoords);
 
+    void set_loop(std::string name);
+
     bool draw(Window &win);
 
     static Quad *square(float sidelength, float z=0.0f);
@@ -43,5 +45,5 @@ class Quad: public GLObject {
     std::array<GLVertex, 4> vertices;
     unsigned int buffer_id, indices_id, attrib_id;
 
-    unsigned int animations_frames, animation_index, animation_lb, animation_ub;
+    unsigned int animations_frames, animation_index, animation_lb, animation_ub, inv_anim_speed, framecount;
 };

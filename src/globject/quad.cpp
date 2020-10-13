@@ -8,7 +8,7 @@
 #include "quad.hpp"
 
 Quad::Quad()
-  : animation_index(0), animation_lb(0), animation_ub(50)
+  : anchor_mode(AnchorCentre), animation_index(0), animation_lb(0), animation_ub(50), inv_anim_speed(5), framecount(0)
 {
   unsigned int indices[] = {
     0, 1, 3,
@@ -61,12 +61,17 @@ void Quad::update_texture(Texture *texture)
   std::cout << "texture id=" << this->texture->get_id() << std::endl;
 }
 
+void Quad::set_loop(std::string name)
+{
+  this->texture->request_animation_bounds(name, this->animation_lb, this->animation_ub);
+}
+
 
 bool Quad::draw(Window &win)
 {
   (void) win;
 
-  //advance_animation();
+  advance_animation();
 
   shaderProgram->use();
   texture->use();
@@ -202,19 +207,25 @@ GLVertex *Quad::get_vertices_arr()
 
 void Quad::advance_animation()
 {
-  this->animation_index++;
-  if (this->animation_index >= this->animation_ub) {
-    this->animation_index = this->animation_lb;
+  framecount ++;
+
+  //std::cout << "next frame " << animation_index << " " << framecount << std::endl;
+  if (framecount > this->inv_anim_speed) {
+    framecount = 0;
+    this->animation_index++;
+    if (this->animation_index >= this->animation_ub) {
+      this->animation_index = this->animation_lb;
+    }
+
+    float inv_n = this->texture->get_inv_n_frames();
+    float xstart = inv_n * float(this->animation_index);
+    float xend = inv_n * float(this->animation_index + 1);
+    this->update_texture_coords({
+        Vec2({xend, 1.0}),
+        Vec2({xend, 0.0}),
+        Vec2({xstart, 0.0}),
+        Vec2({xstart, 1.0})
+        });
   }
 
-
-  float xstart = 0.02 * float(this->animation_index);
-  float xend = 0.02 * float(this->animation_index + 1);
-  std::cout << "next frame " << animation_index << " " << xstart << std::endl;
-  this->update_texture_coords({
-      Vec2({xend, 1.0}),
-      Vec2({xend, 0.0}),
-      Vec2({xstart, 0.0}),
-      Vec2({xstart, 1.0})
-      });
 }
