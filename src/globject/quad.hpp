@@ -8,6 +8,8 @@
 #include "globject.hpp"
 #include "glvertex.hpp"
 
+enum AnchorMode { AnchorCentre, AnchorBottomLeft };
+
 class Quad: public GLObject {
 
   public:
@@ -16,6 +18,11 @@ class Quad: public GLObject {
     void update_texture(Texture *texture);
 
     void update_vertices(std::array<GLVertex,4> vertices);
+    void update_position(Vec3 bl);
+    void update_scale(float scale);
+    void update_size(Vec2 size);
+    void update_size_from_centre(Vec2 size);
+    void update_size_from_bl(Vec2 size);
     void update_position(std::array<Vec3, 4> positions);
     void update_colour(std::array<Vec4, 4> colours);
     void update_texture_coords(std::array<Vec2, 4> texcoords);
@@ -32,6 +39,7 @@ class Quad: public GLObject {
     ShaderProgram *shaderProgram;
     Texture *texture;
 
+    AnchorMode anchor_mode;
     std::array<GLVertex, 4> vertices;
     unsigned int buffer_id, indices_id, attrib_id;
 
