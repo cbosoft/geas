@@ -5,6 +5,7 @@
 
 Texture::Texture()
   : texture_id(0)
+    , n_animation_frames(1)
 {
 }
 
@@ -41,4 +42,29 @@ Texture::Texture(const ImageData &image)
 void Texture::use()
 {
   glBindTexture(GL_TEXTURE_2D, this->texture_id);
+}
+
+void Texture::request_animation_bounds(std::string name, unsigned int &lb, unsigned int &ub)
+{
+  (void) name;
+  lb = 0;
+  ub = n_animation_frames;
+  // TODO get lb/ub from map
+}
+
+float Texture::get_inv_n_frames()
+{
+  static float inv_n = 0;
+  static unsigned int prev_n = 0;
+
+  if (this->n_animation_frames != prev_n) {
+    inv_n = 1.0/float(this->n_animation_frames);
+    prev_n = this->n_animation_frames;
+  }
+  return inv_n;
+}
+
+unsigned int Texture::get_id() const
+{
+  return this->texture_id;
 }
