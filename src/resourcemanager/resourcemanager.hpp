@@ -8,6 +8,8 @@
 class ResourceManager {
 
   public:
+    friend class Window;
+
     static ResourceManager& singleton()
     {
       static ResourceManager rv;
@@ -17,7 +19,7 @@ class ResourceManager {
 
     std::string read_text_file(std::string file_name);
     Shader &get_shader(std::string filename);
-    Texture &get_texture(std::string filename);
+    Texture *get_texture(std::string filename);
 
   private:
     ResourceManager();
