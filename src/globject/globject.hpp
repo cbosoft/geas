@@ -3,6 +3,6 @@
 class Window;
 class GLObject {
   public:
-    virtual bool draw(Window &win) =0;
+    virtual bool draw() =0;
     virtual ~GLObject() =default;
 };

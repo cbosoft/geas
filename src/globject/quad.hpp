@@ -29,7 +29,7 @@ class Quad: public GLObject {
 
     void set_loop(std::string name);
 
-    bool draw(Window &win);
+    bool draw() override;
 
     static Quad *square(float sidelength, float z=0.0f);
 

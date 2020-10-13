@@ -67,10 +67,8 @@ void Quad::set_loop(std::string name)
 }
 
 
-bool Quad::draw(Window &win)
+bool Quad::draw()
 {
-  (void) win;
-
   advance_animation();
 
   shaderProgram->use();
@@ -79,6 +77,7 @@ bool Quad::draw(Window &win)
   glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices_id);
   glBindVertexArray(attrib_id);
+
   gl_error_check("Quad::draw(), after glBindVertexArray(...)");
   glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
   gl_error_check("Quad::draw(), after glDrawElements(...)");
