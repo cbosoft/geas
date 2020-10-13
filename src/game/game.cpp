@@ -35,9 +35,10 @@ void Game::graphics_thread_worker()
   while (this->is_alive()) {
     win.prepaint();
 
-    std::list<GLObject *> surviving;
+    std::list<GeasObject *> surviving;
     for ( auto obj : this->objects ) {
-      if (obj->draw(this->win)) {
+      obj->draw();
+      if (obj->is_marked_for_destruction()) {
         delete obj;
       }
       else {
@@ -54,7 +55,7 @@ void Game::graphics_thread_worker()
   }
 }
 
-void Game::push_object(GLObject *object)
+void Game::push_object(GeasObject *object)
 {
   this->objects.push_back(object);
 }

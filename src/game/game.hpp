@@ -3,6 +3,7 @@
 #include <thread>
 #include <list>
 
+#include "../geas_object/geas_object.hpp"
 #include "../window/window.hpp"
 
 class GLObject;
@@ -13,7 +14,7 @@ class Game {
     static Game *singleton();
 
     void play();
-    void push_object(GLObject *object);
+    void push_object(GeasObject *object);
 
     bool is_alive() const;
     void is_alive(bool v);
@@ -32,6 +33,6 @@ class Game {
 
     bool _is_alive;
     std::list<std::thread> threads;
-    std::list<GLObject *> objects;
+    std::list<GeasObject *> objects;
 
 };
