@@ -1,19 +1,24 @@
 #pragma once
 
+#include <array>
+
 #include "../vector/vector.hpp"
 #include "../shader/shader.hpp"
 #include "../texture/texture.hpp"
 #include "globject.hpp"
+#include "gldata.hpp"
 
 class Quad: public GLObject {
 
   public:
     Quad();
-    Quad(Vec3 tr, Vec3 br, Vec3 bl, Vec3 tl);
-    Quad(Vec3 tr, Vec3 br, Vec3 bl, Vec3 tl, std::string texture_name);
-    void update_vertices(Vec3 tr, Vec3 br, Vec3 bl, Vec3 tl);
-    void update_texture(Texture &texture);
     void update_texture(std::string filename);
+    void update_texture(Texture *texture);
+
+    void update_vertices(std::array<GLVertex,4> vertices);
+    void update_position(std::array<Vec3, 4> positions);
+    void update_colour(std::array<Vec4, 4> colours);
+    void update_texture_coords(std::array<Vec2, 4> texcoords);
 
     bool draw(Window &win);
 
@@ -21,21 +26,14 @@ class Quad: public GLObject {
 
   private:
 
-    ShaderProgram shaderProgram;
-    Texture texture;
+    GLVertex *get_vertices_arr();
+    void advance_animation();
+
+    ShaderProgram *shaderProgram;
+    Texture *texture;
+
+    std::array<GLVertex, 4> vertices;
     unsigned int buffer_id, indices_id, attrib_id;
 
-    struct quad_vertex {
-      float x;
-      float y;
-      float z;
-
-      float r;
-      float g;
-      float b;
-      float a;
-
-      float s;
-      float t;
-    };
+    unsigned int animations_frames, animation_index, animation_lb, animation_ub;
 };
