@@ -11,6 +11,12 @@ class WorldPosition {
 
     Vec3 in_window_coords() const;
 
+    WorldPosition &operator+=(const Vec2& other)
+    {
+      this->position = this->position + other.promote(0.0);
+      return *this;
+    }
+
   private:
     Vec3 position;
 
