@@ -30,7 +30,7 @@ class VectorN {
       this->data[i] = value;
     }
 
-    VectorN<T,N+1> promote(T fill)
+    VectorN<T,N+1> promote(T fill) const
     {
       VectorN<T,N+1> rv;
       for (unsigned int i = 0; i < N; i++) {
@@ -40,7 +40,7 @@ class VectorN {
       return rv;
     }
 
-    VectorN<T,N-1> demote()
+    VectorN<T,N-1> demote() const
     {
       VectorN<T,N+1> rv;
       for (unsigned int i = 0; i < N-1; i++) {
