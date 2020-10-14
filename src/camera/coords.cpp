@@ -1,17 +1,19 @@
+#include <iostream>
+
 #include "camera.hpp"
 
 
 Vec2 Camera::world_to_window(Vec2 position)
 {
   Vec2 relpos_world = position - this->position;
-  Vec2 relpos_cam = relpos_world / this->size;
+  Vec2 relpos_cam = relpos_world * this->_inv_size;
   return relpos_cam;
 }
 
 Vec3 Camera::world_to_window(Vec3 position)
 {
   Vec3 relpos_world = position - this->_position3d;
-  Vec3 relpos_cam = relpos_world / this->_size3d;
+  Vec3 relpos_cam = relpos_world * this->_inv_size3d;
   return relpos_cam;
 }
 

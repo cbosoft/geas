@@ -28,7 +28,7 @@ class Camera {
   private:
     Camera(float x, float y, float w, float h);
 
-    Vec2 position, size;
-    Vec3 _position3d, _size3d;
+    Vec2 position, size, _inv_size;
+    Vec3 _position3d, _size3d, _inv_size3d;
 
 };
