@@ -9,8 +9,9 @@ static std::map<std::string, Camera*> named_cameras;
 
 Camera *Camera::create(std::string name)
 {
-  return Camera::create(0.0, 0.0, 100.0, 100.0, name);
-
+  Window *win = Window::singleton();
+  float w = win->get_w(), h = win->get_h();
+  return Camera::create(0.0, 0.0, w/2, h/2, name);
 }
 
 
@@ -29,9 +30,7 @@ Camera *Camera::create(float x, float y, float w, float h, std::string name)
 Camera *Camera::main()
 {
   if (cameras.size() < 1) {
-    Window *win = Window::singleton();
-    float w = win->get_w(), h = win->get_h();
-    cameras.push_back(new Camera(0, 0, w, h));
+    cameras.push_back(Camera::create());
   }
 
   return cameras[0];
