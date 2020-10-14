@@ -8,7 +8,12 @@
 #include "quad.hpp"
 
 Quad::Quad()
-  : anchor_mode(AnchorCentre), animation_index(0), animation_lb(0), animation_ub(50), inv_anim_speed(5), framecount(0)
+  :   anchor_mode(AnchorCentre)
+    , animation_index(0)
+    , animation_lb(0)
+    , animation_ub(50)
+    , inv_anim_speed(5)
+    , framecount(0)
 {
   unsigned int indices[] = {
     0, 1, 3,
