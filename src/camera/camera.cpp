@@ -1,9 +1,9 @@
 #include "camera.hpp"
 
 Camera::Camera(float x, float y, float w, float h)
-  : position({x, y}), size({w, h})
 {
-  // do nothing
+  this->set_position(Vec2({x,y}));
+  this->set_size(Vec2({w, h}));
 }
 
 void Camera::set_position(Vec2 position)
