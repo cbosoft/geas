@@ -2,6 +2,7 @@
 // vim: foldmethod=marker
 
 #include <array>
+#include <cmath>
 
 template<typename T, unsigned int N>
 class VectorN {
@@ -16,6 +17,12 @@ class VectorN {
     {
       for (unsigned int i = 0; i < N; i++) {
         this->data[i] = data[i];
+      }
+    }
+    VectorN(T fill)
+    {
+      for (unsigned int i = 0; i < N; i++) {
+        this->data[i] = fill;
       }
     }
     ~VectorN() {};
@@ -80,6 +87,46 @@ class VectorN {
 
     VectorN<T,N> operator/(const VectorN<T,N> &rhs)
     {
+      VectorN<T,N> rv;
+      for (unsigned int i = 0; i < N; i++) {
+        rv.set(i, this->get(i)/rhs.get(i));
+      }
+      return rv;
+    }
+
+    VectorN<T,N> operator+(T other)
+    {
+      VectorN<T,N> rhs(other);
+      VectorN<T,N> rv;
+      for (unsigned int i = 0; i < N; i++) {
+        rv.set(i, this->get(i)+rhs.get(i));
+      }
+      return rv;
+    }
+
+    VectorN<T,N> operator-(T other)
+    {
+      VectorN<T,N> rhs(other);
+      VectorN<T,N> rv;
+      for (unsigned int i = 0; i < N; i++) {
+        rv.set(i, this->get(i)-rhs.get(i));
+      }
+      return rv;
+    }
+
+    VectorN<T,N> operator*(T other)
+    {
+      VectorN<T,N> rhs(other);
+      VectorN<T,N> rv;
+      for (unsigned int i = 0; i < N; i++) {
+        rv.set(i, this->get(i)*rhs.get(i));
+      }
+      return rv;
+    }
+
+    VectorN<T,N> operator/(T other)
+    {
+      VectorN<T,N> rhs(other);
       VectorN<T,N> rv;
       for (unsigned int i = 0; i < N; i++) {
         rv.set(i, this->get(i)/rhs.get(i));
@@ -160,11 +207,66 @@ class VectorN {
       this->set(3, value);
     }
     // }}}
+    // vector maths {{{
+
+    T square_magnitude() const
+    {
+      T rv = 0.0;
+      for (unsigned int i = 0; i < N; i++) {
+        rv += data[i]*data[i];
+      }
+      return rv;
+    }
+
+    T magnitude() const
+    {
+      return std::pow(square_magnitude(), 0.5);
+    }
+
+    T dot(const VectorN<T, N> &rhs)
+    {
+      T rv = 0.0;
+      for (unsigned int i = 0; i < N; i++) {
+        rv = this->data[i]*rhs.data[i];
+      }
+      return rv;
+    }
+
+    // }}}
+
 
   private:
 
     std::array<T, N> data;
 };
+
+// more arithmetic {{{
+template<typename T, unsigned int N>
+VectorN<T,N> operator+(float f, const VectorN<T, N>& rhs)
+{
+  return rhs+f;
+}
+
+template<typename T, unsigned int N>
+VectorN<T,N> operator-(float f, const VectorN<T, N>& rhs)
+{
+  VectorN<T,N> lhs(f);
+  return lhs - rhs;
+}
+
+  template<typename T, unsigned int N>
+VectorN<T,N> operator*(float f, const VectorN<T, N>& rhs)
+{
+  return rhs*f;
+}
+
+  template<typename T, unsigned int N>
+VectorN<T,N> operator/(float f, const VectorN<T, N>& rhs)
+{
+  VectorN<T,N> lhs(f);
+  return lhs/rhs;
+}
+// }}}
 
 typedef VectorN<float, 2> Vec2;
 typedef VectorN<float, 3> Vec3;
