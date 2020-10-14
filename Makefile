@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -Wall -Wextra -Werror -g -std=c++17
-LINK = -I/usr/local/include `pkg-config --libs glfw3` `pkg-config --static --libs glfw3` `pkg-config --libs glew`
+LINK = -I/usr/local/include `pkg-config --libs glfw3` `pkg-config --static --libs glfw3` `pkg-config --libs glew` -lpthread
 
 HDR = $(shell ls src/*.hpp src/**/*.hpp)
 SRC = $(shell ls src/*.cpp src/**/*.cpp)
