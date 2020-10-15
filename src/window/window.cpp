@@ -18,8 +18,6 @@ Window *Window::singleton()
   return singleton_ptr;
 }
 
-//#define DEBUG
-
 #ifdef DEBUG
 
 void APIENTRY glDebugOutput(GLenum source,
