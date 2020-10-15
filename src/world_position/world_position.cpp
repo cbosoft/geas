@@ -17,3 +17,18 @@ Vec3 WorldPosition::in_window_coords() const
 {
   return Camera::main()->world_to_window(position);
 }
+
+void WorldPosition::set(Vec2 other)
+{
+  this->position = other.promote(0.0);
+}
+
+void WorldPosition::set(Vec3 other)
+{
+  this->position = other;
+}
+
+Vec3 WorldPosition::vec() const
+{
+  return this->position;
+}
