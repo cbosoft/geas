@@ -241,4 +241,6 @@ void Quad::advance_animation()
 void Quad::request_animation(std::string name)
 {
   this->texture->request_animation_bounds(name, this->animation_lb, this->animation_ub);
+  if (this->animation_index < this->animation_lb || this->animation_index >= this->animation_ub)
+    this->animation_index = this->animation_lb;
 }
