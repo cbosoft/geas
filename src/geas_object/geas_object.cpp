@@ -19,12 +19,9 @@ GeasObject::~GeasObject()
     delete this->position;
   }
 
-  // if (animator != nullptr) {
-  //   delete this->animator;
-  // }
-  // if (animator != nullptr) {
-  //   delete this->physics;
-  // }
+  if (physics != nullptr) {
+    delete this->physics;
+  }
 }
 
 bool GeasObject::is_marked_for_destruction() const

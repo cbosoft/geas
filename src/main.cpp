@@ -12,5 +12,10 @@ int main(void)
 
   game->push_object(new Player());
 
+  Player *player = new Player();
+  player->position->set(Vec2({-600, -360}));
+  player->physics->set_gravity(0.0);
+  game->push_object(player);
+
   game->play();
 }

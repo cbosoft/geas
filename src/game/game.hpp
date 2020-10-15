@@ -19,6 +19,9 @@ class Game {
     bool is_alive() const;
     void is_alive(bool v);
 
+    float get_time_delta() const;
+    float get_time() const;
+
   private:
     Game();
 
@@ -34,5 +37,7 @@ class Game {
     bool _is_alive;
     std::list<std::thread> threads;
     std::list<GeasObject *> objects;
+    float time, time_delta, time_scale;
+    float time_irl, time_delta_irl;
 
 };

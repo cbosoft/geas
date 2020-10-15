@@ -13,14 +13,20 @@ class Physics {
 
     static Physics *create(GeasObject &owner);
     static void update();
+    void set_mass(float mass);
+    void set_gravity(float gravity);
+
+    Vec3 get_position() const;
 
   private:
+    static Vec2 get_force_between(const Vec2& a, const Vec2 &b);
     static const std::list<Physics *> &get_list();
     static void remove_ref(Physics *physics);
 
     Physics(GeasObject &owner);
 
     GeasObject &owner;
-    float mass;
+    float mass, _inv_mass;
+    float gravity_scale;
     Vec2 force_total;
 };

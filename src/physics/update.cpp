@@ -1,4 +1,10 @@
+#include <iostream>
+
+#include "../geas_object/geas_object.hpp"
+#include "../game/game.hpp"
 #include "physics.hpp"
+
+//static double ptime = 0.0;
 
 void Physics::update()
 {
@@ -6,18 +12,28 @@ void Physics::update()
   
   // TODO: order entities into cells?
 
-  for (Physics *entity : entities) {
-    (void) entity;
+  float dt = Game::singleton()->get_time_delta(), dt2 = dt*dt;
 
-    // TODO
-    // set force on entity from all other entities
-    // use resulting unbalanced force to obtain the acceleration: a = f/m
-    // then simply integrate to obtain velocity change, and then position change
-    // a = f/m
-    // dv = a*dt
-    // v = v + dv
-    // dr = v*dt
-    // above integration scheme is over simplified (plain euler method)
-    // could definitely be improved
+  for (Physics *a : entities) {
+    Vec2 apos = a->get_position().demote();
+    for (Physics *b : entities) {
+      if (a == b)
+        break;
+
+      Vec2 bpos = b->get_position().demote();
+      Vec2 f = Physics::get_force_between(apos, bpos);
+
+      a->force_total = a->force_total + f;
+      b->force_total = b->force_total - f;
+    }
+  }
+
+  for (Physics *entity : entities) {
+    Vec2 force = entity->force_total;
+    force.y(force.y() - entity->gravity_scale);
+
+    Vec2 delta_v = force * (dt2 * entity->_inv_mass);
+    std::cerr << delta_v.x() << ", " << delta_v.y() << "  dt = " << dt << "  grav = " << entity->gravity_scale << std::endl;
+    (*entity->owner.position) += delta_v;
   }
 }
