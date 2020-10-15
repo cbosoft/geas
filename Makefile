@@ -1,5 +1,6 @@
 CC = g++
-CFLAGS = -Wall -Wextra -Werror -g -std=c++17
+USER_DEFINES = ""
+CFLAGS = -Wall -Wextra -Werror -g -std=c++17 $(USER_DEFINES)
 LINK = -I/usr/local/include `pkg-config --libs glfw3` `pkg-config --static --libs glfw3` `pkg-config --libs glew` -lpthread
 
 HDR = $(shell ls src/*.hpp src/**/*.hpp)
@@ -14,9 +15,12 @@ COL_SO = $(shell tput setaf 5 2>/dev/null)
 COL_RST = $(shell tput sgr0 2>/dev/null)
 COL_BLD = $(shell tput bold 2>/dev/null)
 
-.PHONY: all options
+.PHONY: all options debug
 
 all: options geas
+
+debug:
+	$(MAKE) USER_DEFINES="-DDEBUG"
 
 options:
 	@echo "Compiling at `date`"
