@@ -15,5 +15,5 @@ Geas is a 2D platforming game engine (WIP) written in C++, utilising OpenGL.
 # Geas
 
 A "geas" is also magically bound promise or obligation. If you are under a
-geas to do <something>, you *must do <something>*. By downloading this source,
+geas to do ${something}, you **must do ${something}**. By downloading this source,
 you are not under a geas, other than those set out in the [license](LICENSE.MD).
