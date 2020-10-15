@@ -2,6 +2,8 @@
 
 #include "../geas_object/geas_object.hpp"
 #include "../game/game.hpp"
+#include "../util/debug.hpp"
+#include "../util/formatter.hpp"
 #include "physics.hpp"
 
 //static double ptime = 0.0;
@@ -33,7 +35,7 @@ void Physics::update()
     force.y(force.y() - entity->gravity_scale);
 
     Vec2 delta_v = force * (dt2 * entity->_inv_mass);
-    std::cerr << delta_v.x() << ", " << delta_v.y() << "  dt = " << dt << "  grav = " << entity->gravity_scale << std::endl;
+    debug_msg(Formatter() << delta_v.x() << ", " << delta_v.y() << "  dt = " << dt << "  grav = " << entity->gravity_scale);
     (*entity->owner.position) += delta_v;
   }
 }
