@@ -14,6 +14,9 @@ class Quad: public GLObject {
 
   public:
     Quad();
+
+    void request_animation(std::string name);
+
     void update_texture(std::string filename);
     void update_texture(Texture *texture);
 

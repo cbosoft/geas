@@ -237,3 +237,8 @@ void Quad::advance_animation()
   }
 
 }
+
+void Quad::request_animation(std::string name)
+{
+  this->texture->request_animation_bounds(name, this->animation_lb, this->animation_ub);
+}
