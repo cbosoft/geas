@@ -58,7 +58,7 @@ class VectorN {
 
     // arithmetic operators {{{
 
-    VectorN<T,N> operator+(const VectorN<T,N> &rhs)
+    VectorN<T,N> operator+(const VectorN<T,N> &rhs) const
     {
       VectorN<T,N> rv;
       for (unsigned int i = 0; i < N; i++) {
@@ -67,7 +67,7 @@ class VectorN {
       return rv;
     }
 
-    VectorN<T,N> operator-(const VectorN<T,N> &rhs)
+    VectorN<T,N> operator-(const VectorN<T,N> &rhs) const
     {
       VectorN<T,N> rv;
       for (unsigned int i = 0; i < N; i++) {
@@ -76,7 +76,7 @@ class VectorN {
       return rv;
     }
 
-    VectorN<T,N> operator*(const VectorN<T,N> &rhs)
+    VectorN<T,N> operator*(const VectorN<T,N> &rhs) const
     {
       VectorN<T,N> rv;
       for (unsigned int i = 0; i < N; i++) {
@@ -85,7 +85,7 @@ class VectorN {
       return rv;
     }
 
-    VectorN<T,N> operator/(const VectorN<T,N> &rhs)
+    VectorN<T,N> operator/(const VectorN<T,N> &rhs) const
     {
       VectorN<T,N> rv;
       for (unsigned int i = 0; i < N; i++) {
@@ -94,7 +94,7 @@ class VectorN {
       return rv;
     }
 
-    VectorN<T,N> operator+(T other)
+    VectorN<T,N> operator+(T other) const
     {
       VectorN<T,N> rhs(other);
       VectorN<T,N> rv;
@@ -104,7 +104,7 @@ class VectorN {
       return rv;
     }
 
-    VectorN<T,N> operator-(T other)
+    VectorN<T,N> operator-(T other) const
     {
       VectorN<T,N> rhs(other);
       VectorN<T,N> rv;
@@ -114,7 +114,7 @@ class VectorN {
       return rv;
     }
 
-    VectorN<T,N> operator*(T other)
+    VectorN<T,N> operator*(T other) const
     {
       VectorN<T,N> rhs(other);
       VectorN<T,N> rv;
@@ -124,7 +124,7 @@ class VectorN {
       return rv;
     }
 
-    VectorN<T,N> operator/(T other)
+    VectorN<T,N> operator/(T other) const
     {
       VectorN<T,N> rhs(other);
       VectorN<T,N> rv;
