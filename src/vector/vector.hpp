@@ -49,7 +49,7 @@ class VectorN {
 
     VectorN<T,N-1> demote() const
     {
-      VectorN<T,N+1> rv;
+      VectorN<T,N-1> rv;
       for (unsigned int i = 0; i < N-1; i++) {
         rv.set(i, this->get(i));
       }
