@@ -3,6 +3,7 @@
 
 Physics::Physics(GeasObject &owner)
   : owner(owner)
+    , collider(nullptr)
 {
   this->set_mass(1.0);
   this->set_gravity(10000.0);

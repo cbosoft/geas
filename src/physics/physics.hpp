@@ -3,6 +3,7 @@
 #include <list>
 
 #include "../vector/vector.hpp"
+#include "collider.hpp"
 
 class GeasObject;
 
@@ -15,6 +16,7 @@ class Physics {
     static void update();
     void set_mass(float mass);
     void set_gravity(float gravity);
+    void set_collision(CollisionShape *collider);
 
     Vec3 get_position() const;
 
@@ -29,4 +31,5 @@ class Physics {
     float mass, _inv_mass;
     float gravity_scale;
     Vec2 force_total;
+    CollisionShape *collider;
 };
