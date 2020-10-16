@@ -74,9 +74,8 @@ void APIENTRY glDebugOutput(GLenum source,
 
 #endif
 
-Window::Window(int w, int h, std::string title)
+Window::Window(std::string title, bool fullscreen)
   :
-    w(w), h(h),
     _is_closed(false)
 {
   if (!glfwInit()) {
@@ -99,7 +98,26 @@ Window::Window(int w, int h, std::string title)
   glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 #endif
 
-  glfw_window = glfwCreateWindow(w, h, title.c_str(), nullptr, nullptr);
+  if (fullscreen) {
+    GLFWmonitor *monitor = glfwGetPrimaryMonitor();
+    const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+    glfwWindowHint(GLFW_RED_BITS, mode->redBits);
+    glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
+    glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
+    glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+
+    this->w = mode->width;
+    this->h = mode->height;
+
+    glfw_window = glfwCreateWindow(mode->width, mode->height, title.c_str(), monitor, nullptr);
+  }
+  else {
+    this->w = 1280;
+    this->h = 720;
+    glfw_window = glfwCreateWindow(this->w, this->h, title.c_str(), nullptr, nullptr);
+  }
+
   if (!glfw_window)
   {
     glfwTerminate();

@@ -6,7 +6,7 @@
 
 Game::Game()
   :
-    win(1280, 720, "GEAS"),
+    win("GEAS", false),
     time(0.0), time_delta(0.0), time_scale(1.0),
     time_irl(0.0), time_delta_irl(0.0)
 {

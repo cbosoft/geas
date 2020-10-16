@@ -32,7 +32,7 @@ class Window {
 
   private:
 
-    Window(int w, int h, std::string title);
+    Window(std::string title, bool fullscreen);
 
     unsigned int w, h;
     bool _is_closed;
