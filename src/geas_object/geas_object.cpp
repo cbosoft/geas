@@ -2,7 +2,7 @@
 
 GeasObject::GeasObject()
   :
-    quad(nullptr)
+    sprite(nullptr)
     , position(nullptr)
     , _marked_for_destruction(false)
 {
@@ -11,8 +11,8 @@ GeasObject::GeasObject()
 GeasObject::~GeasObject()
 {
 
-  if (quad != nullptr) {
-    delete this->quad;
+  if (sprite != nullptr) {
+    delete this->sprite;
   }
 
   if (position != nullptr) {

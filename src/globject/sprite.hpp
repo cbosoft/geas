@@ -10,10 +10,10 @@
 
 enum AnchorMode { AnchorCentre, AnchorBottomLeft };
 
-class Quad: public GLObject {
+class Sprite: public GLObject {
 
   public:
-    Quad();
+    Sprite(std::string texture);
 
     void request_animation(std::string name);
 
@@ -33,8 +33,6 @@ class Quad: public GLObject {
     void set_loop(std::string name);
 
     bool draw() override;
-
-    static Quad *square(float sidelength, float z=0.0f);
 
   private:
 

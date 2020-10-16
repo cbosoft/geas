@@ -1,13 +1,13 @@
 #pragma once
 
-#include "../globject/quad.hpp"
+#include "../globject/sprite.hpp"
 #include "../world_position/world_position.hpp"
 #include "../physics/physics.hpp"
 
 class GeasObject {
 
   public:
-    Quad *quad;
+    Sprite *sprite;
     WorldPosition *position;
     Physics *physics;
 

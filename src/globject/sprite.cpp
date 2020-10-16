@@ -5,9 +5,9 @@
 
 #include "../resourcemanager/resourcemanager.hpp"
 #include "../util/exception.hpp"
-#include "quad.hpp"
+#include "sprite.hpp"
 
-Quad::Quad()
+Sprite::Sprite(std::string texture_path)
   :   anchor_mode(AnchorCentre)
     , animation_index(0)
     , animation_lb(0)
@@ -53,30 +53,36 @@ Quad::Quad()
   glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, vsz, (void *)(7*sizeof(float)));
   glEnableVertexAttribArray(2);
 
-  shaderProgram = ShaderProgram::from_file("shaders/simple_vert.glsl", "shaders/simple_frag.glsl");
-  texture = ResourceManager::singleton().get_texture("textures/test2.png");
+  if (!texture_path.empty()) {
+    texture = ResourceManager::singleton().get_texture(texture_path);
+    shaderProgram = ShaderProgram::from_file("shaders/simple_vert.glsl", "shaders/simple_texture_frag.glsl");
+  }
+  else {
+    texture = nullptr;
+    shaderProgram = ShaderProgram::from_file("shaders/simple_vert.glsl", "shaders/simple_blockcolour_frag.glsl");
+  }
 }
 
-void Quad::update_texture(std::string filename)
+void Sprite::update_texture(std::string filename)
 {
   ResourceManager &rm = ResourceManager::singleton();
   Texture *t = rm.get_texture(filename);
   this->update_texture(t);
 }
 
-void Quad::update_texture(Texture *texture)
+void Sprite::update_texture(Texture *texture)
 {
   this->texture = texture;
   std::cout << "texture id=" << this->texture->get_id() << std::endl;
 }
 
-void Quad::set_loop(std::string name)
+void Sprite::set_loop(std::string name)
 {
   this->texture->request_animation_bounds(name, this->animation_lb, this->animation_ub);
 }
 
 
-bool Quad::draw()
+bool Sprite::draw()
 {
   advance_animation();
 
@@ -93,7 +99,7 @@ bool Quad::draw()
   return false;
 }
 
-void Quad::update_position(std::array<Vec3, 4> positions)
+void Sprite::update_position(std::array<Vec3, 4> positions)
 {
   for (int i = 0; i < 4; i++) {
     this->vertices[i].x = positions[i].x();
@@ -106,7 +112,7 @@ void Quad::update_position(std::array<Vec3, 4> positions)
   glBufferData(GL_ARRAY_BUFFER, this->vertices.size()*sizeof(GLVertex), vertices_array, GL_STATIC_DRAW);
 }
 
-void Quad::update_position(Vec3 position)
+void Sprite::update_position(Vec3 position)
 {
   float sx = this->vertices[1].x - this->vertices[2].x;
   float sy = this->vertices[0].y - this->vertices[1].y;
@@ -120,7 +126,7 @@ void Quad::update_position(Vec3 position)
   this->update_position(positions);
 }
 
-void Quad::update_scale(float scale)
+void Sprite::update_scale(float scale)
 {
   float sx = (this->vertices[1].x - this->vertices[2].x)*scale;
   float sy = (this->vertices[0].y - this->vertices[1].y)*scale;
@@ -128,7 +134,7 @@ void Quad::update_scale(float scale)
   this->update_size(size);
 }
 
-void Quad::update_size(Vec2 size)
+void Sprite::update_size(Vec2 size)
 {
   switch(anchor_mode) {
 
@@ -142,7 +148,7 @@ void Quad::update_size(Vec2 size)
   }
 }
 
-void Quad::update_size_from_centre(Vec2 size)
+void Sprite::update_size_from_centre(Vec2 size)
 {
   float cx = (this->vertices[2].x + this->vertices[1].x)*0.5;
   float cy = (this->vertices[0].y + this->vertices[1].y)*0.5;
@@ -161,7 +167,7 @@ void Quad::update_size_from_centre(Vec2 size)
 
 }
 
-void Quad::update_size_from_bl(Vec2 size)
+void Sprite::update_size_from_bl(Vec2 size)
 {
   float blx = this->vertices[2].x;
   float bly = this->vertices[2].y;
@@ -180,7 +186,7 @@ void Quad::update_size_from_bl(Vec2 size)
 
 }
 
-void Quad::update_texture_coords(std::array<Vec2, 4> texcoords)
+void Sprite::update_texture_coords(std::array<Vec2, 4> texcoords)
 {
   for (int i = 0; i < 4; i++) {
     this->vertices[i].s = texcoords[i].x();
@@ -192,28 +198,12 @@ void Quad::update_texture_coords(std::array<Vec2, 4> texcoords)
   glBufferData(GL_ARRAY_BUFFER, this->vertices.size()*sizeof(GLVertex), vertices_array, GL_STATIC_DRAW);
 }
 
-Quad *Quad::square(float sidelength, float z)
-{
-  float hs = sidelength/2;
-  Quad *rv = new Quad();
-
-  rv->update_position({
-      Vec3({ hs,  hs, z}),
-      Vec3({ hs, -hs, z}),
-      Vec3({-hs, -hs, z}),
-      Vec3({-hs,  hs, z})
-      }
-  );
-
-  return rv;
-}
-
-GLVertex *Quad::get_vertices_arr()
+GLVertex *Sprite::get_vertices_arr()
 {
   return this->vertices.data();
 }
 
-void Quad::advance_animation()
+void Sprite::advance_animation()
 {
   framecount ++;
 
@@ -238,7 +228,7 @@ void Quad::advance_animation()
 
 }
 
-void Quad::request_animation(std::string name)
+void Sprite::request_animation(std::string name)
 {
   this->texture->request_animation_bounds(name, this->animation_lb, this->animation_ub);
   if (this->animation_index < this->animation_lb || this->animation_index >= this->animation_ub)
