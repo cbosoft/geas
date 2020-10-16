@@ -17,6 +17,11 @@ Transform::Transform(Transform *parent)
   // do nothing
 }
 
+Transform::~Transform()
+{
+    // do nothing
+}
+
 
 // Getters
 Vec3 Transform::absolute_position() const
@@ -53,22 +58,32 @@ Transform *Transform::parent() const
 }
 
 // Setters
-void Transform::absolute_position(Vec3 abs)
+void Transform::absolute_position(const Vec3& abs)
 {
-  this->relative_position(abs - this->_parent->absolute_position());
+    if (this->_parent) {
+        this->relative_position(abs - this->_parent->absolute_position());
+    }
+    else {
+        this->relative_position(abs);
+    }
 }
 
-void Transform::relative_position(Vec3 rel)
+void Transform::relative_position(const Vec3& rel)
 {
   this->_relative_position = rel;
 }
 
-void Transform::scale(Vec2 scale)
+void Transform::scale(const Vec2& scale)
 {
-  this->local_scale(scale / this->_parent->scale());
+    if (this->_parent) {
+        this->local_scale(scale / this->_parent->scale());
+    }
+    else {
+        this->local_scale(scale);
+    }
 }
 
-void Transform::local_scale(Vec2 local_scale)
+void Transform::local_scale(const Vec2& local_scale)
 {
   this->_local_scale = local_scale;
 }

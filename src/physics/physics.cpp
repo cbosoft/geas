@@ -28,7 +28,7 @@ void Physics::set_gravity(float gravity)
 
 Vec3 Physics::get_position() const
 {
-  return this->owner.position->vec();
+  return this->owner.transform->absolute_position();
 }
 void Physics::set_collision(CollisionShape * collider)
 {

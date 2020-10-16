@@ -1,14 +1,14 @@
 #pragma once
 
 #include "../globject/sprite.hpp"
-#include "../world_position/world_position.hpp"
+#include "../transform/transform.hpp"
 #include "../physics/physics.hpp"
 
 class GeasObject {
 
   public:
     Sprite *sprite;
-    WorldPosition *position;
+    Transform *transform;
     Physics *physics;
 
     GeasObject();

@@ -17,11 +17,21 @@ class Transform {
     Transform *parent() const;
 
     // Setters
-    void absolute_position(Vec3 abs);
-    void relative_position(Vec3 rel);
-    void scale(Vec2 scale);
-    void local_scale(Vec2 local_scale);
+    void absolute_position(const Vec3& abs);
+    void relative_position(const Vec3& rel);
+    void scale(const Vec2& scale);
+    void local_scale(const Vec2& local_scale);
     void parent(Transform *t);
+
+    Transform &operator +=(const Vec3& other) {
+        this->_relative_position += other;
+        return *this;
+    }
+
+    Transform &operator += (const Vec2& other) {
+        this->_relative_position += other.promote(0.0);
+        return *this;
+    }
 
   private:
     Vec3 _relative_position;

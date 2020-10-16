@@ -3,7 +3,7 @@
 GeasObject::GeasObject()
   :
     sprite(nullptr)
-    , position(nullptr)
+    , transform(nullptr)
     , _marked_for_destruction(false)
 {
 }
@@ -15,8 +15,8 @@ GeasObject::~GeasObject()
     delete this->sprite;
   }
 
-  if (position != nullptr) {
-    delete this->position;
+  if (transform != nullptr) {
+    delete this->transform;
   }
 
   if (physics != nullptr) {
