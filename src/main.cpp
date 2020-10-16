@@ -1,19 +1,24 @@
 #include <iostream>
-#include <ctime>
 
 #include "game/game.hpp"
 #include "player/player.hpp"
 
-int main(void)
+int main()
 {
-  Game *game = Game::singleton();
+    Game *game = Game::singleton();
 
-  game->push_object(new Player());
+    {
+        auto *player = new Player();
+        player->transform->absolute_position(Vec3({-300, 360, 0.0}));
+        game->push_object(player);
+    }
 
-  Player *player = new Player();
-  player->position->set(Vec2({-600, -360}));
-  player->physics->set_gravity(0.0);
-  game->push_object(player);
+    {
+        auto *player = new Player();
+        player->transform->absolute_position(Vec3({-300, -360, 0.0}));
+        player->physics->set_gravity(0.0);
+        game->push_object(player);
+    }
 
-  game->play();
+    game->play();
 }
