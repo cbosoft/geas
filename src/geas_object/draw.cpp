@@ -5,7 +5,8 @@ void GeasObject::draw()
 {
   this->update();
 
-  if (this->quad != nullptr) {
-    this->quad->draw();
+  if (this->sprite != nullptr) {
+    this->sprite->draw();
   }
+
 }
