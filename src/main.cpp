@@ -2,8 +2,6 @@
 #include <ctime>
 
 #include "game/game.hpp"
-#include "globject/quad.hpp"
-#include "resourcemanager/resourcemanager.hpp"
 #include "player/player.hpp"
 
 int main(void)
