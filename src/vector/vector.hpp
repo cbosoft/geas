@@ -133,6 +133,76 @@ class VectorN {
       }
       return rv;
     }
+    // }}}
+    // assignment operators {{{
+
+    VectorN<T, N> &operator+=(const VectorN<T,N> &rhs)
+    {
+      for (unsigned int i = 0; i < N; i++) {
+        this->set(i, this->get(i)+rhs.get(i));
+      }
+      return *this;
+    }
+
+    VectorN<T, N> &operator-=(const VectorN<T,N> &rhs)
+    {
+      for (unsigned int i = 0; i < N; i++) {
+        this->set(i, this->get(i)-rhs.get(i));
+      }
+      return *this;
+    }
+
+    VectorN<T, N> &operator*=(const VectorN<T,N> &rhs)
+    {
+      for (unsigned int i = 0; i < N; i++) {
+        this->set(i, this->get(i)*rhs.get(i));
+      }
+      return *this;
+    }
+
+    VectorN<T, N> &operator/=(const VectorN<T,N> &rhs)
+    {
+      for (unsigned int i = 0; i < N; i++) {
+        // if rhs.get(i) == 0:
+        //   raise DivByZero!
+        this->set(i, this->get(i)/rhs.get(i));
+      }
+      return *this;
+    }
+
+    VectorN<T, N> &operator+=(T rhs)
+    {
+      for (unsigned int i = 0; i < N; i++) {
+        this->set(i, this->get(i) + rhs);
+      }
+      return *this;
+    }
+
+    VectorN<T, N> &operator-=(T rhs)
+    {
+      for (unsigned int i = 0; i < N; i++) {
+        this->set(i, this->get(i) - rhs);
+      }
+      return *this;
+    }
+
+    VectorN<T, N> &operator*=(T rhs)
+    {
+      for (unsigned int i = 0; i < N; i++) {
+        this->set(i, this->get(i)*rhs);
+      }
+      return *this;
+    }
+
+    VectorN<T, N> &operator/=(T rhs)
+    {
+      // if rhs == 0:
+      //   raise DivByZero!
+      for (unsigned int i = 0; i < N; i++) {
+        this->set(i, this->get(i)/rhs);
+      }
+      return *this;
+    }
 
     // }}}
     // named accessors {{{
