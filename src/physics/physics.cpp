@@ -30,7 +30,7 @@ Vec3 Physics::get_position() const
 {
   return this->owner.transform->absolute_position();
 }
-void Physics::set_collision(CollisionShape * collider)
+void Physics::set_collider(Collider * collider)
 {
   this->collider = collider;
 }

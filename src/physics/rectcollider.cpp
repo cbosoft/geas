@@ -2,7 +2,7 @@
 
 
 RectCollider::RectCollider(Physics &owner, Vec2 bl_offset, Vec2 size)
-  : CollisionShape(owner)
+  : Collider(owner)
     , bl_offset(bl_offset)
     , size(size)
 {

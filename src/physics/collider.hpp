@@ -4,11 +4,11 @@
 #include "../vector/vector.hpp"
 
 class Physics;
-class CollisionShape {
+class Collider {
 
   public:
-    CollisionShape(Physics &owner);
-    virtual ~CollisionShape() =default;
+    Collider(Physics &owner);
+    virtual ~Collider() =default;
     virtual Vec2 get_centre() const =0;
     virtual Vec2 get_nearest(const Vec2 &p) const =0;
 
@@ -19,7 +19,7 @@ class CollisionShape {
 
 };
 
-class RectCollider final: public CollisionShape {
+class RectCollider final: public Collider {
 
   public:
     RectCollider(Physics &owner, Vec2 bl_offset, Vec2 size);
@@ -33,7 +33,7 @@ class RectCollider final: public CollisionShape {
 
 };
 
-class CircleCollider final: public CollisionShape {
+class CircleCollider final: public Collider {
 
   public:
     CircleCollider(Physics &owner, Vec2 bl_offset, float radius);
@@ -48,7 +48,7 @@ class CircleCollider final: public CollisionShape {
 
 };
 
-class PolygonCollider final: public CollisionShape {
+class PolygonCollider final: public Collider {
 
   public:
     PolygonCollider(Physics &owner, std::list<Vec2> points);
