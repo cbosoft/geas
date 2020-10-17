@@ -3,6 +3,8 @@
 
 #include <array>
 #include <cmath>
+#include <string>
+#include <sstream>
 
 template<typename T, unsigned int N>
 class VectorN {
@@ -303,6 +305,19 @@ class VectorN {
     }
 
     // }}}
+    
+    std::string to_string() const
+    {
+      std::stringstream ss;
+      ss << "Vec" << N << "(";
+      for (unsigned int i = 0; i < N; i++) {
+        if (i) ss << ", ";
+        ss << this->data[i];
+      }
+      ss << ")";
+
+      return ss.str();
+    }
 
 
   private:
