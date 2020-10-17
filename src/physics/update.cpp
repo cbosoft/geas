@@ -24,6 +24,7 @@ void Physics::update()
 
       Vec2 bpos = b->get_position().demote();
       Vec2 f = Physics::get_force_between(apos, bpos);
+      debug_msg(f.to_string());
 
       a->force_total = a->force_total + f;
       b->force_total = b->force_total - f;

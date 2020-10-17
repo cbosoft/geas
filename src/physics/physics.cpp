@@ -34,3 +34,9 @@ void Physics::set_collider(Collider * collider)
 {
   this->collider = collider;
 }
+
+bool Physics::interacts_with(const Physics *other) const
+{
+  (void) other;
+  return true;
+}

@@ -20,6 +20,8 @@ class Physics {
 
     Vec3 get_position() const;
 
+    bool interacts_with(const Physics *other) const;
+
   private:
     static Vec2 get_force_between(const Vec2& a, const Vec2 &b);
     static const std::list<Physics *> &get_list();
