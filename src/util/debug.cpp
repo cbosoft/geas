@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "debug.hpp"
 
 void debug_msg(const std::string &s)
