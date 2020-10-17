@@ -2,7 +2,7 @@
 #include "player.hpp"
 Player::Player()
 {
-  this->sprite = new Sprite("textures/sprite_sheet.png");
+  this->sprite = new Sprite("textures/sprite_sheet.png", Vec2({100,100}));
   this->sprite->request_animation("run");
 
   this->transform = new Transform(); // no parent transform: this

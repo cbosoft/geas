@@ -63,6 +63,12 @@ Sprite::Sprite(std::string texture_path)
   }
 }
 
+Sprite::Sprite(std::string texture_path, const Vec2 &size)
+  : Sprite(texture_path)
+{
+  this->update_size(size);
+}
+
 void Sprite::update_texture(std::string filename)
 {
   ResourceManager &rm = ResourceManager::singleton();

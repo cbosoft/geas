@@ -14,6 +14,7 @@ class Sprite: public GLObject {
 
   public:
     Sprite(std::string texture);
+    Sprite(std::string texture, const Vec2 &size);
 
     void request_animation(std::string name);
 
