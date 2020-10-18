@@ -18,9 +18,9 @@ class Transform {
 
     // Setters
     void absolute_position(const Vec3& abs);
-    void relative_position(const Vec3& rel);
+    virtual void relative_position(const Vec3& rel);
     void scale(const Vec2& scale);
-    void local_scale(const Vec2& local_scale);
+    virtual void local_scale(const Vec2& local_scale);
     void parent(Transform *t);
 
     Transform &operator +=(const Vec3& other) {

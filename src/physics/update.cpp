@@ -24,7 +24,7 @@ void Physics::update()
 
       Vec2 bpos = b->get_position().demote();
       Vec2 f = Physics::get_force_between(apos, bpos);
-      debug_msg(f.to_string());
+      //debug_msg(f.to_string());
 
       a->force_total = a->force_total + f;
       b->force_total = b->force_total - f;
@@ -36,7 +36,7 @@ void Physics::update()
     force.y(force.y() - entity->gravity_scale);
 
     Vec2 delta_r = force * (dt2 * entity->_inv_mass);
-    debug_msg(Formatter() << delta_r.x() << ", " << delta_r.y() << "  dt = " << dt << "  grav = " << entity->gravity_scale);
-    (*entity->owner.transform) += delta_r;
+    //debug_msg(Formatter() << delta_r.x() << ", " << delta_r.y() << "  dt = " << dt << "  grav = " << entity->gravity_scale);
+    entity->owner += delta_r;
   }
 }

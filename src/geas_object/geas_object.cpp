@@ -1,11 +1,19 @@
 #include "geas_object.hpp"
 
 GeasObject::GeasObject()
-  :
-    sprite(nullptr)
-    , transform(nullptr)
+  : Transform()
+    , sprite(nullptr)
     , _marked_for_destruction(false)
 {
+    // do nothing
+}
+
+GeasObject::GeasObject(Transform *parent)
+  : Transform(parent)
+  , sprite(nullptr)
+  , _marked_for_destruction(false)
+{
+    // do nothing
 }
 
 GeasObject::~GeasObject()
@@ -13,10 +21,6 @@ GeasObject::~GeasObject()
 
   if (sprite != nullptr) {
     delete this->sprite;
-  }
-
-  if (transform != nullptr) {
-    delete this->transform;
   }
 
   if (physics != nullptr) {

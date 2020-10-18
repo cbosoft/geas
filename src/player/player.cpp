@@ -2,12 +2,9 @@
 #include "player.hpp"
 Player::Player()
 {
-  this->sprite = new Sprite("textures/sprite_sheet.png", Vec2({100,100}));
+  this->sprite = new Sprite(this, "textures/sprite_sheet.png");
   this->sprite->request_animation("run");
 
-  this->transform = new Transform(); // no parent transform: this
-  // transform is with respect to the global space. In a real game,
-  // this should be the child of the world/level space.
 
   this->physics = Physics::create(*this);
   this->physics->set_collider(new RectCollider(*this->physics,

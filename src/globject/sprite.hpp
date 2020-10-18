@@ -5,16 +5,17 @@
 #include "../vector/vector.hpp"
 #include "../shader/shader.hpp"
 #include "../texture/texture.hpp"
+#include "../transform/transform.hpp"
 #include "globject.hpp"
 #include "glvertex.hpp"
 
 enum AnchorMode { AnchorCentre, AnchorBottomLeft };
 
-class Sprite: public GLObject {
+class Sprite: public GLObject, public Transform {
 
   public:
-    Sprite(std::string texture);
-    Sprite(std::string texture, const Vec2 &size);
+    Sprite(Transform *parent, const std::string &texture);
+    Sprite(Transform *parent, const std::string &texture, const Vec2 &size);
 
     void request_animation(std::string name);
 
@@ -22,21 +23,33 @@ class Sprite: public GLObject {
     void update_texture(Texture *texture);
 
     void update_vertices(std::array<GLVertex,4> vertices);
-    void update_position(Vec3 bl);
-    void update_scale(float scale);
-    void update_size(Vec2 size);
-    void update_size_from_centre(Vec2 size);
-    void update_size_from_bl(Vec2 size);
+
+    void update_position(const Vec3 &bl);
     void update_position(std::array<Vec3, 4> positions);
+    void update_position_bl(const Vec3 &bl);
+    void update_position_centre(const Vec3 &centre);
+
+    void update_scale(const Vec2& scale);
+    void update_size(const Vec2& size);
+    void update_size_from_centre(const Vec2 &size);
+    void update_size_from_bl(const Vec2 &size);
     void update_colour(std::array<Vec4, 4> colours);
     void update_texture_coords(std::array<Vec2, 4> texcoords);
+
+    Vec2 get_size() const;
+    Vec2 get_centre() const;
 
     void set_loop(std::string name);
 
     bool draw() override;
 
+    // Transform stuff
+    void relative_position(const Vec3 &rel_pos) override;
+    void local_scale(const Vec2 &scale) override;
+
   private:
 
+    void update_vertices() const;
     GLVertex *get_vertices_arr();
     void advance_animation();
 
@@ -48,4 +61,8 @@ class Sprite: public GLObject {
     unsigned int buffer_id, indices_id, attrib_id;
 
     unsigned int animations_frames, animation_index, animation_lb, animation_ub, inv_anim_speed, framecount;
+    bool vertices_invalid_p;
+
+    Vec3 position_cache;
+    bool position_cache_unset{true};
 };

@@ -6,7 +6,7 @@ Physics::Physics(GeasObject &owner)
     , collider(nullptr)
 {
   this->set_mass(1.0);
-  this->set_gravity(10000.0);
+  this->set_gravity(1000.0);
 }
 
 Physics::~Physics()
@@ -28,7 +28,7 @@ void Physics::set_gravity(float gravity)
 
 Vec3 Physics::get_position() const
 {
-  return this->owner.transform->absolute_position();
+  return this->owner.absolute_position();
 }
 void Physics::set_collider(Collider * collider)
 {

@@ -4,14 +4,14 @@
 #include "../transform/transform.hpp"
 #include "../physics/physics.hpp"
 
-class GeasObject {
+class GeasObject : public Transform {
 
   public:
     Sprite *sprite;
-    Transform *transform;
     Physics *physics;
 
     GeasObject();
+    GeasObject(Transform *parent);
     virtual ~GeasObject();
 
     virtual void update() =0;

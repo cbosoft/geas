@@ -5,15 +5,19 @@
 
 #include "../resourcemanager/resourcemanager.hpp"
 #include "../util/exception.hpp"
+#include "../camera/camera.hpp"
+#include "../util/debug.hpp"
 #include "sprite.hpp"
 
-Sprite::Sprite(std::string texture_path)
-  :   anchor_mode(AnchorCentre)
+Sprite::Sprite(Transform *parent, const std::string& texture_path)
+  :   Transform(parent)
+    , anchor_mode(AnchorCentre)
     , animation_index(0)
     , animation_lb(0)
     , animation_ub(50)
     , inv_anim_speed(5)
     , framecount(0)
+    , vertices_invalid_p(false)
 {
   unsigned int indices[] = {
     0, 1, 3,
@@ -63,8 +67,8 @@ Sprite::Sprite(std::string texture_path)
   }
 }
 
-Sprite::Sprite(std::string texture_path, const Vec2 &size)
-  : Sprite(texture_path)
+Sprite::Sprite(Transform *parent, const std::string &texture_path, const Vec2 &size)
+  : Sprite(parent, texture_path)
 {
   this->update_size(size);
 }
@@ -90,79 +94,118 @@ void Sprite::set_loop(std::string name)
 
 bool Sprite::draw()
 {
-  advance_animation();
+    advance_animation();
 
-  shaderProgram->use();
-  texture->use();
+    {
+        Vec3 abspos = this->absolute_position();
+        if (this->position_cache != abspos || this->position_cache_unset) {
+            this->position_cache = abspos;
+            this->position_cache_unset = false;
+            this->update_position(abspos);
+        }
+    }
 
-  glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices_id);
-  glBindVertexArray(attrib_id);
+    if (this->vertices_invalid_p) {
+        // TODO: also check if parent transform has moved
+        GLVertex *vertices_array = this->get_vertices_arr();
+        //for (auto vertex : this->vertices) {
+        //    debug_msg(Formatter() << " drawing vertex " << vertex.x << "," << vertex.y );
+        //}
 
-  gl_error_check("Quad::draw(), after glBindVertexArray(...)");
-  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-  gl_error_check("Quad::draw(), after glDrawElements(...)");
-  return false;
+        glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
+        glBufferData(GL_ARRAY_BUFFER, this->vertices.size()*sizeof(GLVertex), vertices_array, GL_STATIC_DRAW);
+        this->vertices_invalid_p = false;
+    }
+
+    shaderProgram->use();
+    texture->use();
+
+    glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices_id);
+    glBindVertexArray(attrib_id);
+
+    gl_error_check("Quad::draw(), after glBindVertexArray(...)");
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    gl_error_check("Quad::draw(), after glDrawElements(...)");
+    return false;
+}
+
+void Sprite::update_position(const Vec3 &position)
+{
+    switch (this->anchor_mode) {
+        case AnchorBottomLeft:
+            this->update_position_bl(position);
+            break;
+        case AnchorCentre:
+            this->update_position_centre(position);
+            break;
+    }
+}
+
+void Sprite::update_position_bl(const Vec3 &position)
+{
+    Vec2 size = this->get_size();
+    float sx = size.x();
+    float sy = size.y();
+
+    std::array<Vec3, 4> positions;
+    positions[0] = position + Vec3({ sx,  sy, 0.0}); // tr
+    positions[1] = position + Vec3({ sx, 0.0, 0.0}); // br
+    positions[2] = position + Vec3({0.0, 0.0, 0.0}); // bl
+    positions[3] = position + Vec3({0.0,  sy, 0.0}); // tl
+    this->update_position(positions);
+}
+
+void Sprite::update_position_centre(const Vec3 &position)
+{
+    Vec2 half_size = this->get_size() * 0.5f;
+    float hsx = half_size.x();
+    float hsy = half_size.y();
+
+    std::array<Vec3, 4> positions;
+    positions[0] = position + Vec3({ hsx,  hsy, 0.0}); // tr
+    positions[1] = position + Vec3({ hsx, -hsy, 0.0}); // br
+    positions[2] = position + Vec3({-hsx, -hsy, 0.0}); // bl
+    positions[3] = position + Vec3({-hsx,  hsy, 0.0}); // tl
+    this->update_position(positions);
 }
 
 void Sprite::update_position(std::array<Vec3, 4> positions)
 {
-  for (int i = 0; i < 4; i++) {
-    this->vertices[i].x = positions[i].x();
-    this->vertices[i].y = positions[i].y();
-    this->vertices[i].z = positions[i].z();
-  }
-
-  GLVertex *vertices_array = this->get_vertices_arr();
-  glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
-  glBufferData(GL_ARRAY_BUFFER, this->vertices.size()*sizeof(GLVertex), vertices_array, GL_STATIC_DRAW);
+    for (int i = 0; i < 4; i++) {
+        Vec3 pos_in_world = Camera::main()->world_to_window(positions[i]);
+        this->vertices[i].x = pos_in_world.x();
+        this->vertices[i].y = pos_in_world.y();
+        this->vertices[i].z = pos_in_world.z();
+    }
+    this->vertices_invalid_p = true;
 }
 
-void Sprite::update_position(Vec3 position)
+void Sprite::update_scale(const Vec2 &scale)
 {
-  float sx = this->vertices[1].x - this->vertices[2].x;
-  float sy = this->vertices[0].y - this->vertices[1].y;
-
-  std::array<Vec3, 4> positions;
-  // or change pos of centre?
-  positions[0] = position + Vec3({ sx,  sy, 0.0}); // tr
-  positions[1] = position + Vec3({ sx, 0.0, 0.0}); // br
-  positions[2] = position + Vec3({0.0, 0.0, 0.0}); // bl
-  positions[3] = position + Vec3({0.0,  sy, 0.0}); // tl
-  this->update_position(positions);
+    Vec2 size = this->get_size() * scale;
+    this->update_size(size);
 }
 
-void Sprite::update_scale(float scale)
+void Sprite::update_size(const Vec2& size)
 {
-  float sx = (this->vertices[1].x - this->vertices[2].x)*scale;
-  float sy = (this->vertices[0].y - this->vertices[1].y)*scale;
-  Vec2 size({sx, sy});
-  this->update_size(size);
+    switch(anchor_mode) {
+        case AnchorCentre:
+            this->update_size_from_centre(size);
+            break;
+
+        case AnchorBottomLeft:
+            this->update_size_from_bl(size);
+            break;
+    }
 }
 
-void Sprite::update_size(Vec2 size)
+void Sprite::update_size_from_centre(const Vec2& size)
 {
-  switch(anchor_mode) {
+  Vec3 centre = this->get_centre().promote(this->vertices[0].z);
 
-    case AnchorCentre:
-      this->update_size_from_centre(size);
-      break;
-
-    case AnchorBottomLeft:
-      this->update_size_from_bl(size);
-      break;
-  }
-}
-
-void Sprite::update_size_from_centre(Vec2 size)
-{
-  float cx = (this->vertices[2].x + this->vertices[1].x)*0.5;
-  float cy = (this->vertices[0].y + this->vertices[1].y)*0.5;
-  float cz = this->vertices[0].z;
-  Vec3 centre({cx, cy, cz});
-
-  float hsx = size.x()*0.5;
-  float hsy = size.y()*0.5;
+  float hsx = size.x()*0.5f;
+  float hsy = size.y()*0.5f;
 
   std::array<Vec3, 4> positions;
   positions[0] = centre + Vec3({ hsx, hsy, 0.0}); // tr
@@ -173,7 +216,7 @@ void Sprite::update_size_from_centre(Vec2 size)
 
 }
 
-void Sprite::update_size_from_bl(Vec2 size)
+void Sprite::update_size_from_bl(const Vec2 &size)
 {
   float blx = this->vertices[2].x;
   float bly = this->vertices[2].y;
@@ -198,10 +241,7 @@ void Sprite::update_texture_coords(std::array<Vec2, 4> texcoords)
     this->vertices[i].s = texcoords[i].x();
     this->vertices[i].t = texcoords[i].y();
   }
-
-  GLVertex *vertices_array = this->get_vertices_arr();
-  glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
-  glBufferData(GL_ARRAY_BUFFER, this->vertices.size()*sizeof(GLVertex), vertices_array, GL_STATIC_DRAW);
+  this->vertices_invalid_p = true;
 }
 
 GLVertex *Sprite::get_vertices_arr()
@@ -239,4 +279,37 @@ void Sprite::request_animation(std::string name)
   this->texture->request_animation_bounds(name, this->animation_lb, this->animation_ub);
   if (this->animation_index < this->animation_lb || this->animation_index >= this->animation_ub)
     this->animation_index = this->animation_lb;
+}
+
+void Sprite::relative_position(const Vec3 &rel_pos)
+{
+    Transform::relative_position(rel_pos);
+    Vec3 abs = this->absolute_position();
+    Vec3 win = Camera::main()->world_to_window(abs);
+    this->update_position(win);
+}
+
+void Sprite::local_scale(const Vec2 &scale)
+{
+    this->update_scale(scale);
+    Transform::local_scale(scale);
+}
+
+Vec2 Sprite::get_size() const
+{
+    // TODO: don't get from the vertices, hold a 'master' copy of the size (in world units) for comparison with local scale
+    float sx = this->vertices[1].x - this->vertices[2].x;
+    float sy = this->vertices[0].y - this->vertices[1].y;
+    Vec2 size_win({sx, sy});
+    Vec2 size_world = Camera::main()->window_to_world(size_win);
+    return size_world;
+}
+
+Vec2 Sprite::get_centre() const
+{
+    float cx = (this->vertices[0].x - this->vertices[2].x)*0.5f;
+    float cy = (this->vertices[0].y - this->vertices[2].y)*0.5f;
+    Vec2 centre_win({cx, cy});
+    Vec2 centre_world = Camera::main()->window_to_world(centre_win);
+    return centre_world;
 }
