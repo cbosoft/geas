@@ -11,7 +11,9 @@ Camera *Camera::create(std::string name)
 {
   Window *win = Window::singleton();
   float w = win->get_w(), h = win->get_h();
-  return Camera::create(0.0, 0.0, w/2, h/2, name);
+  float aspect = h/w;
+  float winw = 100.0, winh = aspect*winw;
+  return Camera::create(0.0, 0.0, winw, winh, name);
 }
 
 
