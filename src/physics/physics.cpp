@@ -18,7 +18,7 @@ Physics::~Physics()
 void Physics::set_mass(float mass)
 {
   this->mass = mass;
-  this->_inv_mass = 1.0/mass;
+  this->_inv_mass = 1.0f/mass;
 }
 
 void Physics::set_gravity(float gravity)
