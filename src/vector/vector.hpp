@@ -305,6 +305,22 @@ class VectorN {
     }
 
     // }}}
+    // comparison operators {{{
+
+    bool operator==(const VectorN<T,N>&other) {
+        for (unsigned int i = 0; i < N; i++) {
+            if (this->get(i) != other.get(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    bool operator!=(const VectorN<T, N> &other) {
+        return !((*this) == other);
+    }
+
+    // }}}
     
     std::string to_string() const
     {
