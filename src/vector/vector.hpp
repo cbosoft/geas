@@ -321,7 +321,12 @@ class VectorN {
     }
 
     // }}}
-    
+
+    operator VectorN<T,N-1>() const
+    {
+        return this->demote();
+    }
+
     std::string to_string() const
     {
       std::stringstream ss;
@@ -333,6 +338,11 @@ class VectorN {
       ss << ")";
 
       return ss.str();
+    }
+
+    operator std::string() const
+    {
+        return this->to_string();
     }
 
 
@@ -368,6 +378,7 @@ VectorN<T,N> operator/(float f, const VectorN<T, N>& rhs)
   return lhs/rhs;
 }
 // }}}
+
 
 typedef VectorN<float, 2> Vec2;
 typedef VectorN<float, 3> Vec3;
