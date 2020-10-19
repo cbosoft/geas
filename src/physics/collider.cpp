@@ -1,13 +1,20 @@
+#include "../geas_object/geas_object.hpp"
 #include "physics.hpp"
 #include "collider.hpp"
 
 Collider::Collider(Physics &owner)
-  : owner(owner)
+  : Transform(&owner.owner)
+  , owner(owner)
 {
   // do nothing
 }
 
-Vec2 Collider::get_point_in_world(const Vec2 &point) const
+
+/// Get shortest 2D distance between this collider and the other collider.
+/// \param other the other collider.
+/// \return Shortest distance between the two colliders.
+Vec2 Collider::get_separation_between(const Collider *other) const
 {
-  return this->owner.get_position().demote() + point;
+    std::pair<Vec2, Vec2> points = this->get_nearest(other);
+    return points.first - points.second;
 }

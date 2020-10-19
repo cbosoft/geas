@@ -1,18 +1,20 @@
 #pragma once
 
 #include <list>
+#include <map>
 #include "../vector/vector.hpp"
+#include "../transform/transform.hpp"
 
 class Physics;
-class Collider {
+class Collider : public Transform {
 
   public:
     Collider(Physics &owner);
     virtual ~Collider() =default;
     virtual Vec2 get_centre() const =0;
     virtual Vec2 get_nearest(const Vec2 &p) const =0;
-
-    Vec2 get_point_in_world(const Vec2 &p) const;
+    virtual std::pair<Vec2, Vec2> get_nearest(const Collider *other) const =0;
+    Vec2 get_separation_between(const Collider *other) const;
 
   private:
     Physics &owner;
@@ -27,6 +29,7 @@ class RectCollider final: public Collider {
 
     Vec2 get_centre() const override;
     Vec2 get_nearest(const Vec2 &p) const override;
+    std::pair<Vec2, Vec2> get_nearest(const Collider *other) const override;
 
   private:
     Vec2 bl_offset, size;
@@ -41,6 +44,7 @@ class CircleCollider final: public Collider {
 
     Vec2 get_centre() const override;
     Vec2 get_nearest(const Vec2 &p) const override;
+    std::pair<Vec2, Vec2> get_nearest(const Collider *other) const override;
 
   private:
     Vec2 bl;
@@ -56,6 +60,7 @@ class PolygonCollider final: public Collider {
 
     Vec2 get_centre() const override;
     Vec2 get_nearest(const Vec2 &p) const override;
+    std::pair<Vec2, Vec2> get_nearest(const Collider *other) const override;
 
   private:
     std::list<Vec2> points;
