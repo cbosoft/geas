@@ -17,6 +17,7 @@ class Physics {
     void set_mass(float mass);
     void set_gravity(float gravity);
     void set_collider(Collider *collider);
+    void set_fixed(bool is_fixed=true);
 
     Vec3 get_position() const;
 
@@ -29,6 +30,7 @@ class Physics {
 
     Physics(GeasObject &owner);
 
+    bool fixed{false};
     GeasObject &owner;
     float mass, _inv_mass;
     float gravity_scale;

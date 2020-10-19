@@ -35,8 +35,7 @@ void Physics::set_collider(Collider * collider)
   this->collider = collider;
 }
 
-bool Physics::interacts_with(const Physics *other) const
+void Physics::set_fixed(bool is_fixed)
 {
-  (void) other;
-  return true;
+    this->fixed = is_fixed;
 }
