@@ -1,7 +1,7 @@
 #include "collider.hpp"
 
 
-RectCollider::RectCollider(Physics &owner, Vec2 bl_offset, Vec2 size)
+RectCollider::RectCollider(GeasObject &owner, Vec2 bl_offset, Vec2 size)
   : Collider(owner)
     , size(size)
 {
@@ -44,7 +44,7 @@ Vec2 RectCollider::get_nearest(const Vec2 &p) const
 
 /// Get nearest points on this collider to collider other
 /// \param other
-/// \return
+/// \return pair of position on *this* surface, and position on *other* surface
 std::pair<Vec2, Vec2> RectCollider::get_nearest(const Collider *other) const
 {
     // TODO

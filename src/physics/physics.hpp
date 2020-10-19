@@ -10,6 +10,8 @@ class GeasObject;
 // Class managing the physics of an object (mass, gravity, drag, collision)
 class Physics {
   public:
+    friend class Collider;
+
     ~Physics();
 
     static Physics *create(GeasObject &owner);
@@ -21,10 +23,8 @@ class Physics {
 
     Vec3 get_position() const;
 
-    bool interacts_with(const Physics *other) const;
-
   private:
-    static Vec2 get_force_between(const Vec2& a, const Vec2 &b);
+    void interact_with(Physics *other);
     static const std::list<Physics *> &get_list();
     static void remove_ref(Physics *physics);
 
@@ -34,6 +34,7 @@ class Physics {
     GeasObject &owner;
     float mass, _inv_mass;
     float gravity_scale;
+    Vec2 momentum;
     Vec2 force_total;
     Collider *collider;
 };

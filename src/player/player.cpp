@@ -7,7 +7,7 @@ Player::Player()
 
 
   this->physics = Physics::create(*this);
-  this->physics->set_collider(new RectCollider(*this->physics,
+  this->physics->set_collider(new RectCollider(*this,
         Vec2({0.0, 1.0}),
         Vec2({1.0, 1.0}))
       );

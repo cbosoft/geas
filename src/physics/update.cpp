@@ -14,33 +14,30 @@ void Physics::update()
   
   // TODO: order entities into cells?
 
-  float dt = Game::singleton()->get_time_delta(), dt2 = dt*dt;
+  float dt = Game::singleton()->get_time_delta();
 
   for (Physics *a : entities) {
-    Vec2 apos = a->get_position().demote();
     for (Physics *b : entities) {
+
       if (a == b)
         break;
 
-      Vec2 bpos = b->get_position().demote();
-      Vec2 f = Physics::get_force_between(apos, bpos);
-      //debug_msg(f.to_string());
+      a->interact_with(b);
 
-      a->force_total = a->force_total + f;
-      b->force_total = b->force_total - f;
     }
   }
 
   for (Physics *entity : entities) {
+
       if (entity->fixed)
           continue;
 
-    Vec2 force = entity->force_total;
-    force.y(force.y() - entity->gravity_scale);
+      Vec2 accel({0.0f, -entity->gravity_scale * entity->_inv_mass});
+      Vec2 vel = entity->momentum*entity->_inv_mass + accel*dt;
 
-    Vec2 delta_r = force * (dt2 * entity->_inv_mass);
-    //debug_msg(Formatter() << delta_r.x() << ", " << delta_r.y() << "  dt = " << dt << "  grav = " << entity->gravity_scale);
+      // Here "r" means position because physicists are weird (and p is momentum, and x would be misleading).
+      Vec2 delta_r = vel * dt;
 
-    entity->owner += delta_r;
+      entity->owner.relative_position(entity->owner.relative_position() + delta_r.promote(0.0));
   }
 }
