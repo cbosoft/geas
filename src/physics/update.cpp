@@ -32,11 +32,15 @@ void Physics::update()
   }
 
   for (Physics *entity : entities) {
+      if (entity->fixed)
+          continue;
+
     Vec2 force = entity->force_total;
     force.y(force.y() - entity->gravity_scale);
 
     Vec2 delta_r = force * (dt2 * entity->_inv_mass);
     //debug_msg(Formatter() << delta_r.x() << ", " << delta_r.y() << "  dt = " << dt << "  grav = " << entity->gravity_scale);
+
     entity->owner += delta_r;
   }
 }
