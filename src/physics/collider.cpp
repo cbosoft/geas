@@ -15,14 +15,3 @@ Vec2 Collider::get_separation_between(const Collider *other) const
     std::pair<Vec2, Vec2> points = this->get_nearest(other);
     return points.first - points.second;
 }
-
-
-/// Calculate the normal vector (vector pointing away perpendicular) to the surface of the collider
-/// \param at the point on the collider at which to calc the normal
-/// \return the normal vector (2D)
-Vec2 Collider::get_surface_normal(const Vec2 &at) const
-{
-    // TODO: implement function
-    (void) at; // appease linter
-    return Vec2({0.0, 1.0});
-}

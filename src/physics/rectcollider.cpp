@@ -50,3 +50,14 @@ std::pair<Vec2, Vec2> RectCollider::get_nearest(const Collider *other) const
     // TODO
     return std::make_pair(this->get_centre(), other->get_centre());
 }
+
+
+/// Calculate the normal vector (vector pointing away perpendicular) to the surface of the collider
+/// \param at the point on the collider at which to calc the normal
+/// \return the normal vector (2D)
+Vec2 RectCollider::get_surface_normal(const Vec2 &at) const
+{
+    // TODO: implement function
+    (void) at; // appease linter
+    return Vec2({0.0, 1.0});
+}

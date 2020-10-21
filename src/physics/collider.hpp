@@ -14,8 +14,8 @@ class Collider : public Transform {
     virtual Vec2 get_centre() const =0;
     virtual Vec2 get_nearest(const Vec2 &p) const =0;
     virtual std::pair<Vec2, Vec2> get_nearest(const Collider *other) const =0;
+    virtual Vec2 get_surface_normal(const Vec2 &at) const =0;
     Vec2 get_separation_between(const Collider *other) const;
-    Vec2 get_surface_normal(const Vec2 &at) const;
 
 };
 
@@ -28,6 +28,7 @@ class RectCollider final: public Collider {
     Vec2 get_centre() const override;
     Vec2 get_nearest(const Vec2 &p) const override;
     std::pair<Vec2, Vec2> get_nearest(const Collider *other) const override;
+    Vec2 get_surface_normal(const Vec2 &at) const override;
 
   private:
     Vec2 size;
