@@ -74,7 +74,8 @@ unsigned int Shader::compile_source_to_shader(unsigned int type, std::string sou
     // compile error :(
     int len;
     glGetShaderiv(id, GL_INFO_LOG_LENGTH, &len);
-    char msg[len];
+
+    char *msg = (char *)alloca(len);
     glGetShaderInfoLog(id, len, &len, msg);
     glDeleteShader(id);
     throw ShaderCompileError(Formatter() << "Failed to compile shader: " << &(msg[0]));
