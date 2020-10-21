@@ -6,6 +6,12 @@ Vec2 fixed_body_momentum_transfer(const Vec2 &incoming_momentum, const Vec2 &sur
     // TODO
     // interaction with a fixed body. resulting momentum vector component normal to the surface is flipped, while
     // tangent components are reflected across the normal.
+
+    // appease linter
+    (void) incoming_momentum;
+    (void) surface_normal_unit;
+
+    return Vec2(0.0);
 }
 
 void Physics::interact_with(Physics *other)
