@@ -10,7 +10,6 @@ class GeasObject : public Transform {
     Sprite *sprite;
     Physics *physics;
 
-    GeasObject();
     GeasObject(Transform *parent);
     virtual ~GeasObject();
 
@@ -21,6 +20,7 @@ class GeasObject : public Transform {
     void destroy();
 
   private:
+    GeasObject();
     bool _marked_for_destruction;
 
 };
