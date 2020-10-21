@@ -1,3 +1,4 @@
+#include "../util/exception.hpp"
 #include "collider.hpp"
 
 
@@ -66,7 +67,25 @@ std::pair<Vec2, Vec2> RectCollider::get_nearest(const Collider *other) const
 /// \return the normal vector (2D)
 Vec2 RectCollider::get_surface_normal(const Vec2 &at) const
 {
-    // TODO: implement function
-    (void) at; // appease linter
-    return Vec2({0.0, 1.0});
+    std::list<Vec2> corners = this->get_corners();
+    corners.push_back(corners.front());
+    std::list<Vec2> normals{
+        Vec2({ 1.0,  0.0}),
+        Vec2({ 0.0, -1.0}),
+        Vec2({ -1.0,  0.0}),
+        Vec2({ 0.0,  1.0})
+    };
+
+    auto corner = corners.begin(), next_corner = corner++, normal = normals.begin();
+
+    for (;next_corner != corners.end();corner++, next_corner++, normal++) {
+
+        if (at.coincident(*corner, *next_corner)) {
+            std::cerr << at.to_string() << " " << corner->to_string() << " " << next_corner->to_string() << std::endl;
+            return *normal;
+        }
+
+    }
+    // TODO: error
+    throw PositionError("RectCollider::get_surface_normal", "position 'at' is not on the rectangle.");
 }

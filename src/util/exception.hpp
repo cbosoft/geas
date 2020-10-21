@@ -105,6 +105,7 @@ EXCEPTION(OutOfRange, "OutOfRange");
 EXCEPTION(GLError, "GLError");
 EXCEPTION_ERRNO(IOError, "IOError");
 EXCEPTION(SizeMismatch, "SizeMismatch");
+EXCEPTION(PositionError, "PositionError");
 
 
 
