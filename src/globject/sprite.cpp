@@ -29,6 +29,7 @@ Sprite::Sprite(Transform *parent, const std::string& texture_path)
   vertices[2] = {/*  position: */ 0.0, 0.0, 0.0, /*  colour: */ 1.0, 1.0, 1.0, 1.0, /*  texture: */ 0.0, 0.0};
   vertices[3] = {/*  position: */ 0.0, 1.0, 0.0, /*  colour: */ 1.0, 1.0, 1.0, 1.0, /*  texture: */ 0.0, 1.0};
 
+  // TODO: split GL stuff out from sprite: push into texture?
   glGenBuffers(1, &buffer_id);
   glGenBuffers(1, &indices_id);
   glGenVertexArrays(1, &attrib_id);
