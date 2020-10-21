@@ -1,6 +1,7 @@
 #include "../physics/collider.hpp"
 #include "player.hpp"
-Player::Player()
+Player::Player(Transform *parent)
+    : GeasObject(parent)
 {
   this->sprite = new Sprite(this, "textures/sprite_sheet.png");
   this->sprite->request_animation("run");

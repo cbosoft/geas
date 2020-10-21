@@ -4,7 +4,7 @@
 
 class Player final : public GeasObject {
   public:
-    Player();
+    Player(Transform *parent);
 
     void update() override;
 
