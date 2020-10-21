@@ -31,6 +31,9 @@ class RectCollider final: public Collider {
     Vec2 get_surface_normal(const Vec2 &at) const override;
 
   private:
+
+    std::list<Vec2> get_corners() const;
+
     Vec2 size;
 
 };

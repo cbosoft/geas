@@ -23,17 +23,26 @@ Vec2 RectCollider::get_centre() const
 }
 
 
+/// Get the absolute (world) positions of the four corners of this rectangle.
+/// \return list of Vec2 positions
+std::list<Vec2> RectCollider::get_corners() const
+{
+    std::list<Vec2> corners;
+    Vec2 bl = this->absolute_position();
+    corners.push_back(bl + this->size);
+    corners.push_back(bl + Vec2({this->size.x(), 0.0}) );
+    corners.push_back(bl);
+    corners.push_back(bl + Vec2({0.0, this->size.y()}) );
+    return corners;
+}
+
+
 /// Get the point on the rectangle nearest to the other point p.
 /// \param p
 /// \return Nearest point to p
 Vec2 RectCollider::get_nearest(const Vec2 &p) const
 {
-  std::list<Vec2> corners;
-  Vec2 bl = this->absolute_position();
-  corners.push_back(bl);
-  corners.push_back(bl + Vec2({this->size.x(), 0.0}) );
-  corners.push_back(bl + Vec2({0.0, this->size.y()}) );
-  corners.push_back(bl + this->size);
+  //std::list<Vec2> corners = this->get_corners();
 
   // TODO: get nearest point on the collider to the point p
   (void) p;
