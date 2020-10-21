@@ -346,6 +346,28 @@ class VectorN {
     }
 
 
+    bool coincident(const VectorN<T,N> &a, const VectorN<T,N> &b) const
+    {
+        for (unsigned int i = 0; i < N; i++) {
+
+            // TODO use epsilon
+            if (std::abs(a.data[i] - b.data[i]) < 1e-9) {
+
+                if (std::abs(a.data[i] - this->data[i]) < 1e-9) {
+                    return true;
+                }
+                else {
+                    break;
+                }
+
+            }
+
+        }
+
+        return false;
+    }
+
+
   private:
 
     std::array<T, N> data;
