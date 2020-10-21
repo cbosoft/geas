@@ -2,7 +2,7 @@
 #include "collider.hpp"
 
 Collider::Collider(GeasObject &parent)
-  : Transform(parent)
+  : Transform(&parent)
 {
 }
 
