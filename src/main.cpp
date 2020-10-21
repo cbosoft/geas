@@ -14,9 +14,10 @@ void player_add(Game *game, Player *player, int delay)
 int main()
 {
     Game *game = Game::singleton();
+    Transform t;
 
     {
-        auto *player = new Player();
+        auto *player = new Player(&t);
         player->sprite->request_animation("idle");
         player->absolute_position(Vec3({0, 0, 0.0}));
         player->physics->set_gravity(0.0);
@@ -25,7 +26,7 @@ int main()
     }
 
     {
-        auto *player = new Player();
+        auto *player = new Player(&t);
         player->absolute_position(Vec3({0, 100, 0.0}));
         std::thread(player_add,game, player, 500).detach();
     }
