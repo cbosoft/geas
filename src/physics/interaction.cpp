@@ -1,4 +1,7 @@
 #include "../geas_object/geas_object.hpp"
+#include "../util/formatter.hpp"
+#include "../util/debug.hpp"
+
 #include "physics.hpp"
 
 Vec2 fixed_body_momentum_transfer(const Vec2 &incoming_momentum, const Vec2 &surface_normal_unit)
@@ -11,7 +14,7 @@ Vec2 fixed_body_momentum_transfer(const Vec2 &incoming_momentum, const Vec2 &sur
     (void) incoming_momentum;
     (void) surface_normal_unit;
 
-    return Vec2(0.0);
+    return Vec2({0.0, 100.0});
 }
 
 void Physics::interact_with(Physics *other)
@@ -32,8 +35,15 @@ void Physics::interact_with(Physics *other)
     // relative to other) times the timedelta is greater than the threshold. This is to prevent ghost reflections
     // wherein an object "rattles" on collision.
 
-    const float threshold  = 1e-2f;
+    const float threshold  = 1.0f;
     float dist = dr.magnitude();
+
+    // TODO: not only check if the objects are close, but also that their relative momentum would bring them closer
+    // i.e.
+    // Vec3 relative_momentum = other->momentum - this->momentum;
+    // bool will_collide = relative_momentum < 0 // in 1d, what about in 2d? I think there's a quadratic involved
+    // perhaps this could be used to inform the size of threshold?
+    // like thresh = relative_momentum * dt // again in 1D, TODO extrapolate to 2D
     if (dist < threshold) {
         // touching!
         // if both objects are free (non-fixed) then transfer momentum between the objects (rotation is ignored)
