@@ -48,7 +48,7 @@ Vec2 RectCollider::get_nearest(const Vec2 &p) const
   // TODO: get nearest point on the collider to the point p
   (void) p;
   
-  return this->get_centre();
+  return this->absolute_position();
 }
 
 
@@ -58,7 +58,7 @@ Vec2 RectCollider::get_nearest(const Vec2 &p) const
 std::pair<Vec2, Vec2> RectCollider::get_nearest(const Collider *other) const
 {
     // TODO
-    return std::make_pair(this->get_centre(), other->get_centre());
+    return std::make_pair(this->absolute_position(), other->absolute_position());
 }
 
 
