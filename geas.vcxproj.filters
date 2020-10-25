@@ -42,9 +42,6 @@
     <ClCompile Include="src\geas_object\physics_update.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\globject\rect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\globject\sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
