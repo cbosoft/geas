@@ -14,7 +14,11 @@ Vec2 fixed_body_momentum_transfer(const Vec2 &incoming_momentum, const Vec2 &sur
     (void) incoming_momentum;
     (void) surface_normal_unit;
 
-    return Vec2({0.0, 100.0});
+    const float bouncy = 0.1;
+
+    Vec2 resulting_momentum({incoming_momentum.x(), -incoming_momentum.y()*bouncy});
+
+    return resulting_momentum;
 }
 
 void Physics::interact_with(Physics *other)
