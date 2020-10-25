@@ -6,7 +6,7 @@ Physics::Physics(GeasObject &owner)
     , collider(nullptr)
 {
   this->set_mass(1.0);
-  this->set_gravity(1000.0);
+  this->set_gravity(10.0);
 }
 
 Physics::~Physics()
