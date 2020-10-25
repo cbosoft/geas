@@ -33,10 +33,13 @@ void Physics::update()
           continue;
 
       Vec2 accel({0.0f, -entity->gravity_scale * entity->_inv_mass});
-      Vec2 vel = entity->momentum*entity->_inv_mass + accel*dt;
+      entity->momentum += accel*dt;
+      Vec2 vel = entity->momentum*entity->_inv_mass;
 
       // Here "r" means position because physicists are weird (and p is momentum, and x would be misleading).
       Vec2 delta_r = vel * dt;
+
+      std::cerr << entity->momentum.y() << "," << entity->momentum.x() << std::endl;
 
       entity->owner.relative_position(entity->owner.relative_position() + delta_r.promote(0.0));
   }
