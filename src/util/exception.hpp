@@ -50,7 +50,9 @@ class Exception : public virtual std::exception {
       std::cerr << BOLD << BG_RED << this->type << RESET << ": " << this->detail;
       
       if (use_errno) {
-        std::cerr << "(" << errno << ": " << strerror(errno) << ")";
+          char errbuf[100] = { 0 };
+          strerror_s(errbuf, 100, errno);
+        std::cerr << "(" << errno << ": " << &(errbuf[0]) << ")";
       }
 
       if (this->cause_set) {
@@ -66,7 +68,9 @@ class Exception : public virtual std::exception {
       ss << BOLD << BG_RED << this->type << RESET << ": " << this->detail;
       
       if (use_errno) {
-        ss << "(" << errno << ": " << strerror(errno) << ")";
+          char errbuf[100] = { 0 };
+          strerror_s(errbuf, 100, errno);
+        ss << "(" << errno << ": " << &(errbuf[0]) << ")";
       }
 
       if (this->cause_set) {
@@ -74,8 +78,13 @@ class Exception : public virtual std::exception {
       }
 
       std::string s = ss.str();
-      const char *c = strdup(s.c_str());
-      return c;
+
+#ifdef WINDOWS
+      // Microsoft don't like the posix names; they want you to add an underscore? :(
+      return _strdup(s.c_str());
+#else
+      return strdup(s.c_str());
+#endif
     }
 };
 
