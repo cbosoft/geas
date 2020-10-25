@@ -81,7 +81,8 @@ Vec2 RectCollider::get_surface_normal(const Vec2 &at) const
     for (;next_corner != corners.end();corner++, next_corner++, normal++) {
 
         if (at.coincident(*corner, *next_corner)) {
-            std::cerr << at.to_string() << " " << corner->to_string() << " " << next_corner->to_string() << std::endl;
+            // TODO remove this line
+            //std::cerr << at.to_string() << " " << corner->to_string() << " " << next_corner->to_string() << std::endl;
             return *normal;
         }
 
