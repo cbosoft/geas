@@ -3,9 +3,12 @@
 #include <thread>
 #include <list>
 #include <vector>
+#include <mutex>
 
 #include "../geas_object/geas_object.hpp"
 #include "../renderer/renderer.hpp"
+#include "../util/tsq.hpp"
+#include "input.hpp"
 
 class GLObject;
 class Game {
@@ -16,6 +19,7 @@ class Game {
 
     void play();
     //void push_object(GeasObject *object);
+    void push_input(PlayerInput *input);
 
     bool is_alive() const;
     void is_alive(bool v);
@@ -35,7 +39,7 @@ class Game {
 
     void graphics_thread_worker();
     void physics_thread_worker();
-
+    void input_thread_worker();
 
     Renderer *renderer;
     float time, time_delta, time_scale;
@@ -45,5 +49,8 @@ class Game {
     std::vector<Scene *> scenes;
     Scene *_active_scene;
     bool _is_alive;
+    ThreadedQueue<PlayerInput *> input_queue;
+    typedef std::lock_guard<std::mutex> lock_guard;
+    mutable std::mutex mutex;
 
 };

@@ -12,8 +12,8 @@ static void opengl_input_callback(GLFWwindow *window, int key, int scancode, int
 {
     (void) window; // not necessary: only one window used.
     static Game *game = Game::singleton();
-    // TODO queue input for processing by input thread
-    game->process_input(key, scancode, action, mods);
+    PlayerInput *input = new PlayerInput({key, scancode, action, mods});
+    game->push_input(input);
 }
 
 

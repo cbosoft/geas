@@ -21,3 +21,16 @@ void Game::process_input(int key, int scancode, int action, int mods)
 
   }
 }
+
+void Game::input_thread_worker()
+{
+    while(this->is_alive()) {
+        PlayerInput *input = this->input_queue.pop();
+
+        if (input) {
+            this->process_input(input->keycode, input->scancode, input->action, input->mods);
+            delete input;
+        }
+
+    }
+}

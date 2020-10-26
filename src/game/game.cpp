@@ -28,6 +28,7 @@ void Game::play()
 {
     this->_is_alive = true;
     //this->threads.emplace_back(&Game::physics_thread_worker, this);
+    this->threads.emplace_back(&Game::input_thread_worker, this);
 
     this->graphics_thread_worker();
 
@@ -57,22 +58,28 @@ void Game::graphics_thread_worker()
 
 bool Game::is_alive() const
 {
-  // TODO: mutex and lock guard
-  return this->_is_alive;
+    lock_guard(this->mutex);
+    return this->_is_alive;
 }
 
 void Game::is_alive(bool v)
 {
-  // TODO: mutex and lock guard
-  this->_is_alive = v;
+    lock_guard(this->mutex);
+    this->_is_alive = v;
 }
 
 float Game::get_time_delta() const
 {
-  return this->time_delta;
+    return this->time_delta;
 }
 
 float Game::get_time() const
 {
-  return this->time;
+    return this->time;
+}
+
+
+void Game::push_input(PlayerInput *input)
+{
+    this->input_queue.push(input);
 }
