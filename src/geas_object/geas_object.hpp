@@ -4,6 +4,7 @@
 #include "../transform/transform.hpp"
 #include "../physics/physics.hpp"
 
+// TODO: rename to simply "Object"
 class GeasObject : public Transform {
 
   public:
