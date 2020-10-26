@@ -124,6 +124,7 @@ EXCEPTION_ERRNO(IOError, "IOError");
 EXCEPTION(SizeMismatch, "SizeMismatch");
 EXCEPTION(PositionError, "PositionError");
 EXCEPTION(NotFound, "NotFound");
+EXCEPTION(UnexpectedNullPointer, "UnexpectedNullPointer");
 
 
 
