@@ -5,7 +5,17 @@
 
 #include "../../util/exception.hpp"
 #include "../../util/debug.hpp"
+#include "../../game/game.hpp"
 #include "opengl_renderer.hpp"
+
+static void opengl_input_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
+{
+    (void) window; // not necessary: only one window used.
+    static Game *game = Game::singleton();
+    // TODO queue input for processing by input thread
+    game->process_input(key, scancode, action, mods);
+}
+
 
 #ifdef DEBUG
 
@@ -135,4 +145,7 @@ void OpenGLRenderer::init()
         std::cerr << "WARNING! unable to start OpenGL debug messaging: OpenGL version may be too old." <<std::endl;
     }
 #endif
+
+
+    glfwSetKeyCallback(this->glfw_window, opengl_input_callback);
 }

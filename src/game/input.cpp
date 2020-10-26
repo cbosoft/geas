@@ -3,12 +3,6 @@
 
 #include "game.hpp"
 
-void Game::input_callback_wrapper(GLFWwindow *window, int key, int scancode, int action, int mods)
-{
-  (void) window;
-  Game::singleton()->process_input(key, scancode, action, mods);
-}
-
 void Game::process_input(int key, int scancode, int action, int mods)
 {
   (void) scancode;
@@ -18,8 +12,9 @@ void Game::process_input(int key, int scancode, int action, int mods)
   switch (key) {
 
     case GLFW_KEY_ESCAPE:
-      this->win.quit();
-      break;
+        // TODO: quit
+        this->is_alive(false);
+        break;
 
     default:
       break;

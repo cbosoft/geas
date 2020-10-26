@@ -26,6 +26,7 @@ class Game {
     [[nodiscard]] Scene *active_scene() const;
     void active_scene(Scene *scene);
     void active_scene(unsigned int i);
+    void process_input(int key, int scancode, int action, int mods);
 
   private:
     Game();
@@ -34,7 +35,6 @@ class Game {
 
     void graphics_thread_worker();
     void physics_thread_worker();
-    void process_input(int key, int scancode, int action, int mods);
 
 
     Renderer *renderer;
