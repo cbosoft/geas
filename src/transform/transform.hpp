@@ -6,15 +6,15 @@ class Transform {
 
   public:
     Transform();
-    Transform(Transform *parent);
-    ~Transform();
+    explicit Transform(Transform *parent);
+    virtual ~Transform();
 
     // Getters
-    Vec3 absolute_position() const;
-    Vec3 relative_position() const;
-    Vec2 scale() const;
-    Vec2 local_scale() const;
-    Transform *parent() const;
+    [[nodiscard]] Vec3 absolute_position() const;
+    [[nodiscard]] Vec3 relative_position() const;
+    [[nodiscard]] Vec2 scale() const;
+    [[nodiscard]] Vec2 local_scale() const;
+    [[nodiscard]] Transform *parent() const;
 
     // Setters
     void absolute_position(const Vec3& abs);
