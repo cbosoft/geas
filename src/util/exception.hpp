@@ -51,7 +51,11 @@ class Exception : public virtual std::exception {
       
       if (use_errno) {
           char errbuf[100] = { 0 };
+#ifdef WINDOWS
           strerror_s(errbuf, 100, errno);
+#else
+          strerror_r(errno, errbuf, 100);
+#endif
         std::cerr << "(" << errno << ": " << &(errbuf[0]) << ")";
       }
 
@@ -69,7 +73,11 @@ class Exception : public virtual std::exception {
       
       if (use_errno) {
           char errbuf[100] = { 0 };
+#ifdef WINDOWS
           strerror_s(errbuf, 100, errno);
+#else
+          strerror_r(errno, errbuf, 100);
+#endif
         ss << "(" << errno << ": " << &(errbuf[0]) << ")";
       }
 
