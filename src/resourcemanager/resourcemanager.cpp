@@ -6,7 +6,10 @@
 
 ResourceManager::ResourceManager()
 {
-  // do nothing?
+    // initialise: open necessary files
+    get_shader("shaders/block_colour_frag.glsl");
+    get_shader("shaders/textured_frag.glsl");
+    get_shader("shaders/simple_vert.glsl");
 }
 
 ResourceManager::~ResourceManager()
