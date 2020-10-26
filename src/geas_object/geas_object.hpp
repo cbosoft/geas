@@ -14,6 +14,7 @@ class GeasObject : public Transform {
     virtual ~GeasObject();
 
     [[nodiscard]] Renderable *renderable() const override;
+    void renderable(Renderable *);
 
     virtual void update() =0;
     void physics_update();

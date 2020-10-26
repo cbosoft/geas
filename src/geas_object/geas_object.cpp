@@ -37,3 +37,8 @@ Renderable *GeasObject::renderable() const
 {
     return this->_renderable;
 }
+
+void GeasObject::renderable(Renderable *renderable)
+{
+    this->_renderable = renderable;
+}
