@@ -5,30 +5,35 @@
 #include "game.hpp"
 
 Game::Game()
-  :
-    win("GEAS", false),
-    time(0.0), time_delta(0.0), time_scale(1.0),
-    time_irl(0.0), time_delta_irl(0.0)
+  :   time(0.0)
+    , time_delta(0.0)
+    , time_scale(1.0)
+    , time_irl(0.0)
+    , time_delta_irl(0.0)
+    , _active_scene(nullptr)
+    , _is_alive(true)
 {
-  this->win.register_input_callback(Game::input_callback_wrapper);
+    this->renderer = Renderer::get(this);
+    // TODO: register input callback with renderer
+    //this->win.register_input_callback(Game::input_callback_wrapper);
 }
 
 Game::~Game()
 {
   // do nothing
+  // TODO delete scenes
 }
 
 void Game::play()
 {
-  this->_is_alive = true;
+    this->_is_alive = true;
+    //this->threads.emplace_back(&Game::physics_thread_worker, this);
 
-  // // start physics thread(s)
-  // // TODO
+    this->graphics_thread_worker();
 
-  this->graphics_thread_worker();
-  for (auto &thread: this->threads) {
-    thread.join();
-  }
+    for (auto &thread: this->threads) {
+        thread.join();
+    }
 }
 
 //   auto t0 = std::chrono::high_resolution_clock::now();
@@ -42,47 +47,13 @@ void Game::play()
 void Game::graphics_thread_worker()
 {
   std::cerr << "start gfx thread " << std::endl;
-
-  
-  auto t0 = std::chrono::high_resolution_clock::now();
-  while (this->is_alive()) {
-    win.prepaint();
-
-    // TODO move to physics thread
-    auto t1 = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<float> fs = t1 - t0;
-    t0 = t1;
-    this->time_delta_irl = fs.count();
-    this->time_irl += this->time_delta_irl;
-
-    this->time_delta = this->time_delta_irl * this->time_scale;
-    this->time += this->time_delta;
-    Physics::update();
-
-    std::list<GeasObject *> surviving;
-    for ( auto obj : this->objects ) {
-      obj->draw();
-      if (obj->is_marked_for_destruction()) {
-        delete obj;
-      }
-      else {
-        surviving.push_back(obj);
-      }
-    }
-    this->objects = surviving;
-
-    win.postpaint();
-
-    if (win.is_closed()) {
-      this->is_alive(false);
-    }
-  }
+  this->renderer->run();
 }
 
-void Game::push_object(GeasObject *object)
-{
-  this->objects.push_back(object);
-}
+// void Game::push_object(GeasObject *object)
+// {
+//   this->objects.push_back(object);
+// }
 
 bool Game::is_alive() const
 {
