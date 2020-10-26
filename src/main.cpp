@@ -33,6 +33,9 @@ int main()
 
     Scene *scene = new Scene();
 
+    auto *player = new Player(scene->root);
+    player->absolute_position(Vec3({0, 100, 0}));
+
     game->active_scene(scene);
     game->play();
 
