@@ -27,8 +27,8 @@ class Window {
     void prepaint();
     void postpaint();
 
-    unsigned int get_w() const;
-    unsigned int get_h() const;
+    [[nodiscard]] unsigned int get_w() const;
+    [[nodiscard]] unsigned int get_h() const;
 
   private:
 
