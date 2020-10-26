@@ -1,7 +1,6 @@
 #include <thread>
 #include <iostream>
 
-#include "../globject/globject.hpp"
 #include "game.hpp"
 
 Game::Game()
