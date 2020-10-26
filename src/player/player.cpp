@@ -6,6 +6,8 @@ Player::Player(Transform *parent)
   //this->sprite = new Sprite(this, "textures/sprite_sheet.png");
   //this->sprite->request_animation("run");
 
+  this->renderable(new Renderable(this));
+
 
   this->physics = Physics::create(*this);
   this->physics->set_collider(new RectCollider(*this,
