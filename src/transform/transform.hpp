@@ -1,5 +1,7 @@
 #pragma once
 
+#include <list>
+
 #include "../vector/vector.hpp"
 
 class Transform {
@@ -33,8 +35,11 @@ class Transform {
         return *this;
     }
 
+    [[nodiscard]] const std::list<Transform*>& children() const;
+
   private:
     Vec3 _relative_position;
     Vec2 _local_scale;
     Transform *_parent;
+    std::list<Transform *> _children;
 };

@@ -15,6 +15,7 @@ Transform::Transform(Transform *parent)
     , _parent(parent)
 {
   // do nothing
+  parent->_children.push_back(this);
 }
 
 Transform::~Transform()
@@ -91,4 +92,9 @@ void Transform::local_scale(const Vec2& local_scale)
 void Transform::parent(Transform *parent)
 {
   this->_parent = parent;
+}
+
+const std::list<Transform *>& Transform::children() const
+{
+    return this->_children;
 }
