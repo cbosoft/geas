@@ -1,15 +1,20 @@
 #pragma once
 
-#include "../geas_object/geas_object.hpp"
+#include <list>
 
-class Renderable final {
+#include "../transform/transform.hpp"
+
+class GeasObject;
+class Renderable final : public Transform {
 public:
-    Renderable(GeasObject &parent);
+    Renderable(GeasObject *parent);
     ~Renderable() =default;
 
-private:
-    GeasObject &parent;
-    // location?
-    // points?
-    // texture?
+    std::list<Vec2> points;
+
+    bool has_texture;
+    std::string texture_path;
+
+    bool has_colour;
+    Vec4 colour;
 };
