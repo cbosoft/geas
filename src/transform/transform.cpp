@@ -98,3 +98,8 @@ const std::list<Transform *>& Transform::children() const
 {
     return this->_children;
 }
+
+Renderable *Transform::renderable() const
+{
+    return nullptr;
+}

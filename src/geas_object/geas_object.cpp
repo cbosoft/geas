@@ -2,7 +2,7 @@
 
 GeasObject::GeasObject()
   : Transform()
-    , sprite(nullptr)
+    , _renderable(nullptr)
     , _marked_for_destruction(false)
 {
     // do nothing
@@ -10,7 +10,7 @@ GeasObject::GeasObject()
 
 GeasObject::GeasObject(Transform *parent)
   : Transform(parent)
-  , sprite(nullptr)
+  , _renderable(nullptr)
   , _marked_for_destruction(false)
 {
     // do nothing
@@ -18,14 +18,8 @@ GeasObject::GeasObject(Transform *parent)
 
 GeasObject::~GeasObject()
 {
-
-  if (sprite != nullptr) {
-    delete this->sprite;
-  }
-
-  if (physics != nullptr) {
-    delete this->physics;
-  }
+  delete this->_renderable;
+  delete this->physics;
 }
 
 bool GeasObject::is_marked_for_destruction() const
@@ -36,4 +30,10 @@ bool GeasObject::is_marked_for_destruction() const
 void GeasObject::destroy()
 {
   this->_marked_for_destruction = true;
+}
+
+
+Renderable *GeasObject::renderable() const
+{
+    return this->_renderable;
 }

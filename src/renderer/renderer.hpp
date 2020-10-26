@@ -2,6 +2,7 @@
 
 #include "../transform/transform.hpp"
 #include "../scene/scene.hpp"
+#include "../renderable/renderable.hpp"
 
 class Game;
 class Renderer {
@@ -16,6 +17,7 @@ public:
 private:
     virtual void draw(Scene *scene) =0;
     virtual void draw(Transform *transform) =0;
+    virtual void draw(Renderable *renderable) =0;
 
     Game *game;
 

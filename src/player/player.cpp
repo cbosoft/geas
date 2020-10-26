@@ -3,8 +3,8 @@
 Player::Player(Transform *parent)
     : GeasObject(parent)
 {
-  this->sprite = new Sprite(this, "textures/sprite_sheet.png");
-  this->sprite->request_animation("run");
+  //this->sprite = new Sprite(this, "textures/sprite_sheet.png");
+  //this->sprite->request_animation("run");
 
 
   this->physics = Physics::create(*this);

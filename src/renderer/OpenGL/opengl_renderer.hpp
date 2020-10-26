@@ -16,6 +16,7 @@ public:
 private:
     void draw(Scene *scene) override;
     void draw(Transform *transform) override;
+    void draw(Renderable *renderable) override;
     bool initialised;
 
     GLFWwindow *glfw_window;

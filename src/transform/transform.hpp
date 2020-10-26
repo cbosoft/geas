@@ -4,6 +4,7 @@
 
 #include "../vector/vector.hpp"
 
+class Renderable;
 class Transform {
 
   public:
@@ -17,6 +18,7 @@ class Transform {
     [[nodiscard]] Vec2 scale() const;
     [[nodiscard]] Vec2 local_scale() const;
     [[nodiscard]] Transform *parent() const;
+    [[nodiscard]] virtual Renderable *renderable() const;
 
     // Setters
     void absolute_position(const Vec3& abs);
