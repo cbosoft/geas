@@ -5,8 +5,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "../util/exception.hpp"
-#include "../resourcemanager/resourcemanager.hpp"
+#include "../../../util/exception.hpp"
+#include "../../../resourcemanager/resourcemanager.hpp"
 #include "shader.hpp"
 
 Shader::Shader()
@@ -37,8 +37,8 @@ Shader Shader::from_file(std::string filename)
   unsigned int type = GL_VERTEX_SHADER;
   bool assigned = false;
   static std::map<unsigned int, std::regex> type_and_re = {
-    {GL_VERTEX_SHADER, std::regex(".*_vert\\.glsl")},
-    {GL_FRAGMENT_SHADER, std::regex(".*_frag\\.glsl")}
+    std::make_pair(GL_VERTEX_SHADER, std::regex(".*_vert\\.glsl")),
+    std::make_pair(GL_FRAGMENT_SHADER, std::regex(".*_frag\\.glsl"))
   };
 
   for (auto kv: type_and_re) {
@@ -53,7 +53,6 @@ Shader Shader::from_file(std::string filename)
   }
 
   if (!assigned) {
-    // could not determine shader type from filename!
     throw ShaderError(Formatter() << "Could not determine shader type from file name \"" << filename << "\".");
   }
 

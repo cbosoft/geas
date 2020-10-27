@@ -2,7 +2,6 @@
 #include <string>
 #include <map>
 
-#include "../shader/shader.hpp"
 #include "../util/json.hpp"
 
 class ResourceManager {
@@ -15,13 +14,11 @@ class ResourceManager {
     }
     ~ResourceManager();
 
-    std::string read_text_file(std::string file_name);
-    Shader &get_shader(std::string filename);
-    json get_metadata(std::string filename);
+    [[nodiscard]] std::string read_text_file(const std::string &file_name) const;
+    [[nodiscard]] std::string get_abs_path(const std::string &relative_path) const;
+    [[nodiscard]] json get_metadata(const std::string &filename) const;
 
   private:
     ResourceManager();
-    std::string get_metadataname(std::string filename);
-
-    std::map<std::string, Shader> shader_cache;
+    std::string get_metadataname(const std::string &filename) const;
 };

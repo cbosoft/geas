@@ -1,7 +1,5 @@
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
 
-#include "../resourcemanager/resourcemanager.hpp"
 #include "shader.hpp"
 
 ShaderProgram::ShaderProgram()
@@ -47,9 +45,8 @@ void ShaderProgram::use()
 ShaderProgram *ShaderProgram::from_file(std::string vert_source_path, std::string frag_source_path)
 {
   ShaderProgram *rv = new ShaderProgram;
-  ResourceManager &rm = ResourceManager::singleton();
-  rv->add_shader(rm.get_shader(vert_source_path));
-  rv->add_shader(rm.get_shader(frag_source_path));
+  rv->add_shader(Shader::from_file(vert_source_path));
+  rv->add_shader(Shader::from_file(frag_source_path));
   rv->link();
   return rv;
 }
