@@ -2,14 +2,14 @@
 #include <fstream>
 #include "resourcemanager.hpp"
 
-std::string ResourceManager::get_metadataname(std::string filename)
+std::string ResourceManager::get_metadataname(const std::string &filename) const
 {
   std::stringstream ss;
-  ss << filename << ".json";
+  ss << this->get_abs_path(filename) << ".json";
   return ss.str();
 }
 
-json ResourceManager::get_metadata(std::string filename)
+json ResourceManager::get_metadata(const std::string &filename) const
 {
   std::string metadataname = this->get_metadataname(filename);
   std::ifstream ifs(metadataname);
