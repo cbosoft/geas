@@ -2,7 +2,7 @@
 #include <GLFW/glfw3.h>
 
 #include "glerror.hpp"
-#include "exception.hpp"
+#include "../../util/exception.hpp"
 
 std::string glstrerror(unsigned int e)
 {
