@@ -85,7 +85,7 @@ void OpenGLRenderer::draw(Renderable *renderable) {
     renderData->buffer.use();
     renderData->element.use();
 
-    glDrawElements(GL_TRIANGLES, renderData->element.size(), GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, renderData->element.size(), GL_UNSIGNED_INT, nullptr);
     gl_error_check("OpenGLRenderer::draw(Renderable *) -> post draw");
 
 }
