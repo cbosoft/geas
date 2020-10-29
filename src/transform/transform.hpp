@@ -1,6 +1,7 @@
 #pragma once
 
 #include <list>
+#include <mutex>
 
 #include "../vector/vector.hpp"
 
@@ -40,8 +41,12 @@ class Transform {
     [[nodiscard]] const std::list<Transform*>& children() const;
 
   private:
+
+    void add_child(Transform *child);
+
     Vec3 _relative_position;
     Vec2 _local_scale;
     Transform *_parent;
     std::list<Transform *> _children;
+    mutable std::mutex _mutex;
 };
