@@ -47,9 +47,9 @@ void OpenGLRenderer::draw(Renderable *renderable) {
     Vec3 pos = renderable->absolute_position();
     Vec4 colour = renderable->colour;
 
-    //static ShaderProgram *shaderProgram = ShaderProgram::from_file("shaders/simple_vert.glsl", "shaders/block_colour_frag.glsl");
-    //shaderProgram->use();
-    //gl_error_check("OpenGLRenderer::draw(Renderable *) -> after shader compile");
+    static ShaderProgram *shaderProgram = ShaderProgram::from_file("shaders/simple_vert.glsl", "shaders/block_colour_frag.glsl");
+    shaderProgram->use();
+    gl_error_check("OpenGLRenderer::draw(Renderable *) -> after shader compile");
 
     // create vertex buffer
     static BufferArray buff;
