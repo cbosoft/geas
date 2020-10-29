@@ -4,40 +4,32 @@
 #include "game/game.hpp"
 #include "player/player.hpp"
 
-// void player_add(Game *game, Player *player, int delay)
-// {
-//     std::this_thread::sleep_for(std::chrono::milliseconds(delay));
-//     std::cerr << "adding player" << std::endl;
-//     game->push_object(player);
-// }
+void player_add(Scene *scene, int delay)
+{
+    std::this_thread::sleep_for(std::chrono::milliseconds(delay));
+    std::cerr << "dropping player" << std::endl;
+    auto *player = new Player(scene->root);
+    player->absolute_position(Vec3({0, 1, 0.0}));
+}
 
 int main()
 {
     Game *game = Game::singleton();
-    // Transform t;
-
-    // {
-    //     auto *player = new Player(&t);
-    //     player->sprite->request_animation("idle");
-    //     player->absolute_position(Vec3({0, 0, 0.0}));
-    //     player->physics->set_gravity(0.0);
-    //     player->physics->set_fixed();
-    //     game->push_object(player);
-    // }
-
-    // {
-    //     auto *player = new Player(&t);
-    //     player->absolute_position(Vec3({0, 100, 0.0}));
-    //     std::thread(player_add,game, player, 500).detach();
-    // }
-
-    Scene *scene = new Scene();
-
-    auto *player = new Player(scene->root);
-    player->absolute_position(Vec3({0, 100, 0}));
-
+    auto *scene = new Scene();
     game->active_scene(scene);
+
+    {
+        auto *player = new Player(scene->root);
+        //player->sprite->request_animation("idle");
+        player->absolute_position(Vec3({0, -0.5f, 0.0}));
+        player->physics->set_gravity(0.0);
+        player->physics->set_fixed();
+    }
+
+    {
+        std::thread(player_add, scene, 500).detach();
+    }
+
     game->play();
 
-    //std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 }
