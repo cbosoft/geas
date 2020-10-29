@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include <mutex>
 
 #include "../../../vector/vector.hpp"
 #include "../vertex/vertex.hpp"
@@ -33,8 +32,6 @@ public:
 private:
     void sync();
 
-    typedef std::lock_guard<std::mutex> lock_guard;
-    std::mutex mutex;
     std::vector<GLVertex> _vertices;
     bool _invalid;
     AttribArray *attribArray;
