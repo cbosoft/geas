@@ -1,14 +1,17 @@
 #include <GL/glew.h>
 
 #include "../../../util/exception.hpp"
+#include "../../../util/debug.hpp"
 
 #include "shader.hpp"
 #include "shader_program.hpp"
 
 ShaderProgram::ShaderProgram()
 {
-  this->prog_id = glCreateProgram();
-  this->linked = false;
+    this->prog_id = glCreateProgram();
+    debug_msg(Formatter() << "Created new gl shader program " << this->prog_id);
+    GL_ERROR_CHECK_DBG("ShaderProgram::link() -> before link");
+    this->linked = false;
 }
 
 ShaderProgram::~ShaderProgram()
@@ -34,13 +37,38 @@ void ShaderProgram::add_shader(const Shader& shader)
 unsigned int ShaderProgram::link()
 {
     if (!this->linked) {
+
+        debug_msg(Formatter() << "program " << this->prog_id << " linking");
         GL_ERROR_CHECK_DBG("ShaderProgram::link() -> before link");
-        glLinkProgram(prog_id);
+        glLinkProgram(this->prog_id);
         GL_ERROR_CHECK_DBG("ShaderProgram::link() -> after link, before validate");
-        glValidateProgram(prog_id);
+        glValidateProgram(this->prog_id);
         GL_ERROR_CHECK_DBG("ShaderProgram::link() -> after validate");
-        // TODO delete/detach shaders?
+
+        int is_linked = 0;
+        glGetProgramiv(this->prog_id, GL_LINK_STATUS, &is_linked);
+        if (is_linked != GL_TRUE)
+        {
+            // On link error, try to find out what went wrong.
+            int max_length = 100;
+            glGetProgramiv(this->prog_id, GL_INFO_LOG_LENGTH, &max_length);
+
+            char *info = (char *)alloca(max_length*sizeof(char));
+            
+            glGetProgramInfoLog(this->prog_id, max_length, &max_length, info);
+
+            if (max_length == 0) {
+                throw ShaderError(Formatter() << "Shader linking error. No extra information on this was provided by OpenGL. Helpful. ");
+            }
+            else {
+                throw ShaderError(Formatter() << "Shader linking error: '" << info << "' ");
+            }
+        }
+
+
         this->linked = true;
+        debug_msg(Formatter() << "shader program " << this->prog_id << " linked");
+
         for (auto shader : this->attached_shaders) {
           glDetachShader(this->prog_id, shader);
         }
