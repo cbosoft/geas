@@ -19,6 +19,8 @@ public:
     void set(int i, const Vec4 &colour);
     void set(int i, const Vec2 &texture);
 
+    void set_monochrome_rect_centred(const Vec3 &centre, const Vec2 &size, const Vec4 &colour);
+
     void add(const GLVertex &vertex);
     void add(const Vec3 &position, const Vec4 &colour, const Vec2 &texture);
     void add(const Vec3 &position, const Vec2 &texture);
