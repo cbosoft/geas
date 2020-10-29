@@ -6,7 +6,7 @@
 
 #include "colour.hpp"
 #include "formatter.hpp"
-#include "glerror.hpp"
+#include "../renderer/OpenGL/glerror.hpp"
 
 
 
