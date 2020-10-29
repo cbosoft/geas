@@ -39,8 +39,6 @@ void Physics::update()
       // Here "r" means position because physicists are weird (and p is momentum, and x would be misleading).
       Vec2 delta_r = vel * dt;
 
-      std::cerr << entity->momentum.y() << "," << entity->momentum.x() << std::endl;
-
       entity->owner.relative_position(entity->owner.relative_position() + delta_r.promote(0.0));
   }
 }

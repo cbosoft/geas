@@ -46,7 +46,6 @@ void OpenGLRenderer::draw(Renderable *renderable) {
 
     Vec3 pos = renderable->absolute_position();
     Vec4 colour = renderable->colour;
-    debug_msg(pos.to_string());
 
 
 
