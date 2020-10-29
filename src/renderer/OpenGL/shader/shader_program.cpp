@@ -106,6 +106,9 @@ void ShaderProgram::set_uniform(const std::string &name, float value) const
 
 void ShaderProgram::set_uniform(const char *name, float value) const
 {
+    // ensure this program is bound
+    glUseProgram(this->prog_id);
+
     int loc = glGetUniformLocation(this->prog_id, name);
     if (loc == -1) {
         throw NotFound(Formatter() << "location " << name << " not known in shader program.");
