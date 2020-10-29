@@ -1,8 +1,24 @@
 #pragma once
 
+#include <list>
+#include <map>
+
 #include <GLFW/glfw3.h>
 
+#include "attrib_array/attrib_array.hpp"
+#include "buffer_array/buffer_array.hpp"
+#include "element_array/element_array.hpp"
+#include "shader/shader_program.hpp"
 #include "../renderer.hpp"
+
+class OpenGLRenderData {
+public:
+    OpenGLRenderData() =default;
+
+    BufferArray buffer;
+    ElementArray element;
+    ShaderProgram *shaderProgram;
+};
 
 class OpenGLRenderer final : public Renderer{
 public:
@@ -20,4 +36,5 @@ private:
     bool initialised;
 
     GLFWwindow *glfw_window;
+    std::map<Renderable *, OpenGLRenderData *> render_info_cache;
 };

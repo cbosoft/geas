@@ -46,36 +46,45 @@ void OpenGLRenderer::draw(Renderable *renderable) {
 
     Vec3 pos = renderable->absolute_position();
     Vec4 colour = renderable->colour;
+    debug_msg(pos.to_string());
 
-    static ShaderProgram *shaderProgram = ShaderProgram::from_file("shaders/simple_vert.glsl", "shaders/block_colour_frag.glsl");
-    shaderProgram->use();
-    gl_error_check("OpenGLRenderer::draw(Renderable *) -> after shader compile");
 
-    // create vertex buffer
-    static BufferArray buff;
-    if (buff.size() == 0) {
-        buff.add({1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0});
-        buff.add({1.0, -1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0});
-        buff.add({-1.0, -1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0});
-        buff.add({-1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0});
+
+
+    auto it = this->render_info_cache.find(renderable);
+    OpenGLRenderData *renderData = nullptr;
+    if (it == this->render_info_cache.end()) {
+        this->render_info_cache[renderable] = new OpenGLRenderData();
+
+        // renderable not in cache: init new renderdata
+        renderData = this->render_info_cache[renderable];
+        renderData->shaderProgram = ShaderProgram::from_file("shaders/simple_vert.glsl", "shaders/block_colour_frag.glsl");
+
+        // vertex buffer
+        renderData->buffer.add({1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0});
+        renderData->buffer.add({1.0, -1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0});
+        renderData->buffer.add({-1.0, -1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0});
+        renderData->buffer.add({-1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0});
+
+        // elements
+        renderData->element.add(0);
+        renderData->element.add(1);
+        renderData->element.add(3);
+        renderData->element.add(1);
+        renderData->element.add(2);
+        renderData->element.add(3);
+
     }
-    buff.use();
-
-    // create vertex attrib array
-    static AttribArray attrib;
-    attrib.use();
-
-    static ElementArray elements;
-    if (elements.size() == 0) {
-        elements.add(0);
-        elements.add(1);
-        elements.add(3);
-        elements.add(1);
-        elements.add(2);
-        elements.add(3);
+    else {
+        // renderable in cache: update with new position/colour?
+        renderData = it->second;
     }
-    elements.use();
 
-    glDrawElements(GL_TRIANGLES, elements.size(), GL_UNSIGNED_INT, 0);
+    renderData->shaderProgram->use();
+    renderData->buffer.use();
+    renderData->element.use();
+
+    glDrawElements(GL_TRIANGLES, renderData->element.size(), GL_UNSIGNED_INT, 0);
     gl_error_check("OpenGLRenderer::draw(Renderable *) -> post draw");
 
+}
