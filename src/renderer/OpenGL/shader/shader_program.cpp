@@ -3,6 +3,7 @@
 #include "../../../util/exception.hpp"
 
 #include "shader.hpp"
+#include "shader_program.hpp"
 
 ShaderProgram::ShaderProgram()
 {

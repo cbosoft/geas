@@ -1,7 +1,7 @@
 #include "../../util/exception.hpp"
 #include "../../util/debug.hpp"
 
-#include "shader/shader.hpp"
+#include "shader/shader_program.hpp"
 #include "buffer_array/buffer_array.hpp"
 #include "attrib_array/attrib_array.hpp"
 #include "element_array/element_array.hpp"
