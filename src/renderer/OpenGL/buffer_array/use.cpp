@@ -5,7 +5,7 @@
 
 void BufferArray::use()
 {
-    if (this->invalid())
+    if (this->_invalid)
         this->sync();
 
     glBindBuffer(GL_ARRAY_BUFFER, this->_id);
