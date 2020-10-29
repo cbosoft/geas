@@ -16,7 +16,10 @@ Vec2 fixed_body_momentum_transfer(const Vec2 &incoming_momentum, const Vec2 &sur
 
     const float bouncy = 0.1;
 
-    Vec2 resulting_momentum({incoming_momentum.x(), -incoming_momentum.y()*bouncy});
+    float mag = incoming_momentum.magnitude();
+    Vec2 resulting_momentum = mag*bouncy*surface_normal_unit;
+
+    debug_msg(surface_normal_unit.to_string());
 
     return resulting_momentum;
 }
