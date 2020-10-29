@@ -11,7 +11,6 @@
 void OpenGLRenderer::draw(Scene *scene)
 {
 
-    glClear(GL_COLOR_BUFFER_BIT);
     if (scene == nullptr)
         throw UnexpectedNullPointer("Asked to render a scene which was unexpectedly null.");
 
@@ -21,11 +20,6 @@ void OpenGLRenderer::draw(Scene *scene)
     // draw its objects
     this->draw(scene->root);
 
-    // swap buffers
-    glfwSwapBuffers(this->glfw_window);
-
-    // poll for events
-    glfwPollEvents();
 }
 
 void OpenGLRenderer::draw(Transform *transform)
