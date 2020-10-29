@@ -1,4 +1,6 @@
 #include <iostream>
+#include <thread>
+#include <chrono>
 
 #include "../geas_object/geas_object.hpp"
 #include "../game/game.hpp"
@@ -41,4 +43,6 @@ void Physics::update()
 
       entity->owner.relative_position(entity->owner.relative_position() + delta_r.promote(0.0));
   }
+
+  std::this_thread::sleep_for(std::chrono::microseconds(100));
 }
