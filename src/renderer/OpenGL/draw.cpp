@@ -79,5 +79,3 @@ void OpenGLRenderer::draw(Renderable *renderable) {
     glDrawElements(GL_TRIANGLES, elements.size(), GL_UNSIGNED_INT, 0);
     gl_error_check("OpenGLRenderer::draw(Renderable *) -> post draw");
 
-    debug_msg(Formatter() << "warning: unimplemented function OpenGLRenderer::draw() of renderable at " << pos.to_string());
-}
