@@ -97,3 +97,19 @@ ShaderProgram *ShaderProgram::from_file(std::string vert_source_path, std::strin
     rv->link();
     return rv;
 }
+
+void ShaderProgram::set_uniform(const std::string &name, float value) const
+{
+    const char *ucstr = name.c_str();
+    this->set_uniform(ucstr, value);
+}
+
+void ShaderProgram::set_uniform(const char *name, float value) const
+{
+    int loc = glGetUniformLocation(this->prog_id, name);
+    if (loc == -1) {
+        throw NotFound(Formatter() << "location " << name << " not known in shader program.");
+    }
+
+    glUniform1f(loc, value);
+}
