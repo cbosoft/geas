@@ -31,9 +31,9 @@ void Physics::interact_with(Physics *other)
         return;
 
     // Get distance between other collider's surface and this surface
-    std::pair<Vec2, Vec2> surface_positions = other->collider->get_nearest(this->collider);
-    Vec2 other_surface_pos = surface_positions.first;
-    Vec2 this_surface_pos = surface_positions.second;
+    std::pair<Vec2, Vec2> surface_positions = this->collider->get_nearest(other->collider);
+    Vec2 this_surface_pos = surface_positions.first;
+    Vec2 other_surface_pos = surface_positions.second;
     Vec2 dr = this_surface_pos - other_surface_pos;
 
     // # Is touching?
