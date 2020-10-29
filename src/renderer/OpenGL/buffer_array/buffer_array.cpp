@@ -5,9 +5,13 @@
 
 BufferArray::BufferArray()
     : _invalid(true)
+    , attribArray(nullptr)
 {
     glGenBuffers(1, &this->_id);
     gl_error_check("BufferArray::ctor()");
+
+    glBindBuffer(GL_ARRAY_BUFFER, this->_id);
+    this->attribArray = new AttribArray();
 }
 
 BufferArray::BufferArray(BufferArray &&other)
@@ -18,7 +22,7 @@ BufferArray::BufferArray(BufferArray &&other)
 
 BufferArray::~BufferArray()
 {
-    // TODO: teardown array
+    // TODO: teardown array and attrib
 }
 
 std::size_t BufferArray::size() const

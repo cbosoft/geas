@@ -10,4 +10,6 @@ void BufferArray::use()
 
     glBindBuffer(GL_ARRAY_BUFFER, this->_id);
     gl_error_check("BufferArray::use()");
+
+    this->attribArray->use();
 }

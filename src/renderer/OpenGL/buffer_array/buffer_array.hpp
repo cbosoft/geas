@@ -6,6 +6,7 @@
 #include "../../../vector/vector.hpp"
 #include "../vertex/vertex.hpp"
 #include "../opengl_object/opengl_object.hpp"
+#include "../attrib_array/attrib_array.hpp"
 
 class BufferArray final : public OpenGLObject {
 public:
@@ -36,4 +37,5 @@ private:
     std::mutex mutex;
     std::vector<GLVertex> _vertices;
     bool _invalid;
+    AttribArray *attribArray;
 };
