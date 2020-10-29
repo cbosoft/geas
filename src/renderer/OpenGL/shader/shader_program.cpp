@@ -17,17 +17,17 @@ ShaderProgram::~ShaderProgram()
 
 void ShaderProgram::add_shader(const Shader& shader)
 {
-  if (linked) {
-    // cannot add shader after program is linked!
-    // TODO: exception
-    throw ShaderError("Cannot add shader after program is linked!");
-  }
-  else
-  {
-      GL_ERROR_CHECK_DBG("ShaderProgram::add_shader(shader) -> before shader attach");
-      glAttachShader(prog_id, shader.get_id());
-      GL_ERROR_CHECK_DBG("ShaderProgram::add_shader(shader) -> after shader attach");
-  }
+    if (linked) {
+        // cannot add shader after program is linked!
+        throw ShaderError("Cannot add shader after program is linked!");
+    }
+    else
+    {
+        GL_ERROR_CHECK_DBG("ShaderProgram::add_shader(shader) -> before shader attach");
+        glAttachShader(this->prog_id, shader.get_id());
+        GL_ERROR_CHECK_DBG("ShaderProgram::add_shader(shader) -> after shader attach");
+        this->attached_shaders.push_back(shader.get_id());
+    }
 }
 
 unsigned int ShaderProgram::link()
@@ -40,6 +40,9 @@ unsigned int ShaderProgram::link()
         GL_ERROR_CHECK_DBG("ShaderProgram::link() -> after validate");
         // TODO delete/detach shaders?
         this->linked = true;
+        for (auto shader : this->attached_shaders) {
+          glDetachShader(this->prog_id, shader);
+        }
     }
 
     return this->prog_id;

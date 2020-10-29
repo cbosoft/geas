@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 class Shader;
 class ShaderProgram {
@@ -20,6 +21,7 @@ class ShaderProgram {
 
     bool linked;
     unsigned int prog_id;
+    std::vector<unsigned int> attached_shaders;
 };
 
 class Shader {
