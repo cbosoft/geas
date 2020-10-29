@@ -1,3 +1,5 @@
+#include <cstddef>
+
 #include <GL/glew.h>
 
 #include "../vertex/vertex.hpp"
@@ -8,17 +10,18 @@ AttribArray::AttribArray()
     constexpr unsigned int vsz = sizeof(GLVertex);
 
     glGenVertexArrays(1, &(this->_id));
+    glBindVertexArray(this->_id);
 
     // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, vsz, 0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, vsz, (void *)offsetof(GLVertex, x));
     glEnableVertexAttribArray(0);
 
     // color attribute
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, vsz, (void *)(3*sizeof(float)));
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, vsz, (void *)offsetof(GLVertex, r));
     glEnableVertexAttribArray(1);
 
     // texture coord attribute
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, vsz, (void *)(7*sizeof(float)));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, vsz, (void *)offsetof(GLVertex, s));
     glEnableVertexAttribArray(2);
 }
 
