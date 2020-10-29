@@ -63,11 +63,16 @@ unsigned int Shader::compile_source_to_shader(unsigned int type, std::string sou
 {
   unsigned int id = glCreateShader(type);
   const char *c_source = source.c_str();
+
+  GL_ERROR_CHECK_DBG("Shader::compile_source_to_shader() -> before create source");
   glShaderSource(id, 1, &c_source, nullptr);
+  GL_ERROR_CHECK_DBG("Shader::compile_source_to_shader() -> after create source, before compile");
   glCompileShader(id);
 
+  GL_ERROR_CHECK_DBG("Shader::compile_source_to_shader() -> after compile, before check result");
   int res;
   glGetShaderiv(id, GL_COMPILE_STATUS, &res);
+  GL_ERROR_CHECK_DBG("Shader::compile_source_to_shader() -> after check result");
 
   if (res == GL_FALSE) {
     // compile error :(

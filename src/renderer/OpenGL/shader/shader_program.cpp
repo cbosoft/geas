@@ -1,5 +1,7 @@
 #include <GL/glew.h>
 
+#include "../../../util/exception.hpp"
+
 #include "shader.hpp"
 
 ShaderProgram::ShaderProgram()
@@ -18,28 +20,36 @@ void ShaderProgram::add_shader(const Shader& shader)
   if (linked) {
     // cannot add shader after program is linked!
     // TODO: exception
+    throw ShaderError("Cannot add shader after program is linked!");
   }
   else
   {
-    glAttachShader(prog_id, shader.get_id());
+      GL_ERROR_CHECK_DBG("ShaderProgram::add_shader(shader) -> before shader attach");
+      glAttachShader(prog_id, shader.get_id());
+      GL_ERROR_CHECK_DBG("ShaderProgram::add_shader(shader) -> after shader attach");
   }
 }
 
 unsigned int ShaderProgram::link()
 {
-  if (!linked) {
-    glLinkProgram(prog_id);
-    glValidateProgram(prog_id);
-    // TODO delete/detach shaders?
-    this->linked = true;
-  }
+    if (!this->linked) {
+        GL_ERROR_CHECK_DBG("ShaderProgram::link() -> before link");
+        glLinkProgram(prog_id);
+        GL_ERROR_CHECK_DBG("ShaderProgram::link() -> after link, before validate");
+        glValidateProgram(prog_id);
+        GL_ERROR_CHECK_DBG("ShaderProgram::link() -> after validate");
+        // TODO delete/detach shaders?
+        this->linked = true;
+    }
 
-  return this->prog_id;
+    return this->prog_id;
 }
 
 void ShaderProgram::use()
 {
-  glUseProgram(this->link());
+    GL_ERROR_CHECK_DBG("ShaderProgram::use() -> before use program");
+    glUseProgram(this->link());
+    GL_ERROR_CHECK_DBG("ShaderProgram::link() -> after use program");
 }
 
 ShaderProgram *ShaderProgram::from_file(std::string vert_source_path, std::string frag_source_path)
