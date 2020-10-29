@@ -4,8 +4,10 @@ class OpenGLObject {
 public:
 
     friend class BufferArray;
+    friend class AttribArray;
     friend class Shader;
     friend class ShaderProgram;
+    friend class ElementArray;
 
     inline unsigned int id() const
     {
