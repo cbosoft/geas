@@ -42,7 +42,7 @@ void Physics::interact_with(Physics *other)
     // relative to other) times the timedelta is greater than the threshold. This is to prevent ghost reflections
     // wherein an object "rattles" on collision.
 
-    const float threshold  = 1.0f;
+    const float threshold  = 0.01f;
     float dist = dr.magnitude();
 
     // TODO: not only check if the objects are close, but also that their relative momentum would bring them closer
