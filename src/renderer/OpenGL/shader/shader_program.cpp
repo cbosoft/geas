@@ -16,7 +16,7 @@ ShaderProgram::ShaderProgram()
 
 ShaderProgram::~ShaderProgram()
 {
-  // do nothing?
+    glDeleteProgram(this->prog_id);
 }
 
 void ShaderProgram::add_shader(const Shader& shader)
