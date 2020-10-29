@@ -81,12 +81,10 @@ Vec2 RectCollider::get_surface_normal(const Vec2 &at) const
     for (;next_corner != corners.end();corner++, next_corner++, normal++) {
 
         if (at.coincident(*corner, *next_corner)) {
-            // TODO remove this line
-            //std::cerr << at.to_string() << " " << corner->to_string() << " " << next_corner->to_string() << std::endl;
             return *normal;
         }
 
     }
-    // TODO: error
-    throw PositionError("RectCollider::get_surface_normal", "position 'at' is not on the rectangle.");
+
+    throw PositionError(Formatter() << "RectCollider::get_surface_normal(at) -> position " << at.to_string() << " is not on the rectangle.");
 }
