@@ -86,9 +86,14 @@ void ShaderProgram::use()
 
 ShaderProgram *ShaderProgram::from_file(std::string vert_source_path, std::string frag_source_path)
 {
-  ShaderProgram *rv = new ShaderProgram;
-  rv->add_shader(Shader::from_file(vert_source_path));
-  rv->add_shader(Shader::from_file(frag_source_path));
-  rv->link();
-  return rv;
+    ShaderProgram *rv = new ShaderProgram;
+    
+    auto vert = Shader::from_file(vert_source_path);
+    rv->add_shader(vert);
+
+    auto frag = Shader::from_file(frag_source_path);
+    rv->add_shader(frag);
+
+    rv->link();
+    return rv;
 }
