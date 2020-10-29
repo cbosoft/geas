@@ -14,7 +14,7 @@ BufferArray::BufferArray()
     this->attribArray = new AttribArray();
 }
 
-BufferArray::BufferArray(BufferArray &&other)
+BufferArray::BufferArray(BufferArray &&other) noexcept
 {
     // move constructor: move id from other to this.
     this->_id = other._id;

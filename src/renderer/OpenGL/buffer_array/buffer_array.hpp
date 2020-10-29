@@ -12,7 +12,7 @@ public:
     BufferArray();
     ~BufferArray();
     BufferArray(const BufferArray &other) =delete; // no copying
-    BufferArray(BufferArray &&other);
+    BufferArray(BufferArray &&other) noexcept;
 
     void set(int i, const GLVertex &vertex);
     void set(int i, const Vec3 &position);
