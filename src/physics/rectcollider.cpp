@@ -1,3 +1,4 @@
+#include <vector>
 #include "../util/exception.hpp"
 #include "collider.hpp"
 
@@ -58,6 +59,48 @@ Vec2 RectCollider::get_nearest(const Vec2 &p) const
 std::pair<Vec2, Vec2> RectCollider::get_nearest(const Collider *other) const
 {
     // TODO
+    // draw line from this centre to other centre
+    Vec2 dr = other->get_centre() - this->get_centre();
+
+    static Vec2 vert({0.0f, 1.0f});
+    const float a = std::abs(dr.dot(vert)/dr.magnitude());
+    float theta = std::acos(a);
+    if (dr.x() > 0.0f) {
+        if (dr.y() > 0.0) {
+            // angle is acute
+            // do nothing
+        }
+        else {
+            // pos x, neg y: angle is obtuse
+            theta += M_PI_2;
+        }
+    }
+    else {
+        if (dr.y() > 0.0) {
+            // neg x, pos y: angle is between 3/2 pi and 2 pi
+            theta += M_PI - M_PI_4;
+        }
+        else {
+            // neg x, neg y: angle is between pi and 3/2 pi
+            theta += M_PI;
+        }
+    }
+
+    // TODO calculate cross over of c2c vec and side
+    if ((theta >= M_PI_4) && (theta < M_PI - M_PI_4)) {
+        // right
+    }
+    else if ((theta >= M_PI - M_PI_4) && (theta < M_PI + M_PI_4)) {
+        // down
+    }
+    else if ((theta >= M_PI + M_PI_4) && (theta < M_2_PI - M_PI_4)) {
+        // left
+    }
+    else /*if ((theta >= M_2_PI - M_PI_4) || (theta < M_PI_4))*/ {
+        // up
+    }
+
+
     return std::make_pair(this->absolute_position(), other->absolute_position());
 }
 
@@ -67,7 +110,7 @@ std::pair<Vec2, Vec2> RectCollider::get_nearest(const Collider *other) const
 /// \return the normal vector (2D)
 Vec2 RectCollider::get_surface_normal(const Vec2 &at) const
 {
-    std::list<Vec2> corners = this->get_corners();
+    auto corners = this->get_corners();
     corners.push_back(corners.front());
     std::list<Vec2> normals{
         Vec2({ 1.0,  0.0}),
