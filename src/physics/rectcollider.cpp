@@ -87,21 +87,25 @@ std::pair<Vec2, Vec2> RectCollider::get_nearest(const Collider *other) const
     }
 
     // TODO calculate cross over of c2c vec and side
+    Vec2 thispos, otherpos;
     if ((theta >= M_PI_4) && (theta < M_PI - M_PI_4)) {
-        // right
+        // right on this, left on other
+        thispos = this->absolute_position().demote() + this->size*Vec2({1.0,0.5});
+        otherpos = other->absolute_position().demote() + this->size*Vec2({1.0,0.5});
     }
     else if ((theta >= M_PI - M_PI_4) && (theta < M_PI + M_PI_4)) {
-        // down
+        // bottom on this, top on other
+
     }
     else if ((theta >= M_PI + M_PI_4) && (theta < M_2_PI - M_PI_4)) {
-        // left
+        // left on this, right on other
     }
     else /*if ((theta >= M_2_PI - M_PI_4) || (theta < M_PI_4))*/ {
-        // up
+        // top on this, bottom on other
     }
 
 
-    return std::make_pair(this->absolute_position(), other->absolute_position());
+    return std::make_pair(thispos, otherpos);
 }
 
 
