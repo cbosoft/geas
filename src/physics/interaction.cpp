@@ -4,6 +4,10 @@
 
 #include "physics.hpp"
 
+/// Calculate the resulting momentum of a free body, after interacting with a fixed body's surface.
+/// \param incoming_momentum Momentum of the free body which interacts with the fixed.
+/// \param surface_normal_unit The unit vector indicating the direction perpendicular (normal) to the fixed object's surface.
+/// \return The resulting momentum of the free body after interaction.
 Vec2 fixed_body_momentum_transfer(const Vec2 &incoming_momentum, const Vec2 &surface_normal_unit)
 {
     // TODO
@@ -24,6 +28,9 @@ Vec2 fixed_body_momentum_transfer(const Vec2 &incoming_momentum, const Vec2 &sur
     return resulting_momentum;
 }
 
+
+/// One physics object interacting with another. Momentum of either physics object can be altered in this step.
+/// \param other The other physics object which will interact with this one.
 void Physics::interact_with(Physics *other)
 {
     // if both objects are fixed, nothing to do!
