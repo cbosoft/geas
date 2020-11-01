@@ -97,12 +97,13 @@ void OpenGLRenderer::init()
 #endif
 
     constexpr float s = 3.0f;
-    int w = 0, h = 0;
+    int w = 1280, h = 720;
+    GLFWmonitor *monitor = nullptr;
     if (fullscreen) {
         int n = 0;
         GLFWmonitor **monitors = glfwGetMonitors(&n);
-        GLFWmonitor *monitor = monitors[n-1];
-        const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+        monitor = monitors[n - 1];
+        const GLFWvidmode *mode = glfwGetVideoMode(monitor);
 
         glfwWindowHint(GLFW_RED_BITS, mode->redBits);
         glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
@@ -111,17 +112,12 @@ void OpenGLRenderer::init()
 
         w = mode->width;
         h = mode->height;
-
-        glfw_window = glfwCreateWindow(mode->width, mode->height, "GEAS", monitor, nullptr);
-    }
-    else {
-        w = 1280;
-        h = 720;
-        glfw_window = glfwCreateWindow(w, h, "GEAS", nullptr, nullptr);
     }
 
-    this->scale.x(s/static_cast<float>(1280));
-    this->scale.y(s/static_cast<float>(720));
+    glfw_window = glfwCreateWindow(w, h, "GEAS", monitor, nullptr);
+
+    this->scale.x(s/static_cast<float>(w));
+    this->scale.y(s/static_cast<float>(h));
 
     if (!glfw_window)
     {
