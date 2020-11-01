@@ -4,6 +4,7 @@
 Physics::Physics(GeasObject &owner)
   : owner(owner)
     , collider(nullptr)
+    , direction_constraints_mask(0)
 {
   this->set_mass(1.0);
   this->set_gravity(1.0);
