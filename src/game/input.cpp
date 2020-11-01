@@ -11,13 +11,22 @@ void Game::process_input(int key, int scancode, int action, int mods)
 
   switch (key) {
 
-    case GLFW_KEY_ESCAPE:
-        // TODO: quit
-        this->is_alive(false);
-        break;
+      case GLFW_KEY_ESCAPE:
+          this->is_alive(false);
+          break;
 
-    default:
-      break;
+      case GLFW_KEY_RIGHT:
+          if (this->player)
+              this->player->move(action != GLFW_RELEASE ? 1 : 0);
+          break;
+
+      case GLFW_KEY_LEFT:
+          if (this->player)
+              this->player->move(action != GLFW_RELEASE ? -1 : 0);
+          break;
+
+      default:
+          break;
 
   }
 }
