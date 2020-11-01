@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "../geas_object/geas_object.hpp"
 #include "../util/formatter.hpp"
 #include "../util/debug.hpp"
@@ -18,7 +20,7 @@ Vec2 fixed_body_momentum_transfer(const Vec2 &incoming_momentum, const Vec2 &sur
     (void) incoming_momentum;
     (void) surface_normal_unit;
 
-    const float bouncy = 0.1;
+    const float bouncy = 0.15;
 
     float mag = incoming_momentum.magnitude();
     Vec2 resulting_momentum = mag*bouncy*surface_normal_unit;
@@ -49,8 +51,9 @@ void Physics::interact_with(Physics *other)
     // relative to other) times the timedelta is greater than the threshold. This is to prevent ghost reflections
     // wherein an object "rattles" on collision.
 
-    const float threshold  = 0.01f;
+    const float threshold  = 0.005f;
     float dist = dr.magnitude();
+    std::cerr << dist << std::endl;
 
     // TODO: not only check if the objects are close, but also that their relative momentum would bring them closer
     // i.e.
