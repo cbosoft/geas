@@ -53,7 +53,6 @@ void Physics::interact_with(Physics *other)
 
     const float threshold  = 0.005f;
     float dist = dr.magnitude();
-    std::cerr << dist << std::endl;
 
     // TODO: not only check if the objects are close, but also that their relative momentum would bring them closer
     // i.e.

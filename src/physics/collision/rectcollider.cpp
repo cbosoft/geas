@@ -98,25 +98,21 @@ std::pair<Vec2, Vec2> RectCollider::get_nearest(const Collider *other) const
     Vec2 thispos = this->absolute_position(), otherpos = other->absolute_position();
     if ((theta >= M_PI_4) && (theta < M_PI - M_PI_4)) {
         // right on this, left on other
-        std::cerr << "right this, left other" << std::endl;
         thispos = thispos + this->size*Vec2({1.0,0.5});
         otherpos = otherpos + Vec2({0.0f, this->size.y()*0.5f});
     }
     else if ((theta >= M_PI - M_PI_4) && (theta < M_PI + M_PI_4)) {
         // bottom on this, top on other
-        std::cerr << "bottom this, top other" << std::endl;
         thispos = thispos + Vec2({this->size.x()*0.5f, 0.0f});
         otherpos = otherpos + this->size*Vec2({0.5f,1.0f});
     }
     else if ((theta >= M_PI + M_PI_4) && (theta < M_2_PI - M_PI_4)) {
         // left on this, right on other
-        std::cerr << "left this, right other" << std::endl;
         otherpos = otherpos + this->size*Vec2({1.0,0.5});
         thispos = thispos + Vec2({0.0f, this->size.y()*0.5f});
     }
     else /*if ((theta >= M_2_PI - M_PI_4) || (theta < M_PI_4))*/ {
         // top on this, bottom on other
-        std::cerr << "top this, bottom other" << std::endl;
         otherpos = otherpos + Vec2({this->size.x()*0.5f, 0.0f});
         thispos = thispos + this->size*Vec2({1.0,0.5});
     }
