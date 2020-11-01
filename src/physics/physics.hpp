@@ -36,7 +36,11 @@ class Physics {
 
     static constexpr float global_gravity_scale = 1e-6f;
 
-  private:
+    int driving_direction;
+    float driving_accel;
+    float drag;
+
+private:
     void interact_with(Physics *other);
     static const std::list<Physics *> &get_list();
     static void remove_ref(Physics *physics);

@@ -2,7 +2,11 @@
 #include "physics.hpp"
 
 Physics::Physics(GeasObject &owner)
-  : owner(owner)
+  :
+      driving_direction(0)
+    , driving_accel(1e-5)
+    , drag(-0.1)
+    , owner(owner)
     , collider(nullptr)
     , direction_constraints_mask(0)
 {
