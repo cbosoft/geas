@@ -32,5 +32,7 @@ void Game::input_thread_worker()
             delete input;
         }
 
+        std::this_thread::sleep_for(std::chrono::microseconds(100));
+
     }
 }
