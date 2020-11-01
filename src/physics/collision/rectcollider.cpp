@@ -6,8 +6,16 @@
 RectCollider::RectCollider(GeasObject &owner, Vec2 bl_offset, Vec2 size)
   : Collider(owner)
     , size(size)
+    , tr(this)
+    , br(this)
+    , bl(this)
+    , tl(this)
 {
   this->relative_position(bl_offset.promote(0.0f));
+
+  this->tr.relative_position(size.promote(0.0f));
+  this->br.relative_position(Vec3({size.x(), 0.0f, 0.0f}));
+  this->tl.relative_position(Vec3({0.0f, size.x(), 0.0f}));
 }
 
 RectCollider::~RectCollider()
@@ -29,12 +37,12 @@ Vec2 RectCollider::get_centre() const
 /// \return list of Vec2 positions
 std::list<Vec2> RectCollider::get_corners() const
 {
-    std::list<Vec2> corners;
-    Vec2 bl = this->absolute_position();
-    corners.push_back(bl + this->size);
-    corners.push_back(bl + Vec2({this->size.x(), 0.0}) );
-    corners.push_back(bl);
-    corners.push_back(bl + Vec2({0.0, this->size.y()}) );
+    std::list<Vec2> corners({
+        this->tr.absolute_position(),
+        this->br.absolute_position(),
+        this->bl.absolute_position(),
+        this->tl.absolute_position()
+    });
     return corners;
 }
 

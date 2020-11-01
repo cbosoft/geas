@@ -18,5 +18,6 @@ private:
     std::list<Vec2> get_corners() const;
 
     Vec2 size;
+    Transform tr, br, bl, tl;
 
 };
