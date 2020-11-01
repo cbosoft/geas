@@ -2,6 +2,7 @@
 
 GeasObject::GeasObject()
   : Transform()
+    , physics(nullptr)
     , _renderable(nullptr)
     , _marked_for_destruction(false)
 {
@@ -10,6 +11,7 @@ GeasObject::GeasObject()
 
 GeasObject::GeasObject(Transform *parent)
   : Transform(parent)
+  , physics(nullptr)
   , _renderable(nullptr)
   , _marked_for_destruction(false)
 {
