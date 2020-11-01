@@ -152,10 +152,8 @@ Vec2 RectCollider::get_surface_normal(const Vec2 &at) const
 
 
 
-bool RectCollider::intersects(const Vec2 &newbase, const RectCollider *other) const
+bool RectCollider::intersects(const Vec2 &dr, const RectCollider *other) const
 {
-    Vec2 cpos = this->absolute_position();
-    Vec2 dr = newbase - cpos;
     auto corners = this->get_corners();
     for (const auto &corner : corners) {
         Vec2 ppos = corner + dr;

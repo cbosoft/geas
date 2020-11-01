@@ -47,16 +47,17 @@ void Physics::interact_with(Physics *other)
         Physics *fixedbody = this->fixed ? this : other;
         Physics *freebody = this->fixed ? other : this;
 
-        const Vec2 &np = freebody->maybe_new_position;
-        Vec2 npx_vec = Vec2({np.x(), 0.0f});
-        Vec2 npy_vec = Vec2({0.0f, np.y()});
+        const Vec2 cp = this->get_position();
+        const Vec2 dr = freebody->maybe_new_position.demote() - cp;
+        Vec2 drx_vec = Vec2({dr.x(), 0.0f});
+        Vec2 dry_vec = Vec2({0.0f, dr.y()});
 
-        if (freebody->collider->intersects(npx_vec, fixedbody->collider)) {
+        if (freebody->collider->intersects(drx_vec, fixedbody->collider)) {
             float npx = freebody->owner.absolute_position().x() - (freebody->momentum.x() * freebody->_inv_mass * bouncy);
             freebody->maybe_new_position.x(npx);
         }
 
-        if (freebody->collider->intersects(npy_vec, fixedbody->collider)) {
+        if (freebody->collider->intersects(dry_vec, fixedbody->collider)) {
             float npy = freebody->owner.absolute_position().y() - (freebody->momentum.y() * freebody->_inv_mass * bouncy);
             freebody->maybe_new_position.y(npy);
         }
