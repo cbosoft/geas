@@ -2,7 +2,7 @@
 #include <chrono>
 
 #include "game/game.hpp"
-#include "player/player.hpp"
+#include "geas_object/player/player.hpp"
 
 void player_add(Game *game, Scene *scene, int delay)
 {
