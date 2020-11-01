@@ -20,6 +20,7 @@ private:
     virtual void draw(Renderable *renderable) =0;
 
     Game *game;
+    bool fullscreen{true};
 
     friend class OpenGLRenderer;
 };

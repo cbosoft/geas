@@ -96,26 +96,32 @@ void OpenGLRenderer::init()
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 #endif
 
-    // if (fullscreen) {
-    //     GLFWmonitor *monitor = glfwGetPrimaryMonitor();
-    //     const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+    constexpr float s = 3.0f;
+    int w = 0, h = 0;
+    if (fullscreen) {
+        int n = 0;
+        GLFWmonitor **monitors = glfwGetMonitors(&n);
+        GLFWmonitor *monitor = monitors[n-1];
+        const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 
-    //     glfwWindowHint(GLFW_RED_BITS, mode->redBits);
-    //     glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
-    //     glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
-    //     glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+        glfwWindowHint(GLFW_RED_BITS, mode->redBits);
+        glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
+        glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
+        glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
 
-    //     this->w = mode->width;
-    //     this->h = mode->height;
+        w = mode->width;
+        h = mode->height;
 
-    //     glfw_window = glfwCreateWindow(mode->width, mode->height, "GEAS", monitor, nullptr);
-    // }
-    // else {
-        constexpr float s = 3.0f;
-        glfw_window = glfwCreateWindow(1280, 720, "GEAS", nullptr, nullptr);
-        this->scale.x(s/static_cast<float>(1280));
-        this->scale.y(s/static_cast<float>(720));
-    // }
+        glfw_window = glfwCreateWindow(mode->width, mode->height, "GEAS", monitor, nullptr);
+    }
+    else {
+        w = 1280;
+        h = 720;
+        glfw_window = glfwCreateWindow(w, h, "GEAS", nullptr, nullptr);
+    }
+
+    this->scale.x(s/static_cast<float>(1280));
+    this->scale.y(s/static_cast<float>(720));
 
     if (!glfw_window)
     {
