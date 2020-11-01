@@ -1,3 +1,5 @@
+#include <map>
+
 #include <GL/glew.h>
 
 #include "../../../util/exception.hpp"
@@ -86,7 +88,14 @@ void ShaderProgram::use()
 
 ShaderProgram *ShaderProgram::from_file(std::string vert_source_path, std::string frag_source_path)
 {
-    ShaderProgram *rv = new ShaderProgram;
+    static std::map<std::pair<std::string, std::string>, ShaderProgram*> shader_cache;
+
+    auto it = shader_cache.find(std::make_pair(vert_source_path, frag_source_path));
+    if (it != shader_cache.end()) {
+        return it->second;
+    }
+
+    auto *rv = new ShaderProgram;
     
     auto vert = Shader::from_file(vert_source_path);
     rv->add_shader(vert);
@@ -95,6 +104,7 @@ ShaderProgram *ShaderProgram::from_file(std::string vert_source_path, std::strin
     rv->add_shader(frag);
 
     rv->link();
+    shader_cache[std::make_pair(vert_source_path, frag_source_path)] = rv;
     return rv;
 }
 
