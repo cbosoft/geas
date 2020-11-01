@@ -111,7 +111,10 @@ void OpenGLRenderer::init()
     //     glfw_window = glfwCreateWindow(mode->width, mode->height, "GEAS", monitor, nullptr);
     // }
     // else {
+        constexpr float s = 3.0f;
         glfw_window = glfwCreateWindow(1280, 720, "GEAS", nullptr, nullptr);
+        this->scale.x(s/static_cast<float>(1280));
+        this->scale.y(s/static_cast<float>(720));
     // }
 
     if (!glfw_window)

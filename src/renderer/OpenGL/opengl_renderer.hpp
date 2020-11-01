@@ -28,6 +28,7 @@ public:
     void init() override;
     void run() override;
 
+    Vec2 scale{{0.01f, 0.01f}};
 
 private:
     void draw(Scene *scene) override;

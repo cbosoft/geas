@@ -10,7 +10,7 @@ void player_add(Game *game, Scene *scene, int delay)
     std::cerr << "dropping player" << std::endl;
     auto *player = new Player(scene->root);
     game->set_player(player);
-    player->absolute_position(Vec3({0, 1, 0.0}));
+    player->absolute_position(Vec3({0, 100, 0.0}));
 }
 
 int main()
@@ -22,7 +22,7 @@ int main()
     {
         auto *player = new Player(scene->root);
         //player->sprite->request_animation("idle");
-        player->absolute_position(Vec3({0, -0.5f, 0.0}));
+        player->absolute_position(Vec3({0, -100, 0.0}));
         player->physics->set_gravity(0.0);
         player->physics->set_fixed();
     }

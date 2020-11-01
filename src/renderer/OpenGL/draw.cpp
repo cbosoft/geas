@@ -79,7 +79,7 @@ void OpenGLRenderer::draw(Renderable *renderable) {
         renderData = it->second;
     }
 
-    renderData->buffer.set_monochrome_rect_centred(pos, Vec2(0.1f), colour);
+    renderData->buffer.set_monochrome_rect_centred(pos*this->scale.promote(1.0f), renderable->size*this->scale, colour);
 
     renderData->shaderProgram->use();
     renderData->buffer.use();

@@ -7,6 +7,7 @@ Renderable::Renderable(GeasObject *parent)
     , has_texture(false)
     , has_colour(false)
     , colour(1.0)
+    , size({10.0f, 10.0f})
 {
 
 }

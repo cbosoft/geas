@@ -12,6 +12,6 @@ Player::Player(Transform *parent)
   this->physics = Physics::create(*this);
   this->physics->set_collider(new RectCollider(this,
         Vec2({0.0, 0.0}),
-        Vec2({0.1, 0.1}))
+        Vec2({10, 10}))
       );
 }

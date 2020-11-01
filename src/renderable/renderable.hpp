@@ -17,4 +17,6 @@ public:
 
     bool has_colour;
     Vec4 colour;
+
+    Vec2 size;
 };

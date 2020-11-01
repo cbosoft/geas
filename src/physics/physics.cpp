@@ -4,7 +4,7 @@
 Physics::Physics(GeasObject &owner)
   :
       driving_direction(0)
-    , driving_accel(1e-5)
+    , driving_accel(1e-3f)
     , drag(-0.1)
     , owner(owner)
     , collider(nullptr)

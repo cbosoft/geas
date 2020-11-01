@@ -34,7 +34,7 @@ class Physics {
     [[nodiscard]] bool check_constraint(bitmask_t mask) const;
 
 
-    static constexpr float global_gravity_scale = 1e-6f;
+    static constexpr float global_gravity_scale = 3e-5f;
 
     int driving_direction;
     float driving_accel;
