@@ -174,9 +174,9 @@ bool RectCollider::contains_point(const Vec2 &pt) const
 
     return (
             (pt.x() > blpt.x()) &&
-            (pt.x() < blpt.x() + this->size.x()) &&
+            (pt.x() <= blpt.x() + this->size.x()) &&
             (pt.y() > blpt.y()) &&
-            (pt.y() < blpt.y() + this->size.y())
+            (pt.y() <= blpt.y() + this->size.y())
         );
 }
 

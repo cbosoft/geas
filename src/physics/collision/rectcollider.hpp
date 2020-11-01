@@ -1,17 +1,24 @@
+#pragma once
+
 #include <list>
 
-#include "collider.hpp"
+#include "../../transform/transform.hpp"
+#include "../../vector/vector.hpp"
 
-class RectCollider final: public Collider {
+class GeasObject;
+
+class RectCollider final : Transform {
 
 public:
-    RectCollider(GeasObject &parent, Vec2 bl_offset, Vec2 size);
-    ~RectCollider() override;
+    RectCollider(GeasObject *parent, Vec2 bl_offset, Vec2 size);
+    ~RectCollider();
 
-    Vec2 get_centre() const override;
-    Vec2 get_nearest(const Vec2 &p) const override;
-    std::pair<Vec2, Vec2> get_nearest(const Collider *other) const override;
-    Vec2 get_surface_normal(const Vec2 &at) const override;
+    [[nodiscard]] Vec2 get_centre() const;
+    [[nodiscard]] Vec2 get_nearest(const Vec2 &p) const;
+    [[nodiscard]] std::pair<Vec2, Vec2> get_nearest(const RectCollider *other) const;
+    [[nodiscard]] Vec2 get_surface_normal(const Vec2 &at) const;
+    [[nodiscard]] bool intersects(const Vec2 &newbase, const RectCollider *other) const;
+    [[nodiscard]] bool contains_point(const Vec2 &pt) const;
 
 private:
 

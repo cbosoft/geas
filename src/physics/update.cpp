@@ -12,37 +12,46 @@
 
 void Physics::update()
 {
-  const std::list<Physics *> &entities = Physics::get_list();
-  
-  // TODO: order entities into cells?
+    const std::list<Physics *> &entities = Physics::get_list();
 
-  float dt = Game::singleton()->get_time_delta();
+    // TODO: order entities into cells?
 
-  for (Physics *a : entities) {
-    for (Physics *b : entities) {
+    // First loop: using the momentum of the entities, calculate their projected new position (Physics::maybe_new_position)
+    for (Physics *entity : entities) {
 
-      if (a == b)
-        break;
+        if (entity->fixed)
+            continue;
 
-      a->interact_with(b);
+        Vec2 accel({0.0f, -entity->gravity_scale * entity->_inv_mass});
+        entity->momentum += accel;
+        Vec2 delta_r = entity->momentum*entity->_inv_mass;
+        // Here "r" means position because physicists are weird (and p is momentum, and x would be misleading).
 
+        entity->maybe_new_position = entity->owner.relative_position() + delta_r.promote(0.0);
     }
-  }
 
-  for (Physics *entity : entities) {
 
-      if (entity->fixed)
-          continue;
+    // For all pairs of objects, check if the objects will interact. If they do, alter their projected new position accordingly.
+    for (Physics *a : entities) {
+        for (Physics *b : entities) {
 
-      Vec2 accel({0.0f, -entity->gravity_scale * entity->_inv_mass});
-      entity->momentum += accel*dt;
-      Vec2 vel = entity->momentum*entity->_inv_mass;
+          if (a == b)
+              break;
 
-      // Here "r" means position because physicists are weird (and p is momentum, and x would be misleading).
-      Vec2 delta_r = vel * dt;
+          a->interact_with(b);
 
-      entity->owner.relative_position(entity->owner.relative_position() + delta_r.promote(0.0));
-  }
+        }
+    }
+
+    // finally, set the projected new position for all entities.
+    for (Physics *entity : entities) {
+
+        if (entity->fixed)
+            continue;
+
+        entity->momentum = (entity->maybe_new_position - entity->get_position())*entity->mass;
+        entity->owner.absolute_position(entity->maybe_new_position);
+    }
 
   std::this_thread::sleep_for(std::chrono::microseconds(100));
 }
