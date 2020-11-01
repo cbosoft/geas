@@ -24,7 +24,7 @@ void Physics::set_mass(float mass)
 
 void Physics::set_gravity(float gravity)
 {
-  this->gravity_scale = gravity;
+  this->gravity_scale = gravity*Physics::global_gravity_scale;
 }
 
 Vec3 Physics::get_position() const

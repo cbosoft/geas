@@ -34,6 +34,8 @@ class Physics {
     [[nodiscard]] bool check_constraint(bitmask_t mask) const;
 
 
+    static constexpr float global_gravity_scale = 1e-6f;
+
   private:
     void interact_with(Physics *other);
     static const std::list<Physics *> &get_list();
