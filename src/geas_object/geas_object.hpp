@@ -21,6 +21,8 @@ class GeasObject : public Transform {
     bool is_marked_for_destruction() const;
     void destroy();
 
+    void move(int v);
+
   private:
     GeasObject();
     Renderable *_renderable;
