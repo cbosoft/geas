@@ -1,4 +1,4 @@
-#include "../physics/collider.hpp"
+#include "../physics/collision/collider.hpp"
 #include "player.hpp"
 Player::Player(Transform *parent)
     : GeasObject(parent)

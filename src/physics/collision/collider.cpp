@@ -1,4 +1,4 @@
-#include "../geas_object/geas_object.hpp"
+#include "../../geas_object/geas_object.hpp"
 #include "collider.hpp"
 
 Collider::Collider(GeasObject &parent)

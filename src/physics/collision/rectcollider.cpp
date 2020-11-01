@@ -1,6 +1,6 @@
 #include <vector>
-#include "../util/exception.hpp"
-#include "collider.hpp"
+#include "../../util/exception.hpp"
+#include "rectcollider.hpp"
 
 
 RectCollider::RectCollider(GeasObject &owner, Vec2 bl_offset, Vec2 size)

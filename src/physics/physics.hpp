@@ -3,7 +3,7 @@
 #include <list>
 
 #include "../vector/vector.hpp"
-#include "collider.hpp"
+#include "collision/collider.hpp"
 
 class GeasObject;
 
