@@ -13,8 +13,6 @@ Game::Game()
     , _is_alive(true)
 {
     this->renderer = Renderer::get(this);
-    // TODO: register input callback with renderer
-    //this->win.register_input_callback(Game::input_callback_wrapper);
 }
 
 Game::~Game()
@@ -36,24 +34,11 @@ void Game::play()
     }
 }
 
-//   auto t0 = std::chrono::high_resolution_clock::now();
-//   while (!glfwWindowShouldClose(this->glfw_window)) {
-//     auto t1 = std::chrono::high_resolution_clock::now();
-//     std::chrono::duration<float> fs = t1 - t0;
-//     t0 = t1;
-//     float dt = fs.count();
-//     (void) dt;
-
 void Game::graphics_thread_worker()
 {
   std::cerr << "start gfx thread " << std::endl;
   this->renderer->run();
 }
-
-// void Game::push_object(GeasObject *object)
-// {
-//   this->objects.push_back(object);
-// }
 
 bool Game::is_alive() const
 {

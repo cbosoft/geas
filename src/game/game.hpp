@@ -10,7 +10,6 @@
 #include "../util/tsq.hpp"
 #include "input.hpp"
 
-class GLObject;
 class Game {
 
   public:
@@ -18,7 +17,6 @@ class Game {
     static Game *singleton();
 
     void play();
-    //void push_object(GeasObject *object);
     void push_input(PlayerInput *input);
 
     bool is_alive() const;
@@ -35,8 +33,6 @@ class Game {
   private:
     Game();
 
-    //static void input_callback_wrapper(GLFWwindow *win, int key, int scancode, int action, int mods);
-
     void graphics_thread_worker();
     void physics_thread_worker();
     void input_thread_worker();
@@ -45,12 +41,12 @@ class Game {
     float time, time_delta, time_scale;
     float time_irl, time_delta_irl;
     std::list<std::thread> threads;
-    //std::list<GeasObject *> objects; // unnecessary: objects are stored in scenes via transforms.
     std::vector<Scene *> scenes;
     Scene *_active_scene;
     bool _is_alive;
     ThreadedQueue<PlayerInput *> input_queue;
     typedef std::lock_guard<std::mutex> lock_guard;
     mutable std::mutex mutex;
+
 
 };
