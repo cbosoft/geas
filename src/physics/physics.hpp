@@ -51,4 +51,5 @@ class Physics {
     Vec2 force_total;
     RectCollider *collider;
     bitmask_t direction_constraints_mask;
+    Vec3 maybe_new_position;
 };
