@@ -39,17 +39,16 @@ void Physics::interact_with(Physics *other)
     if (this->fixed && other->fixed)
         return;
 
-    if (this->fixed) {
 
-        if (other->collider->intersects(other->maybe_new_position, this->collider)) {
-            other->maybe_new_position = other->owner.absolute_position();
-        }
+    const float bouncy = 0.5f;
 
-    }
-    else if (other->fixed) {
+    if (this->fixed || other->fixed) {
 
-        if (this->collider->intersects(this->maybe_new_position, other->collider)) {
-            this->maybe_new_position = this->owner.absolute_position();
+        Physics *fixedbody = this->fixed ? this : other;
+        Physics *freebody = this->fixed ? other : this;
+
+        if (freebody->collider->intersects(freebody->maybe_new_position, fixedbody->collider)) {
+            freebody->maybe_new_position = freebody->owner.absolute_position() - (freebody->momentum * freebody->_inv_mass * bouncy).promote(0.0f);
         }
 
     }
