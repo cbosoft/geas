@@ -30,6 +30,9 @@ class Game {
     void active_scene(unsigned int i);
     void process_input(int key, int scancode, int action, int mods);
 
+    void set_player(GeasObject *obj);
+    [[nodiscard]] GeasObject *get_player() const;
+
   private:
     Game();
 
@@ -47,6 +50,7 @@ class Game {
     ThreadedQueue<PlayerInput *> input_queue;
     typedef std::lock_guard<std::mutex> lock_guard;
     mutable std::mutex mutex;
+    GeasObject *player;
 
 
 };

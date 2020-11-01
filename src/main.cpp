@@ -4,11 +4,12 @@
 #include "game/game.hpp"
 #include "player/player.hpp"
 
-void player_add(Scene *scene, int delay)
+void player_add(Game *game, Scene *scene, int delay)
 {
     std::this_thread::sleep_for(std::chrono::milliseconds(delay));
     std::cerr << "dropping player" << std::endl;
     auto *player = new Player(scene->root);
+    game->set_player(player);
     player->absolute_position(Vec3({0, 1, 0.0}));
 }
 
@@ -27,7 +28,7 @@ int main()
     }
 
     {
-        std::thread(player_add, scene, 500).detach();
+        std::thread(player_add, game, scene, 500).detach();
     }
 
     game->play();

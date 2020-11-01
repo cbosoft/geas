@@ -11,6 +11,7 @@ Game::Game()
     , time_delta_irl(0.0)
     , _active_scene(nullptr)
     , _is_alive(true)
+    , player(nullptr)
 {
     this->renderer = Renderer::get(this);
 }
@@ -66,4 +67,16 @@ float Game::get_time() const
 void Game::push_input(PlayerInput *input)
 {
     this->input_queue.push(input);
+}
+
+
+void Game::set_player(GeasObject *obj)
+{
+    this->player = obj;
+}
+
+
+GeasObject *Game::get_player() const
+{
+    return this->player;
 }
