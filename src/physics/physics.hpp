@@ -3,7 +3,7 @@
 #include <list>
 
 #include "../vector/vector.hpp"
-#include "collision/collider.hpp"
+#include "collision/rectcollider.hpp"
 
 class GeasObject;
 
@@ -13,7 +13,7 @@ typedef unsigned int bitmask_t;
 // Class managing the physics of an object (mass, gravity, drag, collision)
 class Physics {
   public:
-    friend class Collider;
+    friend class RectCollider;
 
     ~Physics();
 
@@ -21,7 +21,7 @@ class Physics {
     static void update();
     void set_mass(float mass);
     void set_gravity(float gravity);
-    void set_collider(Collider *collider);
+    void set_collider(RectCollider *collider);
     void set_fixed(bool is_fixed=true);
 
     Vec3 get_position() const;
@@ -47,6 +47,6 @@ class Physics {
     float gravity_scale;
     Vec2 momentum;
     Vec2 force_total;
-    Collider *collider;
+    RectCollider *collider;
     bitmask_t direction_constraints_mask;
 };

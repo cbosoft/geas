@@ -1,10 +1,11 @@
 #include <vector>
 #include "../../util/exception.hpp"
+#include "../../geas_object/geas_object.hpp"
 #include "rectcollider.hpp"
 
 
-RectCollider::RectCollider(GeasObject &owner, Vec2 bl_offset, Vec2 size)
-  : Collider(owner)
+RectCollider::RectCollider(GeasObject *owner, Vec2 bl_offset, Vec2 size)
+  : Transform(owner)
     , size(size)
     , tr(this)
     , br(this)
@@ -64,7 +65,7 @@ Vec2 RectCollider::get_nearest(const Vec2 &p) const
 /// Get nearest points on this collider to collider other
 /// \param other
 /// \return pair of position on *this* surface, and position on *other* surface
-std::pair<Vec2, Vec2> RectCollider::get_nearest(const Collider *other) const
+std::pair<Vec2, Vec2> RectCollider::get_nearest(const RectCollider *other) const
 {
     // TODO
     // draw line from this centre to other centre
@@ -148,3 +149,50 @@ Vec2 RectCollider::get_surface_normal(const Vec2 &at) const
 
     throw PositionError(Formatter() << "RectCollider::get_surface_normal(at) -> position " << at.to_string() << " is not on the rectangle. " << this->tr.absolute_position().to_string());
 }
+
+
+
+bool RectCollider::intersects(const Vec2 &newbase, const RectCollider *other) const
+{
+    Vec2 cpos = this->absolute_position();
+    Vec2 dr = newbase - cpos;
+    auto corners = this->get_corners();
+    for (const auto &corner : corners) {
+        Vec2 ppos = corner + dr;
+        if (other->contains_point(ppos)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+bool RectCollider::contains_point(const Vec2 &pt) const
+{
+    Vec2 blpt = this->bl.absolute_position();
+
+    return (
+            (pt.x() > blpt.x()) &&
+            (pt.x() < blpt.x() + this->size.x()) &&
+            (pt.y() > blpt.y()) &&
+            (pt.y() < blpt.y() + this->size.y())
+        );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
