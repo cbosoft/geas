@@ -6,7 +6,7 @@ class RectCollider final: public Collider {
 
 public:
     RectCollider(GeasObject &parent, Vec2 bl_offset, Vec2 size);
-    ~RectCollider();
+    ~RectCollider() override;
 
     Vec2 get_centre() const override;
     Vec2 get_nearest(const Vec2 &p) const override;

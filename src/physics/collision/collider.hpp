@@ -10,8 +10,9 @@ class GeasObject;
 class Collider : public Transform {
 
   public:
-    Collider(GeasObject &parent);
-    virtual ~Collider() =default;
+    explicit Collider(GeasObject &parent);
+    ~Collider() override =default;
+
     virtual Vec2 get_centre() const =0;
     virtual Vec2 get_nearest(const Vec2 &p) const =0;
     virtual std::pair<Vec2, Vec2> get_nearest(const Collider *other) const =0;
