@@ -3,6 +3,7 @@
 
 #include "game/game.hpp"
 #include "geas_object/player/player.hpp"
+#include "geas_object/tile/tile.hpp"
 
 void player_add(Game *game, Scene *scene, int delay)
 {
@@ -19,17 +20,14 @@ int main()
     auto *scene = new Scene();
     game->active_scene(scene);
 
-    {
-        auto *player = new Player(scene->root);
-        //player->sprite->request_animation("idle");
-        player->absolute_position(Vec3({0, -100, 0.0}));
-        player->physics->set_gravity(0.0);
-        player->physics->set_fixed();
+    for (float x = -100.0f; x < 100.0f; x += 17.0f) {
+        for (float y = -250.0f; y < -200.0f; y += 17.0f) {
+            auto *t = new Tile(scene->root, true, true);
+            t->relative_position(Vec3({x, y, 0.0f}));
+        }
     }
 
-    {
-        std::thread(player_add, game, scene, 500).detach();
-    }
+    std::thread(player_add, game, scene, 500).detach();
 
     game->play();
 
