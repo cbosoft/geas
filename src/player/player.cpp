@@ -1,5 +1,6 @@
-#include "../physics/collision/collider.hpp"
+#include "../physics/collision/rectcollider.hpp"
 #include "player.hpp"
+
 Player::Player(Transform *parent)
     : GeasObject(parent)
 {
