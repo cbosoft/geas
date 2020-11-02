@@ -4,7 +4,7 @@
 Physics::Physics(GeasObject &owner)
   :
       driving_direction(0)
-    , driving_accel(1e-3f)
+    , driving_accel(1e-2f)
     , drag(-0.1)
     , owner(owner)
     , collider(nullptr)
@@ -28,7 +28,7 @@ void Physics::set_mass(float mass)
 
 void Physics::set_gravity(float gravity)
 {
-  this->gravity_scale = gravity*Physics::global_gravity_scale;
+  this->gravity_scale = gravity*Physics::global_gravity_scale();
 }
 
 Vec3 Physics::get_position() const

@@ -20,6 +20,10 @@ int main()
     auto *scene = new Scene();
     game->active_scene(scene);
 
+    Physics::update_rate_hz(500);
+    Physics::time_scale(1.0f);
+    Physics::global_gravity_scale(1e-2);
+
     for (float x = -100.0f; x < 100.0f; x += 17.0f) {
         for (float y = -250.0f; y < -200.0f; y += 17.0f) {
             auto *t = new Tile(scene->root, true, true);
@@ -27,7 +31,7 @@ int main()
         }
     }
 
-    std::thread(player_add, game, scene, 500).detach();
+    std::thread(player_add, game, scene, 5000).detach();
 
     game->play();
 

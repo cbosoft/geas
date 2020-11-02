@@ -1,6 +1,7 @@
 #pragma once
 
 #include <list>
+#include <chrono>
 
 #include "../vector/vector.hpp"
 #include "collision/rectcollider.hpp"
@@ -34,7 +35,15 @@ class Physics {
     [[nodiscard]] bool check_constraint(bitmask_t mask) const;
 
 
-    static constexpr float global_gravity_scale = 3e-5f;
+    static float global_gravity_scale();
+    static void global_gravity_scale(float v);
+
+    static int update_period_us();
+    static void update_period_us(int v);
+    static void update_rate_hz(int v);
+
+    static float time_scale();
+    static void time_scale(float v);
 
     int driving_direction;
     float driving_accel;
@@ -56,4 +65,5 @@ private:
     RectCollider *collider;
     bitmask_t direction_constraints_mask;
     Vec3 maybe_new_position;
+
 };

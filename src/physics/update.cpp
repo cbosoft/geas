@@ -14,6 +14,8 @@ static bool t0set = false;
 
 void Physics::update()
 {
+    float dt = Physics::time_scale();
+
     if (!t0set) {
         t0 = std::chrono::system_clock::now();
         t0set = true;
@@ -31,8 +33,8 @@ void Physics::update()
         float raw_dv = entity->driving_accel * static_cast<float>(entity->driving_direction);
         float drag_dv = entity->momentum.x() * entity->drag;
         Vec2 accel({raw_dv + drag_dv, -entity->gravity_scale * entity->_inv_mass});
-        entity->momentum += accel;
-        Vec2 delta_r = entity->momentum*entity->_inv_mass;
+        entity->momentum += accel*dt;
+        Vec2 delta_r = entity->momentum*entity->_inv_mass*dt;
         // Here "r" means position because physicists are weird (and p is momentum, and x would be misleading).
 
         entity->maybe_new_position = entity->owner.relative_position() + delta_r.promote(0.0);
@@ -57,15 +59,14 @@ void Physics::update()
         if (entity->fixed)
             continue;
 
-        entity->momentum = (entity->maybe_new_position - entity->get_position())*entity->mass;
+        entity->momentum = (entity->maybe_new_position - entity->get_position())*entity->mass/dt;
         entity->owner.absolute_position(entity->maybe_new_position);
     }
 
     std::chrono::time_point<std::chrono::system_clock> t1 = std::chrono::system_clock::now();
     int dt_us = std::chrono::duration_cast<std::chrono::microseconds>(t1 - t0).count();
 
-    const int physics_dt_us_goal = 500;
-    int w = physics_dt_us_goal - dt_us;
+    int w = Physics::update_period_us() - dt_us;
     if (w < 0) w = 0;
 
     std::cerr << dt_us << " us, w = " << w << std::endl;
