@@ -69,7 +69,7 @@ void Physics::update()
     int w = Physics::update_period_us() - dt_us;
     if (w < 0) w = 0;
 
-    std::cerr << dt_us << " us, w = " << w << std::endl;
+    //std::cerr << dt_us << " us, w = " << w << std::endl;
     std::this_thread::sleep_for(std::chrono::microseconds(w));
     t0 = std::chrono::system_clock::now();
 }
