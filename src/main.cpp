@@ -20,18 +20,21 @@ int main()
     auto *scene = new Scene();
     game->active_scene(scene);
 
-    Physics::update_rate_hz(500);
+    Physics::update_rate_hz(400);
     Physics::time_scale(1.0f);
-    Physics::global_gravity_scale(1e-2);
+    Physics::global_gravity_scale(5e-3);
 
-    for (float x = -100.0f; x < 100.0f; x += 17.0f) {
-        for (float y = -250.0f; y < -200.0f; y += 17.0f) {
+    unsigned int ntiles = 0;
+    for (float x = -1000.0f; x < 1000.0f; x += 16.5f) {
+        for (float y = -110.0f; y < -100.0f; y += 16.5f) {
             auto *t = new Tile(scene->root, true, true);
             t->relative_position(Vec3({x, y, 0.0f}));
+            ntiles ++;
         }
     }
+    std::cerr << ntiles << " tiles" << std::endl;
 
-    std::thread(player_add, game, scene, 5000).detach();
+    std::thread(player_add, game, scene, 500).detach();
 
     game->play();
 
