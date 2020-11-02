@@ -9,9 +9,15 @@
 #include "physics.hpp"
 
 //static double ptime = 0.0;
+static std::chrono::time_point<std::chrono::system_clock> t0;
+static bool t0set = false;
 
 void Physics::update()
 {
+    if (!t0set) {
+        t0 = std::chrono::system_clock::now();
+        t0set = true;
+    }
     const std::list<Physics *> &entities = Physics::get_list();
 
     // TODO: order entities into cells?
@@ -55,5 +61,14 @@ void Physics::update()
         entity->owner.absolute_position(entity->maybe_new_position);
     }
 
-  std::this_thread::sleep_for(std::chrono::microseconds(100));
+    std::chrono::time_point<std::chrono::system_clock> t1 = std::chrono::system_clock::now();
+    int dt_us = std::chrono::duration_cast<std::chrono::microseconds>(t1 - t0).count();
+
+    const int physics_dt_us_goal = 500;
+    int w = physics_dt_us_goal - dt_us;
+    if (w < 0) w = 0;
+
+    std::cerr << dt_us << " us, w = " << w << std::endl;
+    std::this_thread::sleep_for(std::chrono::microseconds(w));
+    t0 = std::chrono::system_clock::now();
 }
