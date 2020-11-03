@@ -14,10 +14,12 @@ public:
     BufferArray(const BufferArray &other) =delete; // no copying
     BufferArray(BufferArray &&other) noexcept;
 
-    void set(int i, const GLVertex &vertex);
-    void set(int i, const Vec3 &position);
-    void set(int i, const Vec4 &colour);
-    void set(int i, const Vec2 &texture);
+    void set(unsigned int i, const GLVertex &vertex);
+    void set(unsigned int i, const Vec3 &position);
+    void set(unsigned int i, const Vec4 &colour);
+    void set(unsigned int i, const Vec2 &texture);
+
+    void clear_no_shrink();
 
     void set_monochrome_rect_centred(const Vec3 &centre, const Vec2 &size, const Vec4 &colour);
 
@@ -34,6 +36,7 @@ public:
 private:
     void sync();
 
+    unsigned int _effective_size;
     std::vector<GLVertex> _vertices;
     bool _invalid;
     AttribArray *attribArray;

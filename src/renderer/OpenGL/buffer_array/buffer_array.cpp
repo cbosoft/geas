@@ -4,7 +4,8 @@
 #include "buffer_array.hpp"
 
 BufferArray::BufferArray()
-    : _invalid(true)
+    : _effective_size(0)
+    , _invalid(true)
     , attribArray(nullptr)
 {
     glGenBuffers(1, &this->_id);
@@ -28,4 +29,9 @@ BufferArray::~BufferArray()
 std::size_t BufferArray::size() const
 {
     return this->_vertices.size();
+}
+
+void BufferArray::clear_no_shrink()
+{
+    this->_effective_size = 0;
 }

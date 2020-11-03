@@ -1,30 +1,52 @@
+#include "../../../util/exception.hpp"
+
 #include "buffer_array.hpp"
 
-void BufferArray::set(int i, const GLVertex &vertex)
+void BufferArray::set(unsigned int i, const GLVertex &vertex)
 {
-    // copy vertex into array
-    GLVertex v = this->_vertices[i];
+    if (i > this->size())
+        throw OutOfRange(Formatter() << "Index " << i << " out of range for bufferarray of size " << this->size());
+    else if (i == this->size())
+        this->add(vertex);
+    else {
+        // copy vertex into array
+        GLVertex v = this->_vertices[i];
 
-    this->_vertices[i] = vertex;
+        this->_vertices[i] = vertex;
 
-    if (v != this->_vertices[i])
-        this->_invalid = true;
+        if (v != this->_vertices[i])
+            this->_invalid = true;
+    }
 }
 
-void BufferArray::set(int i, const Vec3 &position)
+void BufferArray::set(unsigned int i, const Vec3 &position)
 {
-    GLVertex v = this->_vertices[i];
+    if (i > this->size())
+        throw OutOfRange(Formatter() << "Index " << i << " out of range for bufferarray of size " << this->size());
+    else if (i == this->size())
+        this->add(position);
+    else {
 
-    this->_vertices[i].x = position.x();
-    this->_vertices[i].y = position.y();
-    this->_vertices[i].z = position.z();
+        GLVertex v = this->_vertices[i];
 
-    if (v != this->_vertices[i])
-        this->_invalid = true;
+        this->_vertices[i].x = position.x();
+        this->_vertices[i].y = position.y();
+        this->_vertices[i].z = position.z();
+
+        if (v != this->_vertices[i])
+            this->_invalid = true;
+    }
+
+    if (this->_effective_size <= i) {
+        this->_effective_size = i+1;
+    }
 }
 
-void BufferArray::set(int i, const Vec4 &colour)
+void BufferArray::set(unsigned int i, const Vec4 &colour)
 {
+    if (i > this->size())
+        throw OutOfRange(Formatter() << "Index " << i << " out of range for bufferarray of size " << this->size());
+
     GLVertex v = this->_vertices[i];
 
     this->_vertices[i].r = colour.r();
@@ -34,10 +56,17 @@ void BufferArray::set(int i, const Vec4 &colour)
 
     if (v != this->_vertices[i])
         this->_invalid = true;
+
+    if (this->_effective_size <= i) {
+        this->_effective_size = i+1;
+    }
 }
 
-void BufferArray::set(int i, const Vec2 &texture)
+void BufferArray::set(unsigned int i, const Vec2 &texture)
 {
+    if (i > this->size())
+        throw OutOfRange(Formatter() << "Index " << i << " out of range for bufferarray of size " << this->size());
+
     GLVertex v = this->_vertices[i];
 
     this->_vertices[i].s = texture.x();
@@ -45,6 +74,10 @@ void BufferArray::set(int i, const Vec2 &texture)
 
     if (v != this->_vertices[i])
         this->_invalid = true;
+
+    if (this->_effective_size <= i) {
+        this->_effective_size = i+1;
+    }
 }
 
 
