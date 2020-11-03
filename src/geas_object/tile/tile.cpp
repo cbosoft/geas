@@ -1,6 +1,6 @@
 #include "tile.hpp"
 
-Tile::Tile(Transform *parent, bool fixed, bool collision)
+Tile::Tile(Transform *parent, float s, bool fixed, bool collision)
     : GeasObject(parent)
 {
     this->physics = Physics::create(*this);
@@ -9,12 +9,12 @@ Tile::Tile(Transform *parent, bool fixed, bool collision)
     if (collision) {
         this->physics->set_collider(new RectCollider(this,
                                                      Vec2(),
-                                                     Vec2({16.0f, 16.0f})));
+                                                     Vec2(s)));
     }
 
     auto *r = new Renderable(this);
     this->renderable(r);
-    r->size = Vec2({16.0f, 16.0f});
-    r->colour = Vec4({1.0f, 0.0f, 0.0f, 1.0f});
+    r->size = Vec2(s);
+    r->colour = Vec4(1.0f);
     r->has_colour = true;
 }
