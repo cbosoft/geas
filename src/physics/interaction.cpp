@@ -52,12 +52,12 @@ void Physics::interact_with(Physics *other)
         Vec2 drx_vec = Vec2({dr.x(), 0.0f});
         Vec2 dry_vec = Vec2({0.0f, dr.y()});
 
-        if (freebody->collider->intersects(drx_vec, fixedbody->collider)) {
+        if ((freebody->collider->intersects(drx_vec, fixedbody->collider)) || (fixedbody->collider->intersects(drx_vec*-1.0, freebody->collider))) {
             float npx = freebody->owner.absolute_position().x() - (freebody->momentum.x() * freebody->_inv_mass * bouncy);
             freebody->maybe_new_position.x(npx);
         }
 
-        if (freebody->collider->intersects(dry_vec, fixedbody->collider)) {
+        if ((freebody->collider->intersects(dry_vec, fixedbody->collider)) || (fixedbody->collider->intersects(dry_vec*-1.0, freebody->collider))) {
             float npy = freebody->owner.absolute_position().y() - (freebody->momentum.y() * freebody->_inv_mass * bouncy);
             freebody->maybe_new_position.y(npy);
         }
