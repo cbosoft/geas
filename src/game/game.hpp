@@ -5,7 +5,7 @@
 #include <vector>
 #include <mutex>
 
-#include "../geas_object/geas_object.hpp"
+#include "../geas_object/player/player.hpp"
 #include "../renderer/renderer.hpp"
 #include "../util/tsq.hpp"
 #include "input.hpp"
@@ -30,8 +30,8 @@ class Game {
     void active_scene(unsigned int i);
     void process_input(int key, int scancode, int action, int mods);
 
-    void set_player(GeasObject *obj);
-    [[nodiscard]] GeasObject *get_player() const;
+    void set_player(Player *obj);
+    [[nodiscard]] Player *get_player() const;
 
   private:
     Game();
@@ -50,7 +50,7 @@ class Game {
     ThreadedQueue<PlayerInput *> input_queue;
     typedef std::lock_guard<std::mutex> lock_guard;
     mutable std::mutex mutex;
-    GeasObject *player;
+    Player *player;
 
 
 };

@@ -70,13 +70,13 @@ void Game::push_input(PlayerInput *input)
 }
 
 
-void Game::set_player(GeasObject *obj)
+void Game::set_player(Player *obj)
 {
     this->player = obj;
 }
 
 
-GeasObject *Game::get_player() const
+Player *Game::get_player() const
 {
     return this->player;
 }
