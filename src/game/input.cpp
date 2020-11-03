@@ -25,6 +25,11 @@ void Game::process_input(int key, int scancode, int action, int mods)
               this->player->move(action != GLFW_RELEASE ? -1 : 0);
           break;
 
+      case GLFW_KEY_SPACE:
+          if (this->player)
+              this->player->jump();
+          break;
+
       default:
           break;
 
