@@ -30,9 +30,14 @@ void Physics::update()
         if (entity->fixed)
             continue;
 
-        float raw_dv = entity->driving_accel * static_cast<float>(entity->driving_direction);
+        entity->owner.update();
+
         float drag_dv = entity->momentum.x() * entity->drag;
-        Vec2 accel({raw_dv + drag_dv, -entity->gravity_scale * entity->_inv_mass});
+        Vec2 accel({
+            drag_dv + entity->force_total.x()*entity->_inv_mass,
+            (entity->force_total.y() - entity->gravity_scale)*entity->_inv_mass
+        });
+        entity->force_total.zero();
         entity->momentum += accel*dt;
         Vec2 delta_r = entity->momentum*entity->_inv_mass*dt;
         // Here "r" means position because physicists are weird (and p is momentum, and x would be misleading).
