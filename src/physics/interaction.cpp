@@ -55,11 +55,29 @@ void Physics::interact_with(Physics *other)
         if ((freebody->collider->intersects(drx_vec, fixedbody->collider)) || (fixedbody->collider->intersects(drx_vec*-1.0, freebody->collider))) {
             float npx = freebody->owner.absolute_position().x() - (freebody->momentum.x() * freebody->_inv_mass * bouncy);
             freebody->maybe_new_position.x(npx);
+
+            if (dr.x() > 0.0f) {
+                freebody->owner.set_contact_right();
+                fixedbody->owner.set_contact_left();
+            }
+            else {
+                freebody->owner.set_contact_left();
+                fixedbody->owner.set_contact_right();
+            }
         }
 
         if ((freebody->collider->intersects(dry_vec, fixedbody->collider)) || (fixedbody->collider->intersects(dry_vec*-1.0, freebody->collider))) {
             float npy = freebody->owner.absolute_position().y() - (freebody->momentum.y() * freebody->_inv_mass * bouncy);
             freebody->maybe_new_position.y(npy);
+
+            if (dr.y() > 0.0f) {
+                freebody->owner.set_contact_top();
+                fixedbody->owner.set_contact_bottom();
+            }
+            else {
+                freebody->owner.set_contact_bottom();
+                fixedbody->owner.set_contact_top();
+            }
         }
 
     }

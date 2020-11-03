@@ -14,6 +14,7 @@ GeasObject::GeasObject(Transform *parent)
   , physics(nullptr)
   , _renderable(nullptr)
   , _marked_for_destruction(false)
+  , contact_mask(0)
 {
     // do nothing
 }
