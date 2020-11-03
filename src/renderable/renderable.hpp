@@ -8,9 +8,8 @@ class GeasObject;
 class Renderable final : public Transform {
 public:
     Renderable(GeasObject *parent);
-    ~Renderable() =default;
+    ~Renderable() noexcept;
 
-    std::list<Vec2> points;
 
     bool has_texture;
     std::string texture_path;
@@ -19,4 +18,6 @@ public:
     Vec4 colour;
 
     Vec2 size;
+
+    void *renderer_data;
 };

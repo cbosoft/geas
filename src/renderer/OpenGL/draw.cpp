@@ -50,13 +50,11 @@ void OpenGLRenderer::draw(Renderable *renderable) {
 
 
 
-    auto it = this->render_info_cache.find(renderable);
-    OpenGLRenderData *renderData = nullptr;
-    if (it == this->render_info_cache.end()) {
-        this->render_info_cache[renderable] = new OpenGLRenderData();
+    auto *renderData = (OpenGLRenderData *)renderable->renderer_data;
+    if (renderData == nullptr) {
+        renderData = new OpenGLRenderData();
+        renderable->renderer_data = (void *)renderData;
 
-        // renderable not in cache: init new renderdata
-        renderData = this->render_info_cache[renderable];
         renderData->shaderProgram = ShaderProgram::from_file("shaders/simple_vert.glsl", "shaders/block_colour_frag.glsl");
 
         // vertex buffer
@@ -74,12 +72,9 @@ void OpenGLRenderer::draw(Renderable *renderable) {
         renderData->element.add(3);
 
     }
-    else {
-        // renderable in cache: update with new position/colour?
-        renderData = it->second;
-    }
 
-    renderData->buffer.set_monochrome_rect_centred(pos*this->scale.promote(1.0f), renderable->size*this->scale, colour);
+    renderData->buffer.set_monochrome_rect_centred(pos * this->scale.promote(1.0f), renderable->size * this->scale,
+                                                       colour);
 
     renderData->shaderProgram->use();
     renderData->buffer.use();

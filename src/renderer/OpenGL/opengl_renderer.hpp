@@ -27,6 +27,7 @@ public:
 
     void init() override;
     void run() override;
+    void clean(Renderable *renderable) override;
 
     Vec2 scale{{0.01f, 0.01f}};
 
@@ -37,5 +38,4 @@ private:
     bool initialised;
 
     GLFWwindow *glfw_window;
-    std::map<Renderable *, OpenGLRenderData *> render_info_cache;
 };

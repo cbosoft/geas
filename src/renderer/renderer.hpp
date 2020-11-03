@@ -13,6 +13,7 @@ public:
 
     virtual void init() =0;
     virtual void run() =0;
+    virtual void clean(Renderable *) =0;
 
 private:
     virtual void draw(Scene *scene) =0;
