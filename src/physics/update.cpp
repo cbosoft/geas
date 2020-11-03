@@ -21,8 +21,9 @@ void Physics::update()
         t0set = true;
     }
     const std::list<Physics *> &entities = Physics::get_list();
+    std::list<Physics *> non_fixed_entities;
 
-    // TODO: order entities into cells?
+    // TODO: order entities into cells!
 
     // First loop: using the momentum of the entities, calculate their projected new position (Physics::maybe_new_position)
     for (Physics *entity : entities) {
@@ -43,16 +44,18 @@ void Physics::update()
         // Here "r" means position because physicists are weird (and p is momentum, and x would be misleading).
 
         entity->maybe_new_position = entity->owner.relative_position() + delta_r.promote(0.0);
+        non_fixed_entities.push_back(entity);
     }
 
 
     // For all pairs of objects, check if the objects will interact. If they do, alter their projected new position accordingly.
-    for (Physics *a : entities) {
+    for (Physics *a : non_fixed_entities) {
         for (Physics *b : entities) {
 
           if (a == b)
               break;
 
+          // Expensive!
           a->interact_with(b);
 
         }
