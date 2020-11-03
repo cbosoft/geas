@@ -34,6 +34,8 @@ class Physics {
     [[nodiscard]] bool check_constraint(DirectionalConstraint constraint) const;
     [[nodiscard]] bool check_constraint(bitmask_t mask) const;
 
+    void add_impulse(const Vec2 &force);
+
 
     static float global_gravity_scale();
     static void global_gravity_scale(float v);
@@ -45,8 +47,6 @@ class Physics {
     static float time_scale();
     static void time_scale(float v);
 
-    int driving_direction;
-    float driving_accel;
     float drag;
 
 private:

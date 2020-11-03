@@ -8,4 +8,14 @@ class Player final : public GeasObject {
 
     void update() override;
 
+    void move(int dir);
+    void jump();
+
+private:
+
+    float jump_force;
+    float driving_accel;
+    int driving_direction;
+    bool should_jump{false};
+
 };

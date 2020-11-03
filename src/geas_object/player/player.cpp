@@ -2,6 +2,9 @@
 
 Player::Player(Transform *parent)
     : GeasObject(parent)
+    , jump_force(1.0f)
+    , driving_accel(1e-2f)
+    , driving_direction(0)
 {
   //this->sprite = new Sprite(this, "textures/sprite_sheet.png");
   //this->sprite->request_animation("run");

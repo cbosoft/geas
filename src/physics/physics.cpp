@@ -3,9 +3,7 @@
 
 Physics::Physics(GeasObject &owner)
   :
-      driving_direction(0)
-    , driving_accel(1e-2f)
-    , drag(-0.1)
+      drag(-0.1)
     , owner(owner)
     , collider(nullptr)
     , direction_constraints_mask(0)
@@ -43,4 +41,9 @@ void Physics::set_collider(RectCollider * collider)
 void Physics::set_fixed(bool is_fixed)
 {
     this->fixed = is_fixed;
+}
+
+void Physics::add_impulse(const Vec2 &force)
+{
+    this->force_total += force;
 }

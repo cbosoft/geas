@@ -1,11 +1,11 @@
-#include "geas_object.hpp"
+#include "player.hpp"
 
-void GeasObject::move(int v)
+void Player::move(int v)
 {
-    this->physics->driving_direction = v;
+    this->driving_direction = v;
 }
 
-void GeasObject::jump()
+void Player::jump()
 {
-    this->physics->add_impulse(Vec2({0.0f, 1.0f}));
+    this->should_jump = true;
 }
