@@ -367,6 +367,14 @@ class VectorN {
         return false;
     }
 
+    void zero()
+    {
+        for (unsigned int i = 0; i < N; i++)
+        {
+            this->data[i] = 0.0;
+        }
+    }
+
 
   private:
 
