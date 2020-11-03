@@ -22,12 +22,13 @@ int main()
 
     Physics::update_rate_hz(400);
     Physics::time_scale(1.0f);
-    Physics::global_gravity_scale(5e-3);
+    Physics::global_gravity_scale(1e-2);
 
+    const float s = 8.0f;
     unsigned int ntiles = 0;
-    for (float x = -1000.0f; x < 1000.0f; x += 16.5f) {
-        for (float y = -110.0f; y < -100.0f; y += 16.5f) {
-            auto *t = new Tile(scene->root, true, true);
+    for (float x = -100.0f; x < 100.0f; x += s) {
+        for (float y = -110.0f; y < -100.0f; y += s) {
+            auto *t = new Tile(scene->root, s, true, true);
             t->relative_position(Vec3({x, y, 0.0f}));
             ntiles ++;
         }
