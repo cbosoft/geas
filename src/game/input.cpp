@@ -15,16 +15,20 @@ void Game::process_input(int key, int scancode, int action, int mods)
           this->is_alive(false);
           break;
 
+      case GLFW_KEY_D:
       case GLFW_KEY_RIGHT:
           if (this->player)
               this->player->move(action != GLFW_RELEASE ? 1 : 0);
           break;
 
+      case GLFW_KEY_A:
       case GLFW_KEY_LEFT:
           if (this->player)
               this->player->move(action != GLFW_RELEASE ? -1 : 0);
           break;
 
+      case GLFW_KEY_W:
+      case GLFW_KEY_UP:
       case GLFW_KEY_SPACE:
           if (this->player)
               this->player->jump();
