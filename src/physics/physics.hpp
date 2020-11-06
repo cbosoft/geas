@@ -5,6 +5,7 @@
 
 #include "../vector/vector.hpp"
 #include "collision/rectcollider.hpp"
+#include "material/material.hpp"
 
 class GeasObject;
 
@@ -23,6 +24,7 @@ class Physics {
     void set_mass(float mass);
     void set_gravity(float gravity);
     void set_collider(RectCollider *collider);
+    void set_material(Material *material);
     void set_fixed(bool is_fixed=true);
 
     Vec3 get_position() const;
@@ -64,6 +66,7 @@ private:
     Vec2 momentum;
     Vec2 force_total;
     RectCollider *collider;
+    Material *material;
     bitmask_t direction_constraints_mask;
     Vec3 maybe_new_position;
 

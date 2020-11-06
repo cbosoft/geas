@@ -40,7 +40,7 @@ void Physics::interact_with(Physics *other)
         return;
 
 
-    const float bouncy = 0.2f;
+    const float elasticity = (this->material->elasticity() + other->material->elasticity()) * 0.5f;
 
     if (this->fixed || other->fixed) {
 
@@ -53,7 +53,7 @@ void Physics::interact_with(Physics *other)
         Vec2 dry_vec = Vec2({0.0f, dr.y()});
 
         if ((freebody->collider->intersects(drx_vec, fixedbody->collider)) || (fixedbody->collider->intersects(drx_vec*-1.0, freebody->collider))) {
-            float npx = freebody->owner.absolute_position().x() - (freebody->momentum.x() * freebody->_inv_mass * bouncy);
+            float npx = freebody->owner.absolute_position().x() - (freebody->momentum.x() * freebody->_inv_mass * elasticity);
             freebody->maybe_new_position.x(npx);
 
             if (dr.x() > 0.0f) {
@@ -67,7 +67,7 @@ void Physics::interact_with(Physics *other)
         }
 
         if ((freebody->collider->intersects(dry_vec, fixedbody->collider)) || (fixedbody->collider->intersects(dry_vec*-1.0, freebody->collider))) {
-            float npy = freebody->owner.absolute_position().y() - (freebody->momentum.y() * freebody->_inv_mass * bouncy);
+            float npy = freebody->owner.absolute_position().y() - (freebody->momentum.y() * freebody->_inv_mass * elasticity);
             freebody->maybe_new_position.y(npy);
 
             if (dr.y() > 0.0f) {

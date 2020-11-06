@@ -5,7 +5,11 @@ Physics::Physics(GeasObject &owner)
   :
       drag(-0.1)
     , owner(owner)
+    , mass(1.0f)
+    , _inv_mass(1.0f)
+    , gravity_scale(1.0f)
     , collider(nullptr)
+    , material(Material::get_default())
     , direction_constraints_mask(0)
 {
   this->set_mass(1.0);
