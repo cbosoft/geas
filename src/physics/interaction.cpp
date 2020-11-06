@@ -57,12 +57,12 @@ void Physics::interact_with(Physics *other)
             freebody->maybe_new_position.x(npx);
 
             if (dr.x() > 0.0f) {
-                freebody->owner.set_contact_right();
-                fixedbody->owner.set_contact_left();
+                freebody->owner.contact_right(true);
+                fixedbody->owner.contact_left(true);
             }
             else {
-                freebody->owner.set_contact_left();
-                fixedbody->owner.set_contact_right();
+                freebody->owner.contact_left(true);
+                fixedbody->owner.contact_right(true);
             }
         }
 
@@ -71,12 +71,12 @@ void Physics::interact_with(Physics *other)
             freebody->maybe_new_position.y(npy);
 
             if (dr.y() > 0.0f) {
-                freebody->owner.set_contact_top();
-                fixedbody->owner.set_contact_bottom();
+                freebody->owner.contact_top(true);
+                fixedbody->owner.contact_bottom(true);
             }
             else {
-                freebody->owner.set_contact_bottom();
-                fixedbody->owner.set_contact_top();
+                freebody->owner.contact_bottom(true);
+                fixedbody->owner.contact_top(true);
             }
         }
 

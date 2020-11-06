@@ -2,47 +2,62 @@
 
 enum DIRENUM{none, BOTTOM, TOP, LEFT, RIGHT};
 
-void GeasObject::reset_contact()
+void GeasObject::contact_bottom(bool v)
 {
-    this->contact_mask = 0;
+    if (v) {
+        this->contact_mask |= BOTTOM;
+    }
+    else {
+        this->contact_mask &= ~BOTTOM;
+    }
 }
 
-void GeasObject::set_contact_bottom()
+void GeasObject::contact_top(bool v)
 {
-    this->contact_mask |= BOTTOM;
+    if (v) {
+        this->contact_mask |= TOP;
+    }
+    else {
+        this->contact_mask &= ~TOP;
+    }
 }
 
-void GeasObject::set_contact_top()
+void GeasObject::contact_left(bool v)
 {
-    this->contact_mask |= TOP;
+    if (v) {
+        this->contact_mask |= LEFT;
+    }
+    else {
+        this->contact_mask &= ~LEFT;
+    }
 }
 
-void GeasObject::set_contact_left()
+void GeasObject::contact_right(bool v)
 {
-    this->contact_mask |= LEFT;
+    if (v) {
+        this->contact_mask |= RIGHT;
+    }
+    else {
+        this->contact_mask &= ~RIGHT;
+    }
 }
 
-void GeasObject::set_contact_right()
-{
-    this->contact_mask |= RIGHT;
-}
-
-bool GeasObject::get_contact_bottom() const
+bool GeasObject::contact_bottom() const
 {
     return this->contact_mask & BOTTOM;
 }
 
-bool GeasObject::get_contact_top() const
+bool GeasObject::contact_top() const
 {
     return this->contact_mask & TOP;
 }
 
-bool GeasObject::get_contact_left() const
+bool GeasObject::contact_left() const
 {
     return this->contact_mask & LEFT;
 }
 
-bool GeasObject::get_contact_right() const
+bool GeasObject::contact_right() const
 {
     return this->contact_mask & RIGHT;
 }

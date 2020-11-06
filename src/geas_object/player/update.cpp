@@ -7,7 +7,7 @@ void Player::update()
 {
     float y = 0.0f;
     if (this->should_jump) {
-        if (this->get_contact_bottom()) {
+        if (this->contact_bottom()) {
             y = this->jump_force;
         }
         this->should_jump = false;

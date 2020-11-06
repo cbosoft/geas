@@ -21,15 +21,14 @@ class GeasObject : public Transform {
     bool is_marked_for_destruction() const;
     void destroy();
 
-    void reset_contact();
-    void set_contact_bottom();
-    void set_contact_top();
-    void set_contact_left();
-    void set_contact_right();
-    bool get_contact_bottom() const;
-    bool get_contact_top() const;
-    bool get_contact_left() const;
-    bool get_contact_right() const;
+    void contact_bottom(bool v);
+    void contact_top(bool v);
+    void contact_left(bool v);
+    void contact_right(bool v);
+    bool contact_bottom() const;
+    bool contact_top() const;
+    bool contact_left() const;
+    bool contact_right() const;
 
   private:
     GeasObject();
