@@ -26,6 +26,7 @@ class Physics {
     void set_fixed(bool is_fixed=true);
 
     Vec3 get_position() const;
+    const Vec2 &get_momentum() const;
 
     void add_constraint(DirectionalConstraint constraint);
     void add_constraint(bitmask_t mask);

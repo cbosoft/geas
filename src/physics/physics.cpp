@@ -33,6 +33,12 @@ Vec3 Physics::get_position() const
 {
   return this->owner.absolute_position();
 }
+
+const Vec2 &Physics::get_momentum() const
+{
+    return this->momentum;
+}
+
 void Physics::set_collider(RectCollider * collider)
 {
   this->collider = collider;
