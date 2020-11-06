@@ -24,7 +24,7 @@ int main()
     Physics::time_scale(1.0f);
     Physics::global_gravity_scale(1e-2);
 
-    const float s = 16.0f;
+    const float s = 32.0f;
     unsigned int ntiles = 0;
     for (float x = -300.0f; x < 300.0f; x += s) {
         for (float y = -200.0f; y < -100.0f; y += s) {
