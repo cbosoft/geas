@@ -40,7 +40,7 @@ void Physics::interact_with(Physics *other)
         return;
 
 
-    const float bouncy = 0.5f;
+    const float bouncy = 0.2f;
 
     if (this->fixed || other->fixed) {
 
