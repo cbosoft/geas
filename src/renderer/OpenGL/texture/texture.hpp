@@ -3,7 +3,7 @@
 #include <map>
 
 #include "../../../vector/vector.hpp"
-#include "../../../image/image.hpp"
+#include "../../../util/image/image.hpp"
 
 class Texture {
 

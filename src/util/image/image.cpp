@@ -1,4 +1,4 @@
-#include "../util/stb_image/stb_image.h"
+#include "stb_image/stb_image.h"
 #include "image.hpp"
 
 ImageData::ImageData(std::string filename)
