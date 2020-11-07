@@ -9,7 +9,10 @@ Player::Player(Transform *parent)
   //this->sprite = new Sprite(this, "textures/sprite_sheet.png");
   //this->sprite->request_animation("run");
 
-  this->renderable(new Renderable(this));
+  auto *r = new Renderable(this);
+  r->has_texture = true;
+  r->texture_path = "textures/test.png";
+  this->renderable(r);
 
 
   this->physics = Physics::create(*this);

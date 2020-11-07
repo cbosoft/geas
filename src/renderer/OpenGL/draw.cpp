@@ -55,7 +55,9 @@ void OpenGLRenderer::draw(Renderable *renderable) {
         renderData = new OpenGLRenderData();
         renderable->renderer_data = (void *)renderData;
 
-        renderData->shaderProgram = ShaderProgram::from_file("shaders/simple_vert.glsl", "shaders/block_colour_frag.glsl");
+        renderData->shaderProgram = ShaderProgram::from_file(
+                "shaders/simple_vert.glsl",
+                (renderable->has_texture?"shaders/textured_frag.glsl":"shaders/block_colour_frag.glsl"));
 
         // vertex buffer
         renderData->buffer.add({1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0});
@@ -71,6 +73,10 @@ void OpenGLRenderer::draw(Renderable *renderable) {
         renderData->element.add(2);
         renderData->element.add(3);
 
+        if (renderable->has_texture) {
+            renderData->texture = Texture::from_file(renderable->texture_path);
+        }
+
     }
 
     renderData->buffer.set_monochrome_rect_centred(pos * this->scale.promote(1.0f), renderable->size * this->scale,
@@ -79,6 +85,9 @@ void OpenGLRenderer::draw(Renderable *renderable) {
     renderData->shaderProgram->use();
     renderData->buffer.use();
     renderData->element.use();
+    if (renderData->texture) {
+        renderData->texture->use();
+    }
 
     glDrawElements(GL_TRIANGLES, renderData->element.size(), GL_UNSIGNED_INT, nullptr);
     gl_error_check("OpenGLRenderer::draw(Renderable *) -> post draw");

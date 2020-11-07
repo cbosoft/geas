@@ -9,15 +9,22 @@
 #include "buffer_array/buffer_array.hpp"
 #include "element_array/element_array.hpp"
 #include "shader/shader_program.hpp"
+#include "texture/texture.hpp"
 #include "../renderer.hpp"
 
 class OpenGLRenderData {
 public:
-    OpenGLRenderData() =default;
+    OpenGLRenderData()
+        : shaderProgram(nullptr)
+        , texture(nullptr)
+    {
+
+    };
 
     BufferArray buffer;
     ElementArray element;
     ShaderProgram *shaderProgram;
+    Texture *texture;
 };
 
 class OpenGLRenderer final : public Renderer{
