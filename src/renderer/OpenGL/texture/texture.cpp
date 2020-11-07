@@ -43,16 +43,16 @@ Texture::Texture(const ImageData &image)
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-  unsigned int imtype = image.nChannels == 3?GL_RGB:GL_RGBA;
+  unsigned int imtype = image.number_channels() == 3?GL_RGB:GL_RGBA;
   glTexImage2D(GL_TEXTURE_2D,
       0,
       imtype,
-      image.width,
-      image.height,
+      image.width(),
+      image.height(),
       0,
       imtype,
       GL_UNSIGNED_BYTE,
-      image.data);
+      image.full_image());
 
   glGenerateMipmap(GL_TEXTURE_2D);
 }
