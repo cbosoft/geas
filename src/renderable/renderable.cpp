@@ -11,6 +11,7 @@ Renderable::Renderable(GeasObject *parent)
     , frame_lower_bound(0)
     , frame_upper_bound(1)
     , frame_current(0)
+    , animated(false)
     , _colour(1.0)
     , _size({16.0f, 16.0f})
     , renderer_data(nullptr)
@@ -108,6 +109,9 @@ void Renderable::set_texture(const std::string &path)
 
 unsigned int Renderable::increment_frame()
 {
+    if (!this->animated)
+        return this->frame_current;
+
     std::chrono::time_point<std::chrono::system_clock> t1 = std::chrono::system_clock::now();
     auto dt = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0);
     this->ms_since_increment = dt.count();
@@ -132,5 +136,21 @@ void Renderable::set_animation_period(unsigned int t)
 
 void Renderable::set_animation_speed(float hz)
 {
-    this->increment_period_ms = static_cast<unsigned int>(1e3/hz);
+    if (hz > 0.0f) {
+        this->increment_period_ms = static_cast<unsigned int>(1e3 / hz);
+        this->animated = true;
+    }
+    else {
+        this->animated = false;
+    }
+}
+
+void Renderable::set_animated(bool value)
+{
+    this->animated = value;
+}
+
+void Renderable::set_frame(unsigned int i)
+{
+    this->frame_current = i;
 }

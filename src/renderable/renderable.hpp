@@ -21,6 +21,8 @@ public:
     bool has_texture() const;
     void set_animation_speed(float hz);
     void set_animation_period(unsigned int t);
+    void set_animated(bool value);
+    void set_frame(unsigned int i);
 
     Vec4 colour() const;
     void colour(const Vec4 &colour);
@@ -38,6 +40,7 @@ private:
     bool _has_texture;
     std::string _texture_path;
     unsigned int frame_lower_bound, frame_upper_bound, frame_current;
+    bool animated;
     std::map<std::string, std::pair<unsigned int, unsigned int>> animation_loops;
     Vec4 _colour;
     Vec2 _size;

@@ -12,6 +12,7 @@ Player::Player(Transform *parent)
   auto *r = new Renderable(this);
   r->set_texture("textures/sprite_sheet.png");
   r->set_anim_loop("run");
+  r->set_animated(true);
 
   r->size(Vec2({32.0f, 32.0f}));
   this->renderable(r);
