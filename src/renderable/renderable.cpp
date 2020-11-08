@@ -5,13 +5,12 @@
 
 Renderable::Renderable(GeasObject *parent)
     : Transform(parent)
-    , has_texture(false)
+    , _has_texture(false)
     , frame_lower_bound(0)
     , frame_upper_bound(1)
     , frame_current(0)
-    , has_colour(false)
-    , colour(1.0)
-    , size({10.0f, 10.0f})
+    , _colour(1.0)
+    , _size({16.0f, 16.0f})
     , renderer_data(nullptr)
 {
 
@@ -24,6 +23,53 @@ Renderable::~Renderable() noexcept
         rend->clean(this);
     }
 }
+
+
+Vec2 Renderable::size() const
+{
+    return this->_size;
+}
+
+void Renderable::size(const Vec2 &size)
+{
+    this->_size = size;
+}
+
+Vec4 Renderable::colour() const
+{
+    return this->_colour;
+}
+
+void Renderable::colour(const Vec4 &colour)
+{
+    this->_colour = colour;
+}
+
+bool Renderable::has_texture() const
+{
+    return this->_has_texture;
+}
+
+void *Renderable::data() const
+{
+    return this->renderer_data;
+}
+
+void Renderable::data(void *data)
+{
+    this->renderer_data = data;
+}
+
+const std::string &Renderable::texture_path() const
+{
+    return this->_texture_path;
+}
+
+unsigned int Renderable::current_frame() const
+{
+    return this->frame_current;
+}
+
 
 void Renderable::set_anim_loop(const std::string &name)
 {
@@ -44,8 +90,8 @@ void Renderable::load_loops(const json &js_loops)
 
 void Renderable::set_texture(const std::string &path)
 {
-    this->has_texture = true;
-    this->texture_path = path;
+    this->_has_texture = true;
+    this->_texture_path = path;
     json metadata = ResourceManager::singleton().get_metadata(path);
     // linter (clangd) erroneously gives error on json.items(). Ignore it.
     for (auto& [key, value] : metadata.items()) {

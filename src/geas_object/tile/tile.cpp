@@ -14,7 +14,6 @@ Tile::Tile(Transform *parent, float s, bool fixed, bool collision)
 
     auto *r = new Renderable(this);
     this->renderable(r);
-    r->size = Vec2(s);
-    r->colour = Vec4(1.0f);
-    r->has_colour = true;
+    r->size(Vec2(s));
+    r->colour(Vec4(1.0f));
 }

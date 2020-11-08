@@ -2,6 +2,6 @@
 
 void OpenGLRenderer::clean(Renderable *renderable)
 {
-    auto *renderData = (OpenGLRenderData*)renderable->renderer_data;
+    auto *renderData = (OpenGLRenderData*)renderable->data();
     delete renderData;
 }

@@ -13,13 +13,13 @@ Player::Player(Transform *parent)
   r->set_texture("textures/sprite_sheet.png");
   r->set_anim_loop("run");
 
-  r->size = Vec2({32.0f, 32.0f});
+  r->size(Vec2({32.0f, 32.0f}));
   this->renderable(r);
 
 
   this->physics = Physics::create(*this);
   this->physics->set_collider(new RectCollider(this,
         Vec2({0.0, 0.0}),
-        r->size)
+        r->size())
       );
 }
