@@ -2,8 +2,9 @@
 #include <chrono>
 
 #include "game/game.hpp"
+#include "resourcemanager/resourcemanager.hpp"
 #include "geas_object/player/player.hpp"
-#include "geas_object/tile/tile.hpp"
+#include "geas_object/tileset/tileset.hpp"
 
 void player_add(Game *game, Scene *scene, int delay)
 {
@@ -24,16 +25,19 @@ int main()
     Physics::time_scale(1.0f);
     Physics::global_gravity_scale(1e-2);
 
-    const float s = 32.0f;
-    unsigned int ntiles = 0;
-    for (float x = -300.0f; x < 300.0f; x += s) {
-        for (float y = -200.0f; y < -100.0f; y += s) {
-            auto *t = new Tile(scene->root, s, "textures/tile.png", true, true);
-            t->relative_position(Vec3({x, y, 0.0f}));
-            ntiles ++;
-        }
-    }
-    std::cerr << ntiles << " tiles" << std::endl;
+    // const float s = 32.0f;
+    // unsigned int ntiles = 0;
+    // for (float x = -300.0f; x < 300.0f; x += s) {
+    //     for (float y = -200.0f; y < -100.0f; y += s) {
+    //         auto *t = new Tile(scene->root, s, "textures/tile.png", true, true);
+    //         t->relative_position(Vec3({x, y, 0.0f}));
+    //         ntiles ++;
+    //     }
+    // }
+    // std::cerr << ntiles << " tiles" << std::endl;
+
+    json tset = ResourceManager::singleton().get_json("level1.json");
+    create_tiles(scene->root, tset);
 
     std::thread(player_add, game, scene, 500).detach();
 
