@@ -80,6 +80,8 @@ void OpenGLRenderer::draw(Renderable *renderable) {
     }
 
     if (renderData->texture) {
+        renderable->increment_frame();
+
         renderData->texture->use();
         Vec4 rect = renderData->texture->get_rect(renderable->current_frame());
         renderData->buffer.set_textured_rect_centred(

@@ -19,6 +19,8 @@ public:
     unsigned int increment_frame();
     unsigned int current_frame() const;
     bool has_texture() const;
+    void set_animation_speed(float hz);
+    void set_animation_period(unsigned int t);
 
     Vec4 colour() const;
     void colour(const Vec4 &colour);
@@ -40,4 +42,6 @@ private:
     Vec4 _colour;
     Vec2 _size;
     void *renderer_data;
+    unsigned int increment_period_ms, ms_since_increment;
+    std::chrono::time_point<std::chrono::system_clock> t0;
 };

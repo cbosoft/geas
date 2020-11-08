@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "../geas_object/geas_object.hpp"
 #include "../renderer/renderer.hpp"
 #include "../resourcemanager/resourcemanager.hpp"
@@ -12,6 +14,8 @@ Renderable::Renderable(GeasObject *parent)
     , _colour(1.0)
     , _size({16.0f, 16.0f})
     , renderer_data(nullptr)
+    , increment_period_ms(100)
+    , ms_since_increment(1000)
 {
 
 }
@@ -104,10 +108,29 @@ void Renderable::set_texture(const std::string &path)
 
 unsigned int Renderable::increment_frame()
 {
-    this->frame_current++;
+    std::chrono::time_point<std::chrono::system_clock> t1 = std::chrono::system_clock::now();
+    auto dt = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0);
+    this->ms_since_increment = dt.count();
+
+    if (this->ms_since_increment >= this->increment_period_ms) {
+        this->frame_current++;
+        this->ms_since_increment = 0;
+        t0 = t1;
+    }
+
     if ((this->frame_current >= this->frame_upper_bound) || (this->frame_current < this->frame_lower_bound)) {
         this->frame_current = this->frame_lower_bound;
     }
 
     return this->frame_current;
+}
+
+void Renderable::set_animation_period(unsigned int t)
+{
+    this->increment_period_ms = t;
+}
+
+void Renderable::set_animation_speed(float hz)
+{
+    this->increment_period_ms = static_cast<unsigned int>(1e3/hz);
 }
