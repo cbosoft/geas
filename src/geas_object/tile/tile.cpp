@@ -1,6 +1,6 @@
 #include "tile.hpp"
 
-Tile::Tile(Transform *parent, float s, bool fixed, bool collision)
+Tile::Tile(Transform *parent, float s, const std::string &texture_path, bool fixed, bool collision)
     : GeasObject(parent)
 {
     this->physics = Physics::create(*this);
@@ -13,6 +13,7 @@ Tile::Tile(Transform *parent, float s, bool fixed, bool collision)
     }
 
     auto *r = new Renderable(this);
+    r->set_texture(texture_path);
     this->renderable(r);
     r->size(Vec2(s));
     r->colour(Vec4(1.0f));

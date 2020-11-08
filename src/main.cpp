@@ -28,7 +28,7 @@ int main()
     unsigned int ntiles = 0;
     for (float x = -300.0f; x < 300.0f; x += s) {
         for (float y = -200.0f; y < -100.0f; y += s) {
-            auto *t = new Tile(scene->root, s, true, true);
+            auto *t = new Tile(scene->root, s, "textures/tile.png", true, true);
             t->relative_position(Vec3({x, y, 0.0f}));
             ntiles ++;
         }
