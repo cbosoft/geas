@@ -5,6 +5,7 @@
 #include "resourcemanager/resourcemanager.hpp"
 #include "geas_object/player/player.hpp"
 #include "geas_object/tileset/tileset.hpp"
+#include "geas_object/tile/tile.hpp"
 
 void player_add(Game *game, Scene *scene, int delay)
 {
@@ -20,6 +21,14 @@ int main()
     Game *game = Game::singleton();
     auto *scene = new Scene();
     game->active_scene(scene);
+
+    auto *cam = new Transform(scene->root);
+    (void) cam;
+    Tile *t = new Tile(cam, 1000.0f, Vec4({0.2f, 0.1f, 0.4f, 1.0f}), true, false);
+    //Tile *t = new Tile(cam, 100.0f, "textures/test.png", false, false);
+    //Vec3 tpos = t->relative_position();
+    //t->relative_position(Vec3({tpos.x(), tpos.y(), 0.0f}));
+    (void)t;
 
     Physics::update_rate_hz(500);
     Physics::time_scale(1.0f);

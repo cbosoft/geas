@@ -8,7 +8,7 @@
 
 #include "opengl_renderer.hpp"
 
-void OpenGLRenderer::draw(Scene *scene)
+void OpenGLRenderer::draw(Scene *scene, const Vec3 &camera_position)
 {
 
     if (scene == nullptr)
@@ -18,33 +18,33 @@ void OpenGLRenderer::draw(Scene *scene)
     // TODO any extra drawing required for the scene
 
     // draw its objects
-    this->draw(scene->root);
+    this->draw(scene->root, camera_position);
 
 }
 
-void OpenGLRenderer::draw(Transform *transform)
+void OpenGLRenderer::draw(Transform *transform, const Vec3 &camera_position)
 {
     if (transform == nullptr)
         return;
 
     // draw this object
-    this->draw(transform->renderable());
+    this->draw(transform->renderable(), camera_position);
 
     // draw child objects
     for (const auto& child : transform->children()) {
-        this->draw(child);
+        this->draw(child, camera_position);
     }
 
     // TODO: recursion detection: maintain a list of objects which have been drawn, keyed to transform address?
 }
 
-void OpenGLRenderer::draw(Renderable *renderable) {
+void OpenGLRenderer::draw(Renderable *renderable, const Vec3 &camera_position) {
 
     gl_error_check("OpenGLRenderer::draw(Renderable *) -> pre draw");
     if (renderable == nullptr)
         return;
 
-    Vec3 pos = renderable->absolute_position();
+    Vec3 pos = renderable->absolute_position() - camera_position;
     Vec4 colour = renderable->colour();
 
 

@@ -15,6 +15,9 @@ void Game::physics_thread_worker()
         this->time_delta = this->time_delta_irl * this->time_scale;
         this->time += this->time_delta;
         Physics::update();
+
+        if (this->player)
+            this->camera()->absolute_position(this->player->absolute_position());
     }
 }
 

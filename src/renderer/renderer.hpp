@@ -16,9 +16,9 @@ public:
     virtual void clean(Renderable *) =0;
 
 private:
-    virtual void draw(Scene *scene) =0;
-    virtual void draw(Transform *transform) =0;
-    virtual void draw(Renderable *renderable) =0;
+    virtual void draw(Scene *scene, const Vec3 &camera) =0;
+    virtual void draw(Transform *transform, const Vec3 &camera) =0;
+    virtual void draw(Renderable *renderable, const Vec3 &camera) =0;
 
     Game *game;
     bool fullscreen{
