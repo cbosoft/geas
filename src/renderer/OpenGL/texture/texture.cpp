@@ -35,6 +35,7 @@
 
 Texture::Texture(const ImageData &image)
   : glid(0)
+  , _number_frames(image.number_frames())
 {
   glGenTextures(1, &this->glid);
   glBindTexture(GL_TEXTURE_2D, this->glid);
@@ -52,9 +53,17 @@ Texture::Texture(const ImageData &image)
       0,
       imtype,
       GL_UNSIGNED_BYTE,
-      image.full_image());
+      image.data());
 
   glGenerateMipmap(GL_TEXTURE_2D);
+
+  this->framewidth = 1.0f/static_cast<float>(this->_number_frames);
+}
+
+Vec4 Texture::get_rect(unsigned int i) const
+{
+    float x = this->framewidth * static_cast<float>(i);
+    return Vec4({x, 0.0f, this->framewidth, 1.0f});
 }
 
 void Texture::use() const

@@ -10,8 +10,9 @@ Player::Player(Transform *parent)
   //this->sprite->request_animation("run");
 
   auto *r = new Renderable(this);
-  r->has_texture = true;
-  r->texture_path = "textures/test.png";
+  r->set_texture("textures/sprite_sheet.png");
+  r->set_anim_loop("run");
+
   r->size = Vec2({32.0f, 32.0f});
   this->renderable(r);
 

@@ -95,10 +95,40 @@ void BufferArray::set_monochrome_rect_centred(const Vec3 &centre, const Vec2 &si
     const float a = colour.a();
 
     GLVertex verts[4] = {
-            {hsx + cx, hsy + cy, cz, r, g, b, a, 0.0f, 0.0f},
-            {hsx + cx, -hsy + cy, cz, r, g, b, a, 0.0f, 0.0f},
+            {hsx + cx, hsy + cy, cz, r, g, b, a, 1.0f, 1.0f},
+            {hsx + cx, -hsy + cy, cz, r, g, b, a, 1.0f, 0.0f},
             {-hsx + cx, -hsy + cy, cz, r, g, b, a, 0.0f, 0.0f},
-            {-hsx + cx, hsy + cy, cz, r, g, b, a, 0.0f, 0.0f}
+            {-hsx + cx, hsy + cy, cz, r, g, b, a, 0.0f, 1.0f}
+    };
+
+    for (int i = 0; i < 4; i++) {
+        this->set(i, verts[i]);
+    }
+}
+
+void BufferArray::set_textured_rect_centred(const Vec3 &centre, const Vec2 &size, const Vec4 &colour, const Vec4 &rect)
+{
+    const float hsx = size.x()*0.5f;
+    const float hsy = size.y()*0.5f;
+    const float cx = centre.x();
+    const float cy = centre.y();
+    const float cz = centre.z();
+
+    const float r = colour.r();
+    const float g = colour.g();
+    const float b = colour.b();
+    const float a = colour.a();
+
+    const float tx = rect.get(0);
+    const float ty = rect.get(1);
+    const float tw = rect.get(2);
+    const float th = rect.get(3);
+
+    GLVertex verts[4] = {
+            {hsx + cx, hsy + cy, cz, r, g, b, a, tx+tw, ty+th},
+            {hsx + cx, -hsy + cy, cz, r, g, b, a, tx+tw, ty},
+            {-hsx + cx, -hsy + cy, cz, r, g, b, a, tx, ty},
+            {-hsx + cx, hsy + cy, cz, r, g, b, a, tx, ty+th}
     };
 
     for (int i = 0; i < 4; i++) {

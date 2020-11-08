@@ -79,15 +79,23 @@ void OpenGLRenderer::draw(Renderable *renderable) {
 
     }
 
-    renderData->buffer.set_monochrome_rect_centred(pos * this->scale.promote(1.0f), renderable->size * this->scale,
-                                                       colour);
-
+    if (renderData->texture) {
+        renderData->texture->use();
+        Vec4 rect = renderData->texture->get_rect(renderable->frame_current);
+        renderData->buffer.set_textured_rect_centred(
+                pos*this->scale.promote(1.0f),
+                renderable->size*this->scale,
+                colour, rect);
+    }
+    else {
+        renderData->buffer.set_monochrome_rect_centred(
+                pos*this->scale.promote(1.0f),
+                renderable->size*this->scale,
+                colour);
+    }
     renderData->shaderProgram->use();
     renderData->buffer.use();
     renderData->element.use();
-    if (renderData->texture) {
-        renderData->texture->use();
-    }
 
     glDrawElements(GL_TRIANGLES, renderData->element.size(), GL_UNSIGNED_INT, nullptr);
     gl_error_check("OpenGLRenderer::draw(Renderable *) -> post draw");

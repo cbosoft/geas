@@ -1,7 +1,9 @@
+#include <iostream>
+#include "../../resourcemanager/resourcemanager.hpp"
 #include "stb_image/stb_image.h"
 #include "image.hpp"
 
-ImageData::ImageData(std::string filename)
+ImageData::ImageData(const std::string &filename)
 {
   const char *path_cstr = filename.c_str();
   stbi_set_flip_vertically_on_load(true);
@@ -10,6 +12,18 @@ ImageData::ImageData(std::string filename)
   this->_width = w;
   this->_height = h;
   this->_number_channels = n;
+
+  json metadata = ResourceManager::singleton().get_metadata(filename);
+  // linter (clangd) erroneously gives error on json.items(). Ignore it.
+  this->_number_frames = 1;
+  for (auto& [key, value] : metadata.items()) {
+      std::string s_key = std::string(key);
+      if (s_key.compare("number_frames") == 0) {
+          this->_number_frames = value;
+      }
+  }
+
+  std::cerr << this->_number_frames << " frames for " << filename << " " << this->width() << std::endl;
 }
 
 ImageData::~ImageData()
@@ -17,7 +31,7 @@ ImageData::~ImageData()
   stbi_image_free(this->_data);
 }
 
-unsigned char *ImageData::full_image() const
+unsigned char *ImageData::data() const
 {
     return this->_data;
 }
@@ -37,19 +51,8 @@ unsigned int ImageData::number_channels() const
     return this->_number_channels;
 }
 
-std::vector<unsigned char> ImageData::sub_frame(unsigned int x, unsigned int y, unsigned int w, unsigned int h) const
-{
-    std::vector<unsigned char> res;
-    for (int yi = y; yi < y + h; yi++) {
-        for (int xi = x; xi < x + w; xi++) {
-            unsigned int i = this->_number_channels*(xi + this->_width*yi);
-            res.push_back(this->_data[i]);
-        }
-    }
-    return res;
-}
 
-std::vector<unsigned char> ImageData::sub_frame(unsigned int frame_index) const
+unsigned int ImageData::number_frames() const
 {
-    // TODO calc x,y,w,h from frame info
+    return this->_number_frames;
 }
