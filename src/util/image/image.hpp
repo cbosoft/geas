@@ -10,11 +10,11 @@ class ImageData {
     explicit ImageData(const std::string &filename);
     ~ImageData();
 
-    unsigned char *data() const;
-    unsigned int width() const;
-    unsigned int height() const;
-    unsigned int number_channels() const;
-    unsigned int number_frames() const;
+    [[nodiscard]] unsigned char *data() const;
+    [[nodiscard]] unsigned int width() const;
+    [[nodiscard]] unsigned int height() const;
+    [[nodiscard]] unsigned int number_channels() const;
+    [[nodiscard]] unsigned int number_frames() const;
 
 private:
 
