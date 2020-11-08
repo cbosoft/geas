@@ -8,6 +8,7 @@ ImageData::ImageData(const std::string &filename)
   const char *path_cstr = filename.c_str();
   stbi_set_flip_vertically_on_load(true);
   int w, h, n;
+  this->_data = nullptr;
   this->_data = stbi_load(path_cstr, &w, &h, &n, 0);
   this->_width = w;
   this->_height = h;
