@@ -17,20 +17,44 @@ void Game::process_input(int key, int scancode, int action, int mods)
 
       case GLFW_KEY_D:
       case GLFW_KEY_RIGHT:
-          if (this->player)
-              this->player->move(action != GLFW_RELEASE ? 1 : 0);
+          if (this->player) {
+              switch (action) {
+                  case GLFW_RELEASE:
+                      this->player->move(-1);
+                      break;
+                  case GLFW_PRESS:
+                      this->player->move(1);
+                      break;
+
+                  default:
+                  case GLFW_REPEAT:
+                      break;
+              }
+          }
           break;
 
       case GLFW_KEY_A:
       case GLFW_KEY_LEFT:
-          if (this->player)
-              this->player->move(action != GLFW_RELEASE ? -1 : 0);
+          if (this->player) {
+              switch (action) {
+                  case GLFW_RELEASE:
+                      this->player->move(1);
+                      break;
+                  case GLFW_PRESS:
+                      this->player->move(-1);
+                      break;
+
+                  default:
+                  case GLFW_REPEAT:
+                      break;
+              }
+          }
           break;
 
       case GLFW_KEY_W:
       case GLFW_KEY_UP:
       case GLFW_KEY_SPACE:
-          if (this->player)
+          if (this->player && action == GLFW_PRESS)
               this->player->jump();
           break;
 
@@ -50,7 +74,7 @@ void Game::input_thread_worker()
             delete input;
         }
 
-        std::this_thread::sleep_for(std::chrono::microseconds(100));
+        //std::this_thread::sleep_for(std::chrono::microseconds(100));
 
     }
 }
