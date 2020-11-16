@@ -16,15 +16,25 @@ ImageData::ImageData(const std::string &filename)
 
   json metadata = ResourceManager::singleton().get_metadata(filename);
   // linter (clangd) erroneously gives error on json.items(). Ignore it.
-  this->_number_frames = 1;
+  this->_number_frames_x = 1;
+  this->_number_frames_y = 1;
   for (auto& [key, value] : metadata.items()) {
       std::string s_key = std::string(key);
       if (s_key.compare("number_frames") == 0) {
-          this->_number_frames = value;
+          if (value.is_number()) {
+              this->_number_frames_x = value;
+          }
+          else if (value.is_array()) {
+              this->_number_frames_x = value[0];
+              this->_number_frames_y = value[1];
+          }
+          else {
+              // TODO exception
+          }
       }
   }
 
-  std::cerr << this->_number_frames << " frames for " << filename << " " << this->width() << std::endl;
+  //std::cerr << this->_number_frames << " frames for " << filename << " " << this->width() << std::endl;
 }
 
 ImageData::~ImageData()
@@ -53,7 +63,13 @@ unsigned int ImageData::number_channels() const
 }
 
 
-unsigned int ImageData::number_frames() const
+unsigned int ImageData::number_frames_x() const
 {
-    return this->_number_frames;
+    return this->_number_frames_x;
+}
+
+
+unsigned int ImageData::number_frames_y() const
+{
+    return this->_number_frames_y;
 }

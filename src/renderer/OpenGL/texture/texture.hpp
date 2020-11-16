@@ -9,12 +9,13 @@ class Texture {
 
   public:
     static Texture *from_file(const std::string &path);
-    Texture(const ImageData &image);
+    explicit Texture(const ImageData &image);
     void use() const;
-    Vec4 get_rect(unsigned int i) const;
+    [[nodiscard]] Vec4 get_rect(unsigned int i) const;
+    [[nodiscard]] Vec4 get_rect(unsigned int r, unsigned int c) const;
 
   private:
     unsigned int glid;
-    unsigned int _number_frames;
-    float framewidth;
+    unsigned int _number_frames_x, _number_frames_y;
+    float framewidth, frameheight;
 };
