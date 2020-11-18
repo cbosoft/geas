@@ -4,14 +4,13 @@
 #include "game/game.hpp"
 #include "resourcemanager/resourcemanager.hpp"
 #include "geas_object/player/player.hpp"
-#include "geas_object/tileset/tileset.hpp"
 #include "geas_object/tile/tile.hpp"
 
 void player_add(Game *game, Scene *scene, int delay)
 {
     std::this_thread::sleep_for(std::chrono::milliseconds(delay));
     std::cerr << "dropping player" << std::endl;
-    auto *player = new Player(scene->root);
+    auto *player = new Player(scene);
     game->set_player(player);
     player->absolute_position(Vec3({0, 100, 0.0}));
 }
@@ -19,34 +18,15 @@ void player_add(Game *game, Scene *scene, int delay)
 int main()
 {
     Game *game = Game::singleton();
-    auto *scene = new Scene();
+    auto *scene = Scene::from_file("level1.json");
     game->active_scene(scene);
 
-    auto *cam = new Transform(scene->root);
+    auto *cam = new Transform(scene);
     (void) cam;
-    Tile *t = new Tile(cam, 1000.0f, Vec4({0.2f, 0.1f, 0.4f, 1.0f}), true, false);
-    //Tile *t = new Tile(cam, 100.0f, "textures/test.png", false, false);
-    //Vec3 tpos = t->relative_position();
-    //t->relative_position(Vec3({tpos.x(), tpos.y(), 0.0f}));
-    (void)t;
 
     Physics::update_rate_hz(500);
     Physics::time_scale(1.0f);
     Physics::global_gravity_scale(1e-2);
-
-    // const float s = 32.0f;
-    // unsigned int ntiles = 0;
-    // for (float x = -300.0f; x < 300.0f; x += s) {
-    //     for (float y = -200.0f; y < -100.0f; y += s) {
-    //         auto *t = new Tile(scene->root, s, "textures/tile.png", true, true);
-    //         t->relative_position(Vec3({x, y, 0.0f}));
-    //         ntiles ++;
-    //     }
-    // }
-    // std::cerr << ntiles << " tiles" << std::endl;
-
-    json tset = ResourceManager::singleton().get_json("level1.json");
-    create_tiles(scene->root, tset);
 
     std::thread(player_add, game, scene, 500).detach();
 
