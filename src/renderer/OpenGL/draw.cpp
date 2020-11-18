@@ -11,6 +11,8 @@
 void OpenGLRenderer::draw(Scene *scene, const Vec3 &camera_position)
 {
 
+    // TODO: this can probably be merged with draw(transform, pos);
+
     if (scene == nullptr)
         throw UnexpectedNullPointer("Asked to render a scene which was unexpectedly null.");
 
@@ -18,7 +20,7 @@ void OpenGLRenderer::draw(Scene *scene, const Vec3 &camera_position)
     // TODO any extra drawing required for the scene
 
     // draw its objects
-    this->draw(scene->root, camera_position);
+    this->draw((Transform *)scene, camera_position);
 
 }
 

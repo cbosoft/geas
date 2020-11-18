@@ -86,7 +86,7 @@ Player *Game::get_player() const
 Transform *Game::camera()
 {
     if (this->_camera == nullptr)
-        this->_camera = new Transform(this->_active_scene->root);
+        this->_camera = new Transform(this->_active_scene);
     return this->_camera;
 }
 

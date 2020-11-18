@@ -2,10 +2,12 @@
 
 #include "../transform/transform.hpp"
 
-class Scene {
+class Scene : public Transform {
 public:
-    Scene();
     ~Scene();
 
-    Transform *root;
+    static Scene *from_file(const std::string &path);
+
+private:
+    Scene();
 };
