@@ -23,8 +23,6 @@ void Physics::update()
     const std::list<Physics *> &entities = Physics::get_list();
     std::list<Physics *> non_fixed_entities;
 
-    // TODO: order entities into cells!
-
     // First loop: using the momentum of the entities, calculate their projected new position (Physics::maybe_new_position)
     for (Physics *entity : entities) {
 
@@ -50,10 +48,16 @@ void Physics::update()
 
     // For all pairs of objects, check if the objects will interact. If they do, alter their projected new position accordingly.
     for (Physics *a : non_fixed_entities) {
+        Vec3 apos = a->get_position();
         for (Physics *b : entities) {
 
           if (a == b)
               break;
+
+          Vec3 dr = apos - b->get_position();
+          float dist = dr.magnitude();
+          if (dist > Physics::interaction_threshold())
+              continue;
 
           // Expensive!
           a->interact_with(b);

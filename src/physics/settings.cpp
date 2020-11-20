@@ -38,3 +38,14 @@ void Physics::time_scale(float v)
 {
     _time_scale = v;
 }
+
+static float _interaction_threshold = 100.0f;
+float Physics::interaction_threshold()
+{
+    return _interaction_threshold;
+}
+
+void Physics::interaction_threshold(float v)
+{
+    _interaction_threshold = v;
+}

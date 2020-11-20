@@ -50,6 +50,9 @@ class Physics {
     static float time_scale();
     static void time_scale(float v);
 
+    static float interaction_threshold();
+    static void interaction_threshold(float v);
+
     float drag;
 
 private:
