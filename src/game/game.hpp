@@ -54,7 +54,6 @@ class Game {
     typedef std::lock_guard<std::mutex> lock_guard;
     mutable std::mutex mutex;
     Player *player;
-    Transform *_camera;
 
 
 };

@@ -12,7 +12,6 @@ Game::Game()
     , _active_scene(nullptr)
     , _is_alive(true)
     , player(nullptr)
-    , _camera(nullptr)
 {
     this->renderer = Renderer::get(this);
 }
@@ -83,17 +82,4 @@ void Game::set_player(Player *obj)
 Player *Game::get_player() const
 {
     return this->player;
-}
-
-
-Transform *Game::camera()
-{
-    if (this->_camera == nullptr)
-        this->_camera = new Transform(this->_active_scene);
-    return this->_camera;
-}
-
-void Game::camera(Transform *cam)
-{
-    this->_camera = cam;
 }

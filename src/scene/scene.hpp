@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../transform/transform.hpp"
+#include "../geas_object/camera/camera.hpp"
 
 class Scene : public Transform {
 public:
@@ -8,6 +9,9 @@ public:
 
     static Scene *from_file(const std::string &path);
 
+    Camera *camera() const;
+
 private:
     Scene();
+    Camera *_camera;
 };
