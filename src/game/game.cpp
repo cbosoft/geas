@@ -19,8 +19,11 @@ Game::Game()
 
 Game::~Game()
 {
-  // do nothing
-  // TODO delete scenes
+
+    for (Scene *sceneptr : this->scenes) {
+        delete sceneptr;
+    }
+
 }
 
 void Game::play()
