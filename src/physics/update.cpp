@@ -28,10 +28,10 @@ void Physics::update()
     // First loop: using the momentum of the entities, calculate their projected new position (Physics::maybe_new_position)
     for (Physics *entity : entities) {
 
+        entity->owner.update();
+
         if (entity->fixed)
             continue;
-
-        entity->owner.update();
 
         float drag_dv = entity->momentum.x() * entity->drag;
         Vec2 accel({
