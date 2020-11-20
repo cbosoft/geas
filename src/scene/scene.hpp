@@ -3,6 +3,8 @@
 #include "../transform/transform.hpp"
 #include "../geas_object/camera/camera.hpp"
 
+
+// TODO: make scene a derived class of "displayable" which includes UI
 class Scene : public Transform {
 public:
     ~Scene();

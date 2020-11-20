@@ -19,6 +19,10 @@ void OpenGLRenderer::draw(Scene *scene, const Vec3 &camera_position)
     // draw the scene
     // TODO any extra drawing required for the scene
 
+    // TODO: z-ordering objects at higher z should be drawn later
+    // however I like the tree-structure. To get something to print later, it should be later on in the tree. How do
+    // we then make sure something is later in the tree than the player, without it being attached *to* the player?
+
     // draw its objects
     this->draw((Transform *)scene, camera_position);
 
