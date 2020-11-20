@@ -97,7 +97,7 @@ void OpenGLRenderer::init()
 #endif
 
     constexpr float s = 3.0f;
-    int w = 1280, h = 720;
+    int w = 640, h = 480;
     GLFWmonitor *monitor = nullptr;
     if (fullscreen) {
         int n = 0;
