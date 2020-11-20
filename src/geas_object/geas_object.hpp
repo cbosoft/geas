@@ -17,7 +17,6 @@ class GeasObject : public Transform {
     void renderable(Renderable *);
 
     virtual void update();
-    void physics_update();
     bool is_marked_for_destruction() const;
     void destroy();
 
