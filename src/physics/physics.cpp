@@ -43,9 +43,14 @@ const Vec2 &Physics::get_momentum() const
     return this->momentum;
 }
 
-void Physics::set_collider(RectCollider * collider)
+void Physics::set_collider(RectCollider *c)
 {
-  this->collider = collider;
+  this->collider = c;
+}
+
+void Physics::set_collider(const Vec4 &rect)
+{
+    this->collider = new RectCollider(&this->owner, rect);
 }
 
 void Physics::set_fixed(bool is_fixed)

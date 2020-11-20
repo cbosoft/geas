@@ -10,7 +10,8 @@ class GeasObject;
 class RectCollider final : Transform {
 
 public:
-    RectCollider(GeasObject *parent, Vec2 bl_offset, Vec2 size);
+    RectCollider(GeasObject *parent, const Vec4 &rect);
+    RectCollider(GeasObject *parent, const Vec2 &bl_offset, const Vec2 &size);
     ~RectCollider();
 
     [[nodiscard]] Vec2 get_centre() const;

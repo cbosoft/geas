@@ -24,6 +24,7 @@ class Physics {
     void set_mass(float mass);
     void set_gravity(float gravity);
     void set_collider(RectCollider *collider);
+    void set_collider(const Vec4 &rect);
     void set_material(Material *material);
     void set_fixed(bool is_fixed=true);
 

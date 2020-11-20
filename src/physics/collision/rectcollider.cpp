@@ -4,7 +4,24 @@
 #include "rectcollider.hpp"
 
 
-RectCollider::RectCollider(GeasObject *owner, Vec2 bl_offset, Vec2 size)
+RectCollider::RectCollider(GeasObject *owner, const Vec4 &rect)
+        : Transform(owner)
+        , tr(this)
+        , br(this)
+        , bl(this)
+        , tl(this)
+{
+    Vec2 bl_offset({rect.x(), rect.y()});
+    this->size.x(rect.get(2));
+    this->size.y(rect.get(3));
+    this->relative_position(bl_offset.promote(0.0f));
+
+    this->tr.relative_position(size.promote(0.0f));
+    this->br.relative_position(Vec3({size.x(), 0.0f, 0.0f}));
+    this->tl.relative_position(Vec3({0.0f, size.x(), 0.0f}));
+}
+
+RectCollider::RectCollider(GeasObject *owner, const Vec2 &bl_offset, const Vec2 &size)
   : Transform(owner)
     , size(size)
     , tr(this)
