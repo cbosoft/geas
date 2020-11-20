@@ -14,6 +14,13 @@ Scene *Scene::from_file(const std::string &path)
 
     for (const auto& layer : scene_spec["layers"]) {
         std::string tileset_path = layer["tileset"];
+        json tileset_meta = ResourceManager::singleton().get_metadata(tileset_path);
+        json collision_information;
+        auto it = tileset_meta.find("collision");
+        if (it != tileset_meta.end()) {
+            collision_information = *it;
+        }
+
         const float s = layer["size"];
         const float x_offset = static_cast<float>(layer["x_offset"])*s;
         const float y_offset = static_cast<float>(layer["y_offset"])*s;
@@ -27,7 +34,37 @@ Scene *Scene::from_file(const std::string &path)
                 int i = cell;
                 if (i) {
                     int variant = i-1;
-                    auto *t = new Tile(scene, s, tileset_path, true, true);
+
+                    json info;
+                    try {
+                        info = collision_information[variant];
+                    }
+                    catch (std::exception) {
+
+                    }
+
+                    Vec4 rect({0.0f, 0.0f, s,s});
+                    bool collider = true;
+                    if (info.is_object()) {
+                        rect.set(0, float(info["x"])*s);
+                        rect.set(1, float(info["y"])*s);
+                        rect.set(2, float(info["w"])*s);
+                        rect.set(3, float(info["h"])*s);
+                    }
+                    else if (info.is_boolean()) {
+                        collider = info;
+                    }
+                    else {
+                        std::cerr << "collision information not understood: ignoring." << std::endl;
+                    }
+
+                    Tile *t = nullptr;
+                    if (collider) {
+                        t = new Tile(scene, s, tileset_path, rect);
+                    }
+                    else {
+                        t = new Tile(scene, s, tileset_path);
+                    }
                     t->renderable()->set_frame(variant);
                     Vec3 pos({x, y, 0.0f}); // TODO z ordering
                     t->absolute_position(pos);
