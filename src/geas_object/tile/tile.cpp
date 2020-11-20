@@ -1,5 +1,30 @@
 #include "tile.hpp"
 
+Tile::Tile(Transform *parent, float s, const std::string &texture_path)
+        : GeasObject(parent)
+{
+    auto *r = new Renderable(this);
+    r->set_texture(texture_path);
+    this->renderable(r);
+    r->size(Vec2(s));
+    r->colour(Vec4(1.0f));
+}
+
+Tile::Tile(Transform *parent, float s, const std::string &texture_path, Vec4 rect)
+        : GeasObject(parent)
+{
+    this->physics = Physics::create(*this);
+    this->physics->set_fixed();
+
+    this->physics->set_collider(rect);
+
+    auto *r = new Renderable(this);
+    r->set_texture(texture_path);
+    this->renderable(r);
+    r->size(Vec2(s));
+    r->colour(Vec4(1.0f));
+}
+
 Tile::Tile(Transform *parent, float s, const std::string &texture_path, bool fixed, bool collision)
     : GeasObject(parent)
 {
@@ -39,4 +64,9 @@ Tile::Tile(Transform *parent, float s, const Vec4 &colour, bool fixed, bool coll
     this->renderable(r);
     r->size(Vec2(s));
     r->colour(colour);
+}
+
+void Tile::set_variant(int i) const
+{
+    this->renderable()->set_frame(i);
 }
