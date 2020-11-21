@@ -13,6 +13,8 @@ public:
 
     Camera *camera() const;
 
+    std::map<std::string, Transform *> layers;
+
 private:
     Scene();
     Camera *_camera;

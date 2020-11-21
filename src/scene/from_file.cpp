@@ -12,7 +12,7 @@ Scene *Scene::from_file(const std::string &path)
     std::string name = scene_spec["name"];
     std::cerr << "Loading scene \"" << name << "\"" << std::endl;
 
-    for (const auto& layer : scene_spec["layers"]) {
+    for (json layer : scene_spec["layers"]) {
         std::string tileset_path = layer["tileset"];
         json tileset_meta = ResourceManager::singleton().get_metadata(tileset_path);
         json collision_information;
@@ -21,12 +21,22 @@ Scene *Scene::from_file(const std::string &path)
             collision_information = *it;
         }
 
+        bool collision_override = false, collision_override_value = false;
+        it = layer.find("collision");
+        if (it != layer.end()) {
+            collision_override = true;
+            collision_override_value = *it;
+        }
+
         const float s = layer["size"];
         const float x_offset = static_cast<float>(layer["x_offset"])*s;
         const float y_offset = static_cast<float>(layer["y_offset"])*s;
 
         float h = static_cast<float>(layer["tiles"].size())*s;
         float y = h + y_offset, x;
+        Transform *layer_transform = new Transform(scene);
+        std::string sname = layer["name"];
+        scene->layers[sname] = layer_transform;
         for (const auto &row : layer["tiles"]) {
             x = x_offset;
             y -= s;
@@ -58,12 +68,15 @@ Scene *Scene::from_file(const std::string &path)
                         std::cerr << "collision information not understood: ignoring." << std::endl;
                     }
 
+                    if (collision_override)
+                        collider = collision_override_value;
+
                     Tile *t = nullptr;
                     if (collider) {
-                        t = new Tile(scene, s, tileset_path, rect);
+                        t = new Tile(layer_transform, s, tileset_path, rect);
                     }
                     else {
-                        t = new Tile(scene, s, tileset_path);
+                        t = new Tile(layer_transform, s, tileset_path);
                     }
                     t->renderable()->set_frame(variant);
                     Vec3 pos({x, y, 0.0f}); // TODO z ordering

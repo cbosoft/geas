@@ -4,13 +4,12 @@
 #include "game/game.hpp"
 #include "resourcemanager/resourcemanager.hpp"
 #include "geas_object/player/player.hpp"
-#include "geas_object/tile/tile.hpp"
 
 void player_add(Game *game, Scene *scene, int delay)
 {
     std::this_thread::sleep_for(std::chrono::milliseconds(delay));
     std::cerr << "dropping player" << std::endl;
-    auto *player = new Player(scene);
+    auto *player = new Player(scene->layers["main"]);
     game->set_player(player);
     scene->camera()->target(player);
     player->absolute_position(Vec3({0, 100, 0.0}));
