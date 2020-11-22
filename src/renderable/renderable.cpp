@@ -15,8 +15,6 @@ Renderable::Renderable(GeasObject *parent)
     , _colour(1.0)
     , _size({16.0f, 16.0f})
     , renderer_data(nullptr)
-    , increment_period_ms(100)
-    , ms_since_increment(1000)
 {
 
 }
@@ -112,37 +110,13 @@ unsigned int Renderable::increment_frame()
     if (!this->animated)
         return this->frame_current;
 
-    std::chrono::time_point<std::chrono::system_clock> t1 = std::chrono::system_clock::now();
-    auto dt = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0);
-    this->ms_since_increment = dt.count();
-
-    if (this->ms_since_increment >= this->increment_period_ms) {
-        this->frame_current++;
-        this->ms_since_increment = 0;
-        t0 = t1;
-    }
+    this->frame_current++;
 
     if ((this->frame_current >= this->frame_upper_bound) || (this->frame_current < this->frame_lower_bound)) {
         this->frame_current = this->frame_lower_bound;
     }
 
     return this->frame_current;
-}
-
-void Renderable::set_animation_period(unsigned int t)
-{
-    this->increment_period_ms = t;
-}
-
-void Renderable::set_animation_speed(float hz)
-{
-    if (hz > 0.0f) {
-        this->increment_period_ms = static_cast<unsigned int>(1e3 / hz);
-        this->animated = true;
-    }
-    else {
-        this->animated = false;
-    }
 }
 
 void Renderable::set_animated(bool value)

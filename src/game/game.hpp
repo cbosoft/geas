@@ -39,6 +39,7 @@ class Game {
   private:
     Game();
 
+    void animator_thread_worker();
     void graphics_thread_worker();
     void physics_thread_worker();
     void input_thread_worker();

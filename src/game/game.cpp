@@ -30,6 +30,7 @@ void Game::play()
     this->_is_alive = true;
     this->threads.emplace_back(&Game::physics_thread_worker, this);
     this->threads.emplace_back(&Game::input_thread_worker, this);
+    this->threads.emplace_back(&Game::animator_thread_worker, this);
 
     this->graphics_thread_worker();
 

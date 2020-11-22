@@ -45,6 +45,4 @@ private:
     Vec4 _colour;
     Vec2 _size;
     void *renderer_data;
-    unsigned int increment_period_ms, ms_since_increment;
-    std::chrono::time_point<std::chrono::system_clock> t0;
 };
