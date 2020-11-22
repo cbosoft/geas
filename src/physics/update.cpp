@@ -26,6 +26,9 @@ void Physics::update()
     // First loop: using the momentum of the entities, calculate their projected new position (Physics::maybe_new_position)
     for (Physics *entity : entities) {
 
+        if (!entity->owner.is_enabled())
+            continue;
+
         entity->owner.update();
 
         if (entity->fixed)
@@ -53,6 +56,9 @@ void Physics::update()
 
           if (a == b)
               break;
+
+          if (!b->owner.is_enabled())
+              continue;
 
           Vec3 dr = apos - b->get_position();
           float dist = dr.magnitude();

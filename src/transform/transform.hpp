@@ -27,6 +27,9 @@ class Transform {
     void scale(const Vec2& scale);
     virtual void local_scale(const Vec2& local_scale);
     void parent(Transform *t);
+    void enable();
+    void disable();
+    bool is_enabled() const;
 
     Transform &operator +=(const Vec3& other) {
         this->_relative_position += other;
@@ -49,4 +52,5 @@ class Transform {
     Transform *_parent;
     std::list<Transform *> _children;
     mutable std::mutex _mutex;
+    bool _enabled;
 };

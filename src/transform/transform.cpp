@@ -4,6 +4,7 @@ Transform::Transform()
     : _relative_position(Vec3(0.0))
     , _local_scale(Vec2(1.0))
     , _parent(nullptr)
+    , _enabled(false)
 {
   // do nothing
 }
@@ -13,6 +14,7 @@ Transform::Transform(Transform *parent)
     _relative_position(Vec3(0.0))
     , _local_scale(Vec2(1.0))
     , _parent(parent)
+    , _enabled(false)
 {
     parent->add_child(this);
 }
@@ -114,4 +116,28 @@ void Transform::add_child(Transform *child)
 {
     std::scoped_lock _sl(this->_mutex);
     this->_children.push_back(child);
+}
+
+void Transform::enable()
+{
+    std::scoped_lock _sl(this->_mutex);
+    this->_enabled = true;
+    for (auto child : this->_children) {
+        child->enable();
+    }
+}
+
+void Transform::disable()
+{
+    std::scoped_lock _sl(this->_mutex);
+    this->_enabled = false;
+    for (auto child : this->_children) {
+        child->disable();
+    }
+}
+
+bool Transform::is_enabled() const
+{
+    std::scoped_lock _sl(this->_mutex);
+    return this->_enabled;
 }

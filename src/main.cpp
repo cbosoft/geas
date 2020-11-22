@@ -13,6 +13,7 @@ void player_add(Game *game, Scene *scene, int delay)
     game->set_player(player);
     scene->camera()->target(player);
     player->absolute_position(Vec3({0, 100, 0.0}));
+    player->enable();
 }
 
 int main()
@@ -20,6 +21,7 @@ int main()
     Game *game = Game::singleton();
     auto *scene = Scene::from_file("level1.json");
     game->active_scene(scene);
+    scene->enable();
 
     Physics::update_rate_hz(500);
     Physics::time_scale(1.0f);
