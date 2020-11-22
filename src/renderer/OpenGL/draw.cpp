@@ -86,7 +86,6 @@ void OpenGLRenderer::draw(Renderable *renderable, const Vec3 &camera_position) {
     }
 
     if (renderData->texture) {
-        renderable->increment_frame(); // TODO: move to animation loop
 
         renderData->texture->use();
         Vec4 rect = renderData->texture->get_rect(renderable->current_frame());
