@@ -3,6 +3,7 @@
 #include "../transform/transform.hpp"
 #include "../physics/physics.hpp"
 #include "../renderable/renderable.hpp"
+#include "../animator/animator.hpp"
 
 // TODO: rename to simply "Object"
 class GeasObject : public Transform {
@@ -15,6 +16,9 @@ class GeasObject : public Transform {
 
     [[nodiscard]] Renderable *renderable() const override;
     void renderable(Renderable *);
+
+    [[nodiscard]] Animator *animator() const;
+    void animator(Animator *animator);
 
     virtual void update();
     bool is_marked_for_destruction() const;
@@ -32,6 +36,7 @@ class GeasObject : public Transform {
   private:
     GeasObject();
     Renderable *_renderable;
+    Animator *_animator;
     bool _marked_for_destruction;
 
     unsigned int contact_mask;

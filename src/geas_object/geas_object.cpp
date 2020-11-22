@@ -4,6 +4,7 @@ GeasObject::GeasObject()
   : Transform()
     , physics(nullptr)
     , _renderable(nullptr)
+    , _animator(nullptr)
     , _marked_for_destruction(false)
 {
     // do nothing
@@ -13,6 +14,7 @@ GeasObject::GeasObject(Transform *parent)
   : Transform(parent)
   , physics(nullptr)
   , _renderable(nullptr)
+  , _animator(nullptr)
   , _marked_for_destruction(false)
   , contact_mask(0)
 {
@@ -44,4 +46,15 @@ Renderable *GeasObject::renderable() const
 void GeasObject::renderable(Renderable *renderable)
 {
     this->_renderable = renderable;
+}
+
+Animator *GeasObject::animator() const
+{
+    return this->_animator;
+}
+
+void GeasObject::animator(Animator *animator)
+{
+    delete this->_animator;
+    this->_animator = animator;
 }
