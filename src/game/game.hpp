@@ -39,6 +39,9 @@ class Game {
   private:
     Game();
 
+    void process_input_game(int key, int scancode, int action, int mods);
+    void process_input_ui(int key, int scancode, int action, int mods);
+
     void animator_thread_worker();
     void graphics_thread_worker();
     void physics_thread_worker();

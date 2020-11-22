@@ -13,6 +13,8 @@ public:
 
     Camera *camera() const;
 
+    virtual bool is_ui() { return false; }
+
     std::map<std::string, Transform *> layers;
 
 private:
