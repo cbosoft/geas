@@ -1,4 +1,5 @@
 #include "player.hpp"
+#include "player_animator/player_animator.hpp"
 
 Player::Player(Transform *parent)
     : GeasObject(parent)
@@ -23,4 +24,7 @@ Player::Player(Transform *parent)
         Vec2({0.0, 0.0}),
         r->size())
       );
+
+  this->animator(new PlayerAnimator(*this));
+  this->animator()->speed(0.25);
 }

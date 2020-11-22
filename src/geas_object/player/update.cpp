@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "player.hpp"
+#include "player_animator/player_animator.hpp"
 
 // Called by physics before update
 void Player::update()
@@ -13,12 +14,9 @@ void Player::update()
         this->should_jump = false;
     }
 
-    if (this->driving_direction && this->contact_bottom()) {
-        this->renderable()->set_anim_loop("run");
-    }
-    else {
-        this->renderable()->set_anim_loop("idle");
-    }
+    auto *a = (PlayerAnimator *)this->animator();
+    a->horizontal_speed(this->driving_direction);
+    a->on_ground(this->contact_bottom());
 
     if (this->driving_direction) {
         Vec2 ls = this->local_scale();
