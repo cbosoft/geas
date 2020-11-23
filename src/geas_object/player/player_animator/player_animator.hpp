@@ -11,6 +11,8 @@ public:
 
 private:
 
+    void check_state() override;
+
     int _horizontal_speed;
     //int vertical_speed;
     bool _on_ground;
