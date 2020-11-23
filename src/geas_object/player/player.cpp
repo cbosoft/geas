@@ -12,19 +12,18 @@ Player::Player(Transform *parent)
 
   auto *r = new Renderable(this);
   r->set_texture("textures/sprite_sheet.png");
-  r->set_anim_loop("run");
-  r->set_animated(true);
-
-  r->size(Vec2({32.0f, 32.0f}));
+  r->size(Vec2({16.0f, 16.0f}));
   this->renderable(r);
 
 
   this->physics = Physics::create(*this);
   this->physics->set_collider(new RectCollider(this,
-        Vec2({8.0, 0.0}),
-        Vec2({16.0, 16.0}))
+        Vec2({4.0, 0.0}),
+        Vec2({8.0, 8.0}))
       );
 
-  this->animator(new PlayerAnimator(*this));
+  auto *p = new PlayerAnimator(*this);
+  p->load_animations("textures/sprite_sheet.png");
+  this->animator(p);
   this->animator()->speed(0.25);
 }
