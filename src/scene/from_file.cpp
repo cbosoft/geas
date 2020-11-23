@@ -78,7 +78,7 @@ Scene *Scene::from_file(const std::string &path)
                     else {
                         t = new Tile(layer_transform, s, tileset_path);
                     }
-                    t->renderable()->set_frame(variant);
+                    t->renderable()->current_frame(variant);
                     Vec3 pos({x, y, 0.0f}); // TODO z ordering
                     t->absolute_position(pos);
                 }

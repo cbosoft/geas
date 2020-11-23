@@ -68,5 +68,5 @@ Tile::Tile(Transform *parent, float s, const Vec4 &colour, bool fixed, bool coll
 
 void Tile::set_variant(int i) const
 {
-    this->renderable()->set_frame(i);
+    this->renderable()->current_frame(i);
 }
