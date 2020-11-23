@@ -30,7 +30,7 @@ Renderable::~Renderable() noexcept
 
 Vec2 Renderable::size() const
 {
-    return this->_size;
+    return this->_size*1.001f;
 }
 
 void Renderable::size(const Vec2 &size)
