@@ -18,7 +18,7 @@ RectCollider::RectCollider(GeasObject *owner, const Vec4 &rect)
 
     this->tr.relative_position(size.promote(0.0f));
     this->br.relative_position(Vec3({size.x(), 0.0f, 0.0f}));
-    this->tl.relative_position(Vec3({0.0f, size.x(), 0.0f}));
+    this->tl.relative_position(Vec3({0.0f, size.y(), 0.0f}));
 }
 
 RectCollider::RectCollider(GeasObject *owner, const Vec2 &bl_offset, const Vec2 &size)
@@ -33,7 +33,7 @@ RectCollider::RectCollider(GeasObject *owner, const Vec2 &bl_offset, const Vec2 
 
   this->tr.relative_position(size.promote(0.0f));
   this->br.relative_position(Vec3({size.x(), 0.0f, 0.0f}));
-  this->tl.relative_position(Vec3({0.0f, size.x(), 0.0f}));
+  this->tl.relative_position(Vec3({0.0f, size.y(), 0.0f}));
 }
 
 RectCollider::~RectCollider()
