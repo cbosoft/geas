@@ -346,7 +346,7 @@ class VectorN {
     }
 
 
-    bool coincident(const VectorN<T,N> &a, const VectorN<T,N> &b, T epsilon=1e-9f) const
+    bool coincident(const VectorN<T,N> &a, const VectorN<T,N> &b, T epsilon=1e-3f) const
     {
         for (unsigned int i = 0; i < N; i++) {
 
