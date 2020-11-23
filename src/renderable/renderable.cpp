@@ -7,11 +7,8 @@
 
 Renderable::Renderable(GeasObject *parent)
     : Transform(parent)
+    , _current_frame(0)
     , _has_texture(false)
-    , frame_lower_bound(0)
-    , frame_upper_bound(1)
-    , frame_current(0)
-    , animated(false)
     , _colour(1.0)
     , _size({16.0f, 16.0f})
     , renderer_data(nullptr)
@@ -68,63 +65,18 @@ const std::string &Renderable::texture_path() const
     return this->_texture_path;
 }
 
-unsigned int Renderable::current_frame() const
-{
-    return this->frame_current;
-}
-
-
-void Renderable::set_anim_loop(const std::string &name)
-{
-    auto loop = this->animation_loops[name];
-    this->frame_lower_bound = loop.first;
-    this->frame_upper_bound = loop.second;
-}
-
-void Renderable::load_loops(const json &js_loops)
-{
-    // linter (clangd) erroneously gives error on json.items(). Ignore it.
-    for (auto& [key, value] : js_loops.items()) {
-        unsigned int lb = value[0];
-        unsigned int ub = value[1];
-        this->animation_loops[key] = std::make_pair(lb, ub);
-    }
-}
-
 void Renderable::set_texture(const std::string &path)
 {
     this->_has_texture = true;
     this->_texture_path = path;
-    json metadata = ResourceManager::singleton().get_metadata(path);
-    // linter (clangd) erroneously gives error on json.items(). Ignore it.
-    for (auto& [key, value] : metadata.items()) {
-        std::string s_key = std::string(key);
-        if (s_key.compare("animation_loops") == 0) {
-            this->load_loops(value);
-        }
-    }
 }
 
-unsigned int Renderable::increment_frame()
+unsigned int Renderable::current_frame() const
 {
-    if (!this->animated)
-        return this->frame_current;
-
-    this->frame_current++;
-
-    if ((this->frame_current >= this->frame_upper_bound) || (this->frame_current < this->frame_lower_bound)) {
-        this->frame_current = this->frame_lower_bound;
-    }
-
-    return this->frame_current;
+    return this->_current_frame;
 }
 
-void Renderable::set_animated(bool value)
+void Renderable::current_frame(unsigned int i)
 {
-    this->animated = value;
-}
-
-void Renderable::set_frame(unsigned int i)
-{
-    this->frame_current = i;
+    this->_current_frame = i;
 }
