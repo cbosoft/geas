@@ -18,6 +18,7 @@ class ResourceManager {
     [[nodiscard]] std::string get_abs_path(const std::string &relative_path) const;
     [[nodiscard]] json get_metadata(const std::string &filename) const;
     [[nodiscard]] json get_json(const std::string &filename) const;
+    // TODO: animation management and caching here
 
   private:
     ResourceManager();
