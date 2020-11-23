@@ -91,13 +91,13 @@ void OpenGLRenderer::draw(Renderable *renderable, const Vec3 &camera_position) {
         Vec4 rect = renderData->texture->get_rect(renderable->current_frame());
         renderData->buffer.set_textured_rect_centred(
                 pos*this->scale.promote(1.0f),
-                renderable->size()*this->scale,
-                colour, rect, renderable->scale());
+                renderable->size()*this->scale*renderable->scale(),
+                colour, rect);
     }
     else {
         renderData->buffer.set_monochrome_rect_centred(
                 pos*this->scale.promote(1.0f),
-                renderable->size()*this->scale,
+                renderable->size()*this->scale*renderable->scale(),
                 colour);
     }
     renderData->shaderProgram->use();

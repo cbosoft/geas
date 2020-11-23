@@ -106,7 +106,7 @@ void BufferArray::set_monochrome_rect_centred(const Vec3 &centre, const Vec2 &si
     }
 }
 
-void BufferArray::set_textured_rect_centred(const Vec3 &centre, const Vec2 &size, const Vec4 &colour, const Vec4 &rect, const Vec2 &scale)
+void BufferArray::set_textured_rect_centred(const Vec3 &centre, const Vec2 &size, const Vec4 &colour, const Vec4 &rect)
 {
     const float hsx = size.x()*0.5f;
     const float hsy = size.y()*0.5f;
@@ -129,8 +129,8 @@ void BufferArray::set_textured_rect_centred(const Vec3 &centre, const Vec2 &size
     const float tcx = tx + thw;
     const float tcy = ty + thh;
 
-    const float sx = scale.x()*thw;
-    const float sy = scale.y()*thh;
+    const float sx = thw;
+    const float sy = thh;
 
     GLVertex verts[4] = {
             {hsx + cx, hsy + cy, cz, r, g, b, a, tcx + sx, tcy + sy},
