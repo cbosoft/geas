@@ -21,5 +21,5 @@ class ResourceManager {
 
   private:
     ResourceManager();
-    std::string get_metadataname(const std::string &filename) const;
+    [[nodiscard]] std::string get_metadataname(const std::string &filename) const;
 };
