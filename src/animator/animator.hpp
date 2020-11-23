@@ -20,7 +20,6 @@ public:
 
 private:
     static const std::list<Animator *> &animators();
-    virtual void state_changed() =0;
 
     unsigned int _inv_speed;
 };

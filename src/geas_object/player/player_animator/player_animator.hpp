@@ -7,13 +7,12 @@ public:
     explicit PlayerAnimator(GeasObject &owner);
     ~PlayerAnimator() override =default;
 
-    void horizontal_speed(int hs);
-    void on_ground(bool v);
+    void set_state(int horizontal_speed, bool on_ground);
 
 private:
-    void state_changed() override;
 
     int _horizontal_speed;
+    //int vertical_speed;
     bool _on_ground;
     //bool _on_wall;
     //bool _attacking;

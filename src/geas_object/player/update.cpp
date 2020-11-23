@@ -15,8 +15,7 @@ void Player::update()
     }
 
     auto *a = (PlayerAnimator *)this->animator();
-    a->horizontal_speed(this->driving_direction);
-    a->on_ground(this->contact_bottom());
+    a->set_state(this->driving_direction, this->contact_bottom());
 
     if (this->driving_direction) {
         Vec2 ls = this->local_scale();
