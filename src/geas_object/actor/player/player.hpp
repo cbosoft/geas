@@ -1,8 +1,9 @@
 #pragma once
 
-#include "../geas_object.hpp"
+#include "../actor.hpp"
+#include "../../../transform/transform.hpp"
 
-class Player final : public GeasObject {
+class Player final : public Actor {
   public:
     Player(Transform *parent);
 
@@ -10,6 +11,7 @@ class Player final : public GeasObject {
 
     void move(int dir);
     void jump();
+    void hurt(float v) override;
 
 private:
 

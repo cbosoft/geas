@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../animator/animator.hpp"
+#include "../../../../animator/animator.hpp"
 
 class PlayerAnimator final : public Animator {
 public:

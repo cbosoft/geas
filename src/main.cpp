@@ -3,7 +3,7 @@
 
 #include "game/game.hpp"
 #include "resourcemanager/resourcemanager.hpp"
-#include "geas_object/player/player.hpp"
+#include "geas_object/actor/player/player.hpp"
 
 void player_add(Game *game, Scene *scene, int delay)
 {

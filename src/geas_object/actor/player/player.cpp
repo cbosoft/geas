@@ -2,7 +2,7 @@
 #include "player_animator/player_animator.hpp"
 
 Player::Player(Transform *parent)
-    : GeasObject(parent)
+    : Actor(parent, 3.0f)
     , jump_force(1.5f)
     , driving_accel(5e-2f)
     , driving_direction(0)

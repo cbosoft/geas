@@ -5,7 +5,7 @@
 #include <vector>
 #include <mutex>
 
-#include "../geas_object/player/player.hpp"
+#include "../geas_object/actor/player/player.hpp"
 #include "../renderer/renderer.hpp"
 #include "../util/tsq.hpp"
 #include "input.hpp"
