@@ -4,11 +4,11 @@
 
 void Font::render_character(Transform *parent, char c, Vec2 &bl)
 {
-    auto *tile = new Tile(parent, this->height, this->texture_name);
+    auto *tile = new Tile(parent, this->height*this->_scale, this->texture_name);
     tile->set_variant(this->indices[c]);
-    tile->relative_position(bl.promote(0.0f));
+    tile->local_scale(Vec2(this->_scale));
+    tile->relative_position(bl.promote(0.0f)*this->_scale);
     bl.x(bl.x() + this->stride[c]);
-    std::cerr << c << " " << this->stride[c] << std::endl;
 }
 
 void Font::render_word(Transform *parent, const std::string &word, Vec2 &bl)
@@ -18,7 +18,7 @@ void Font::render_word(Transform *parent, const std::string &word, Vec2 &bl)
         char c = chars[i];
         this->render_character(parent, c, bl);
     }
-    bl.x(bl.x() + this->stride[' ']);
+    this->render_character(parent, ' ', bl);
 }
 
 
@@ -48,7 +48,7 @@ void Font::render_text(Transform *parent, const std::string &text, const Vec2 &s
     for (const auto &word : words) {
         float width = this->word_length(word);
         if (bl.x() + width > size.x()) {
-            bl.y(bl.y() - this->height*this->_line_spacing);
+            bl.y(bl.y() - this->height*this->_line_spacing*this->_scale);
             bl.x(0.0f);
         }
         this->render_word(parent, word, bl);
@@ -61,7 +61,7 @@ float Font::word_length(const std::string &word)
     auto chars = word.data();
     for (unsigned int i = 0; i < word.size(); i++) {
         char c = chars[i];
-        width += this->stride[c];
+        width += this->stride[c]*this->_scale;
     }
     return width;
 }

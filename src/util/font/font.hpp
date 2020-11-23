@@ -12,8 +12,11 @@ public:
 
     Font(const std::string &font_sheet);
     void render_text(Transform *t, const std::string &text, const Vec2 &size);
-    float line_spacing() const;
+    [[nodiscard]] float line_spacing() const;
     void line_spacing(float v);
+
+    [[nodiscard]] float scale() const;
+    void scale(float v);
 
 private:
 
@@ -23,5 +26,5 @@ private:
     std::map<char, float> stride;
     std::map<char, unsigned int> indices;
     std::string texture_name;
-    float height, _line_spacing;
+    float height, _line_spacing, _scale;
 };

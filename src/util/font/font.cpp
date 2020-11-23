@@ -1,3 +1,4 @@
+#include <iostream>
 #include "../../resourcemanager/resourcemanager.hpp"
 #include "../json.hpp"
 #include "font.hpp"
@@ -5,7 +6,8 @@
 Font::Font(const std::string &font_sheet)
     : texture_name(font_sheet)
     , height(16.0f)
-    , _line_spacing(1.5)
+    , _line_spacing(1.5f)
+    , _scale(1.0f)
 {
     json j = ResourceManager::singleton().get_metadata(font_sheet);
     this->height = j["height"];
@@ -27,4 +29,14 @@ float Font::line_spacing() const
 void Font::line_spacing(float v)
 {
     this->_line_spacing = v;
+}
+
+float Font::scale() const
+{
+    return this->_scale;
+}
+
+void Font::scale(float v)
+{
+    this->_scale = v;
 }
