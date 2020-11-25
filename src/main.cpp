@@ -34,7 +34,7 @@ int main()
     t->absolute_position(Vec3({0.0f, -32.0f, 0.0f}));
     auto *p = new PlayerAnimator(*t);
     p->load_animations("textures/industrialist1.png");
-    p->set_state(0, true);
+    p->set_state(0, 0, true);
     p->speed(0.1f);
 
     auto f = new Font("textures/vict.png");
