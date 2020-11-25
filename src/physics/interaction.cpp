@@ -56,7 +56,7 @@ void Physics::interact_with(Physics *other)
         Vec2 dry_vec = Vec2({0.0f, dr.y()});
 
         if ((freebody->collider->intersects(drx_vec, fixedbody->collider)) || (fixedbody->collider->intersects(drx_vec*-1.0, freebody->collider))) {
-            float npx = freebody->owner.absolute_position().x() - (freebody->momentum.x() * freebody->_inv_mass * elasticity);
+            float npx = freebody->owner.absolute_position().x() - (freebody->momentum.x() * freebody->_inv_mass * elasticity)*Physics::time_scale();
             freebody->maybe_new_position.x(npx);
 
             if (dr.x() > 0.0f) {
@@ -70,7 +70,7 @@ void Physics::interact_with(Physics *other)
         }
 
         if ((freebody->collider->intersects(dry_vec, fixedbody->collider)) || (fixedbody->collider->intersects(dry_vec*-1.0, freebody->collider))) {
-            float npy = freebody->owner.absolute_position().y() - (freebody->momentum.y() * freebody->_inv_mass * elasticity);
+            float npy = freebody->owner.absolute_position().y() - (freebody->momentum.y() * freebody->_inv_mass * elasticity)*Physics::time_scale();
             freebody->maybe_new_position.y(npy);
 
             if (dr.y() > 0.0f) {
