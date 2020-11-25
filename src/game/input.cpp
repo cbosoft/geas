@@ -70,6 +70,17 @@ void Game::process_input_game(int key, int scancode, int action, int mods)
                 this->player->jump();
             break;
 
+        case GLFW_KEY_DOWN:
+        case GLFW_KEY_LEFT_SHIFT:
+            if (this->player) {
+                if (action == GLFW_PRESS) {
+                    this->player->crouch(true);
+                }
+                else if (action == GLFW_RELEASE) {
+                    this->player->crouch(false);
+                }
+            }
+
         default:
             break;
 

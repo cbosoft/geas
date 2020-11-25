@@ -2,11 +2,12 @@
 #include "../../../geas_object.hpp"
 
 
-void PlayerAnimator::set_state(int horizontal_speed, int vertical_speed, bool on_ground)
+void PlayerAnimator::set_state(int horizontal_speed, int vertical_speed, bool on_ground, bool crouched)
 {
     this->_horizontal_speed = horizontal_speed;
     this->_vertical_speed = vertical_speed;
     this->_on_ground = on_ground;
+    this->_crouched = crouched;
     this->check_state();
 }
 
@@ -21,7 +22,12 @@ void PlayerAnimator::check_state()
     std::string loop_name = "idle";
     if (this->_on_ground) {
         if (this->_horizontal_speed) {
-            loop_name = "run";
+            loop_name = (this->_crouched?"crouch_run":"run");
+        }
+        else {
+            if (this->_crouched) {
+                loop_name = "crouch";
+            }
         }
     }
     else {

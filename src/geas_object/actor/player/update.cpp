@@ -16,7 +16,7 @@ void Player::update()
 
     auto *a = (PlayerAnimator *)this->animator();
     float vspeed = this->physics->get_momentum().y();
-    a->set_state(this->driving_direction, vspeed>0.1f?1:(vspeed<-0.1f?-1:0), this->contact_bottom());
+    a->set_state(this->driving_direction, vspeed>0.1f?1:(vspeed<-0.1f?-1:0), this->contact_bottom(), this->crouching);
 
     if (this->driving_direction) {
         Vec2 ls = this->local_scale();

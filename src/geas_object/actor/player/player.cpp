@@ -6,6 +6,7 @@ Player::Player(Transform *parent)
     , jump_force(1.5f)
     , driving_accel(5e-2f)
     , driving_direction(0)
+    , crouching(false)
 {
   //this->sprite = new Sprite(this, "textures/sprite_sheet.png");
   //this->sprite->request_animation("run");

@@ -7,7 +7,7 @@ public:
     explicit PlayerAnimator(GeasObject &owner);
     ~PlayerAnimator() override =default;
 
-    void set_state(int horizontal_speed, int vertical_speed, bool on_ground);
+    void set_state(int horizontal_speed, int vertical_speed, bool on_ground, bool crouched);
 
 private:
 
@@ -18,5 +18,6 @@ private:
     bool _on_ground;
     //bool _on_wall;
     //bool _attacking;
+    bool _crouched;
 
 };

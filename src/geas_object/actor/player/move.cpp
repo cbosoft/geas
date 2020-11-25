@@ -14,3 +14,8 @@ void Player::jump()
 {
     this->should_jump = true;
 }
+
+void Player::crouch(bool v)
+{
+    this->crouching = v;
+}
