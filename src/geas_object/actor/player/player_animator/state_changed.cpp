@@ -28,7 +28,7 @@ void PlayerAnimator::check_state()
         if (this->_vertical_speed > 0) {
             loop_name = "jump";
         }
-        else {
+        else if (this->_vertical_speed < 0) {
             loop_name = "fall";
         }
     }

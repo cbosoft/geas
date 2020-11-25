@@ -2,20 +2,21 @@
 
 void GeasObject::update()
 {
+    const float epsilon = 0.01f;
     if (this->physics) {
         const Vec2 &mom = this->physics->get_momentum();
 
-        if (mom.x() > 0.0f) {
+        if (mom.x() > epsilon) {
             this->contact_left(false);
         }
-        else if (mom.x() < 0.0f) {
+        else if (mom.x() < -epsilon) {
             this->contact_right(false);
         }
 
-        if (mom.y() > 0.0f) {
+        if (mom.y() > epsilon) {
             this->contact_bottom(false);
         }
-        else if (mom.y() < 0.0f) {
+        else if (mom.y() < -epsilon) {
             this->contact_top(false);
         }
     }
