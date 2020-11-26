@@ -71,6 +71,7 @@ void Game::process_input_game(int key, int scancode, int action, int mods)
             break;
 
         case GLFW_KEY_DOWN:
+        case GLFW_KEY_S:
         case GLFW_KEY_LEFT_SHIFT:
             if (this->player) {
                 if (action == GLFW_PRESS) {
