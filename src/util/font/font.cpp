@@ -40,3 +40,23 @@ void Font::scale(float v)
 {
     this->_scale = v;
 }
+
+
+float Font::get_stride_of(char c) const
+{
+    auto it = this->stride.find(c);
+    if (it != this->stride.end()) {
+        return it->second;
+    }
+    return 16.0f;
+}
+
+
+unsigned int Font::get_index_of(char c) const
+{
+    auto it = this->indices.find(c);
+    if (it != this->indices.end()) {
+        return it->second;
+    }
+    return 0;
+}

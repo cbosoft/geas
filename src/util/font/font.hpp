@@ -10,8 +10,8 @@ class Transform;
 class Font {
 public:
 
-    Font(const std::string &font_sheet);
-    void render_text(Transform *t, const std::string &text, const Vec2 &size);
+    explicit Font(const std::string &font_sheet);
+    void render_text(Transform *t, const std::string &text, const Vec2 &size) const;
     [[nodiscard]] float line_spacing() const;
     void line_spacing(float v);
 
@@ -20,9 +20,11 @@ public:
 
 private:
 
-    void render_character(Transform *t, char c, Vec2 &bl);
-    void render_word(Transform *t, const std::string &w, Vec2 &bl);
-    float word_length(const std::string &word);
+    void render_character(Transform *t, char c, Vec2 &bl) const;
+    void render_word(Transform *t, const std::string &w, Vec2 &bl) const;
+    [[nodiscard]] float word_length(const std::string &word) const;
+    [[nodiscard]] float get_stride_of(char c) const;
+    [[nodiscard]] unsigned int get_index_of(char c) const;
     std::map<char, float> stride;
     std::map<char, unsigned int> indices;
     std::string texture_name;

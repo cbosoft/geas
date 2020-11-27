@@ -2,16 +2,16 @@
 #include "font.hpp"
 #include "../../geas_object/tile/tile.hpp"
 
-void Font::render_character(Transform *parent, char c, Vec2 &bl)
+void Font::render_character(Transform *parent, char c, Vec2 &bl) const
 {
     auto *tile = new Tile(parent, this->height*this->_scale, this->texture_name);
-    tile->set_variant(this->indices[c]);
+    tile->set_variant(this->get_index_of(c));
     tile->local_scale(Vec2(this->_scale));
-    tile->relative_position(bl.promote(0.0f)*this->_scale);
-    bl.x(bl.x() + this->stride[c]);
+    tile->relative_position(bl.promote(0.0f));
+    bl.x(bl.x() + this->get_stride_of(c)*this->_scale);
 }
 
-void Font::render_word(Transform *parent, const std::string &word, Vec2 &bl)
+void Font::render_word(Transform *parent, const std::string &word, Vec2 &bl) const
 {
     auto chars = word.data();
     for (unsigned int i = 0; i < word.size(); i++) {
@@ -22,7 +22,8 @@ void Font::render_word(Transform *parent, const std::string &word, Vec2 &bl)
 }
 
 
-void Font::render_text(Transform *parent, const std::string &text, const Vec2 &size) {
+void Font::render_text(Transform *parent, const std::string &text, const Vec2 &size) const
+{
     auto chars = text.data();
     std::list<Vec2> positions;
     std::list<std::string> words;
@@ -47,6 +48,7 @@ void Font::render_text(Transform *parent, const std::string &text, const Vec2 &s
     Vec2 bl;
     for (const auto &word : words) {
         float width = this->word_length(word);
+        std::cerr << width << " " << bl.x() << " " << size.x() << std::endl;
         if (bl.x() + width > size.x()) {
             bl.y(bl.y() - this->height*this->_line_spacing*this->_scale);
             bl.x(0.0f);
@@ -55,13 +57,13 @@ void Font::render_text(Transform *parent, const std::string &text, const Vec2 &s
     }
 }
 
-float Font::word_length(const std::string &word)
+float Font::word_length(const std::string &word) const
 {
     float width = 0.0f;
     auto chars = word.data();
     for (unsigned int i = 0; i < word.size(); i++) {
         char c = chars[i];
-        width += this->stride[c]*this->_scale;
+        width += this->get_stride_of(c)*this->_scale;
     }
     return width;
 }
