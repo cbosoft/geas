@@ -2,7 +2,7 @@
 #include "../../util/exception.hpp"
 #include "../../geas_object/geas_object.hpp"
 #include "rectcollider.hpp"
-
+const static float _rect_overlap = 1.0f;
 
 RectCollider::RectCollider(GeasObject *owner, const Vec4 &rect)
         : Transform(owner)
@@ -11,9 +11,9 @@ RectCollider::RectCollider(GeasObject *owner, const Vec4 &rect)
         , bl(this)
         , tl(this)
 {
-    Vec2 bl_offset({rect.x(), rect.y()});
-    this->size.x(rect.get(2));
-    this->size.y(rect.get(3));
+    Vec2 bl_offset({rect.x() - _rect_overlap, rect.y() - _rect_overlap});
+    this->size.x(rect.get(2) + _rect_overlap);
+    this->size.y(rect.get(3) + _rect_overlap);
     this->relative_position(bl_offset.promote(0.0f));
 
     this->tr.relative_position(size.promote(0.0f));
@@ -29,11 +29,14 @@ RectCollider::RectCollider(GeasObject *owner, const Vec2 &bl_offset, const Vec2 
     , bl(this)
     , tl(this)
 {
-  this->relative_position(bl_offset.promote(0.0f));
+    Vec3 bl_pos = bl_offset.promote(0.0f);
+    bl_pos += Vec2(-_rect_overlap).promote(0.0f);
+    this->relative_position(bl_pos);
 
-  this->tr.relative_position(size.promote(0.0f));
-  this->br.relative_position(Vec3({size.x(), 0.0f, 0.0f}));
-  this->tl.relative_position(Vec3({0.0f, size.y(), 0.0f}));
+    Vec3 size_after_offset = (size + Vec2(_rect_overlap)).promote(0.0f);
+    this->tr.relative_position(size_after_offset);
+    this->br.relative_position(Vec3({size_after_offset.x(), 0.0f, 0.0f}));
+    this->tl.relative_position(Vec3({0.0f, size_after_offset.y(), 0.0f}));
 }
 
 RectCollider::~RectCollider()
