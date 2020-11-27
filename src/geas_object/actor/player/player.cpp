@@ -8,14 +8,11 @@ Player::Player(Transform *parent)
     , driving_direction(0)
     , crouching(false)
 {
-  //this->sprite = new Sprite(this, "textures/sprite_sheet.png");
-  //this->sprite->request_animation("run");
 
   auto *r = new Renderable(this);
-  r->set_texture("textures/boy.png");
+  r->set_texture("assets/textures/boy.png");
   r->size(Vec2({32.0f, 32.0f}));
   this->renderable(r);
-
 
   this->physics = Physics::create(*this);
   this->physics->set_collider(new RectCollider(this,
@@ -24,7 +21,7 @@ Player::Player(Transform *parent)
       );
 
   auto *p = new PlayerAnimator(*this);
-  p->load_animations("textures/boy.png");
+  p->load_animations("assets/textures/boy.png");
   this->animator(p);
   this->animator()->speed(0.25);
 }

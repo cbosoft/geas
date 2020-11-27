@@ -24,7 +24,7 @@ void player_add(Game *game, Scene *scene, int delay)
 int main()
 {
     Game *game = Game::singleton();
-    auto *scene = Scene::from_file("level1.json");
+    auto *scene = Scene::from_file("assets/rooms/test.json");
     game->active_scene(scene);
     scene->enable();
 
@@ -32,16 +32,16 @@ int main()
     Physics::time_scale(1.0f);
     Physics::global_gravity_scale(1e-2);
 
-    auto *t = new Tile(scene->layers["main"], 64.0f, "textures/industrialist1.png");
+    auto *t = new Tile(scene->layers["main"], 64.0f, "assets/textures/industrialist1.png");
     t->absolute_position(Vec3({0.0f, -32.0f, 0.0f}));
     auto *p = new PlayerAnimator(*t);
-    p->load_animations("textures/industrialist1.png");
+    p->load_animations("assets/textures/industrialist1.png");
     p->set_state(0, 0, true, false);
     p->speed(0.1f);
 
-    auto f = new Font("textures/vict.png");
+    auto f = new Font("assets/textures/vict.png");
     f->scale(0.5f);
-    auto tb = new TextBox(scene->layers["main"], Vec2({150.0f, 16.0f}), "textures/text_background.png", "begone foul child!", *f);
+    auto tb = new TextBox(scene->layers["main"], Vec2({150.0f, 16.0f}), "assets/textures/text_background.png", "begone foul child!", *f);
     (void)tb;
 
     std::thread(player_add, game, scene, 500).detach();
