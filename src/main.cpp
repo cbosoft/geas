@@ -7,6 +7,8 @@
 #include "resourcemanager/resourcemanager.hpp"
 #include "geas_object/actor/player/player.hpp"
 #include "util/font/font.hpp"
+//#include "geas_object/sliced_sprite/sliced_sprite.hpp"
+#include "util/textbox/textbox.hpp"
 
 void player_add(Game *game, Scene *scene, int delay)
 {
@@ -38,10 +40,9 @@ int main()
     p->speed(0.1f);
 
     auto f = new Font("textures/vict.png");
-    f->scale(0.8f);
-    auto transform = new Transform(scene->layers["main"]);
-    transform->relative_position(Vec3({0.0f, 64.0f, 0.0f}));
-    f->render_text(transform, "begone foul child!", Vec2(128.0f));
+    f->scale(0.5f);
+    auto tb = new TextBox(scene->layers["main"], Vec2({150.0f, 16.0f}), "textures/text_background.png", "begone foul child!", *f);
+    (void)tb;
 
     std::thread(player_add, game, scene, 500).detach();
 
