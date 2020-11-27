@@ -96,7 +96,7 @@ void OpenGLRenderer::init()
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 #endif
 
-    constexpr float s = 3.0f;
+    float s = 2.5f;
     int w = 640, h = 480;
     GLFWmonitor *monitor = nullptr;
     if (fullscreen) {
@@ -112,6 +112,8 @@ void OpenGLRenderer::init()
 
         w = mode->width;
         h = mode->height;
+        s = 10.0f;
+
     }
 
     glfw_window = glfwCreateWindow(w, h, "GEAS", monitor, nullptr);
