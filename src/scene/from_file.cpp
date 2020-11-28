@@ -21,6 +21,8 @@ Scene *Scene::from_file(const std::string &path)
             collision_information = *it;
         }
 
+        json tileset_named_colliders = tileset_meta["named_colliders"];
+
         bool collision_override = false, collision_override_value = false;
         it = layer.find("collision");
         if (it != layer.end()) {
@@ -69,6 +71,14 @@ Scene *Scene::from_file(const std::string &path)
                     }
                     else if (info.is_boolean()) {
                         collider = info;
+                    }
+                    else if (info.is_string()) {
+                        std::string collider_name = info;
+                        auto rectinfo = tileset_named_colliders[collider_name];
+                        rect.set(0, float(rectinfo["x"])*s);
+                        rect.set(1, float(rectinfo["y"])*s);
+                        rect.set(2, float(rectinfo["w"])*s);
+                        rect.set(3, float(rectinfo["h"])*s);
                     }
                     else {
                         std::cerr << "collision information not understood: ignoring." << std::endl;
