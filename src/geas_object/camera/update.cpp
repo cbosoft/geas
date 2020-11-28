@@ -2,23 +2,28 @@
 
 void Camera::update()
 {
-    // move to target location
-
-    if (_x_fixed && _y_fixed)
-        return;
 
     if (!this->_target)
         return;
 
+    // move to target location
     Vec3 target_position = this->_target->absolute_position();
+
+    if (target_position.x() > this->_area.x() + this->_area.w()) {
+        target_position.x(this->_area.x() + this->_area.w());
+    }
+    else if (target_position.x() < this->_area.x()) {
+        target_position.x(this->_area.x());
+    }
+
+    if (target_position.y() > this->_area.y() + this->_area.h()) {
+        target_position.y(this->_area.y() + this->_area.h());
+    }
+    else if (target_position.y() < this->_area.y()) {
+        target_position.y(this->_area.y());
+    }
+
     Vec3 current_position = this->absolute_position();
-
-    if (_x_fixed)
-        target_position.x(current_position.y());
-
-    if (_y_fixed)
-        target_position.y(current_position.y());
-
     target_position.z(current_position.z());
 
     this->absolute_position(target_position);

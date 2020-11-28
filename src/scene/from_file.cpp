@@ -12,6 +12,8 @@ Scene *Scene::from_file(const std::string &path)
     std::string name = scene_spec["name"];
     std::cerr << "Loading scene \"" << name << "\"" << std::endl;
 
+    Vec2 bl, tr;
+
     for (json layer : scene_spec["layers"]) {
         std::string tileset_path = layer["tileset"];
         json tileset_meta = ResourceManager::singleton().get_metadata(tileset_path);
@@ -48,7 +50,21 @@ Scene *Scene::from_file(const std::string &path)
         for (const auto &row : layer["tiles"]) {
             x = x_offset;
             y -= s;
+
+            if (y > tr.y())
+                tr.y(y);
+
+            if (y < bl.y())
+                bl.y(y);
+
             for (const auto &cell : row) {
+
+                if (x > tr.x())
+                    tr.x(x);
+
+                if (x < bl.x())
+                    bl.x(x);
+
                 int i = cell;
                 if (i) {
                     int variant = i-1;
@@ -104,5 +120,8 @@ Scene *Scene::from_file(const std::string &path)
 
     }
 
+    const float camoff = 240.0f;
+    Vec4 camera_area({bl.x() + camoff, bl.y()+camoff, tr.x() - bl.x() - camoff*2, tr.y() - bl.y() - camoff*2});
+    scene->set_camera_area(camera_area);
     return scene;
 }

@@ -7,14 +7,14 @@ public:
 
     Camera(Transform *parent, Transform *target=nullptr);
 
-    void immobilise_horizontal(bool v=true);
-    void immobilise_vertical(bool v=true);
     void update() override;
 
     void target(Transform *target);
     Transform *target() const;
 
+    void area(const Vec4 &a);
+
 private:
-    bool _x_fixed, _y_fixed;
+    Vec4 _area;
     Transform *_target;
 };

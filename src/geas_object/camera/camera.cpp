@@ -2,25 +2,13 @@
 
 Camera::Camera(Transform *parent, Transform *target)
     : GeasObject(parent)
-    , _x_fixed(false)
-    , _y_fixed(false)
+    , _area({-1024.0f, -1024.0f, 2048.0f, 2048.0f})
     , _target(target)
 {
     // do nothing
     this->physics = Physics::create(*this);
     this->physics->set_fixed();
 }
-
-void Camera::immobilise_horizontal(bool v)
-{
-    this->_x_fixed = v;
-}
-
-void Camera::immobilise_vertical(bool v)
-{
-    this->_y_fixed = v;
-}
-
 void Camera::target(Transform *target)
 {
     this->_target = target;
@@ -29,4 +17,9 @@ void Camera::target(Transform *target)
 Transform *Camera::target() const
 {
     return this->_target;
+}
+
+void Camera::area(const Vec4 &a)
+{
+    this->_area = a;
 }

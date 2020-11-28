@@ -16,6 +16,7 @@ public:
     virtual bool is_ui() { return false; }
 
     std::map<std::string, Transform *> layers;
+    void set_camera_area(const Vec4 &area) const;
 
 private:
     Scene();
