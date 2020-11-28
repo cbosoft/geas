@@ -4,6 +4,7 @@
 #include "image.hpp"
 
 ImageData::ImageData(const std::string &filename)
+    : _number_layers(1)
 {
   const char *path_cstr = filename.c_str();
   stbi_set_flip_vertically_on_load(true);
@@ -20,7 +21,7 @@ ImageData::ImageData(const std::string &filename)
   this->_number_frames_y = 1;
   for (auto& [key, value] : metadata.items()) {
       std::string s_key = std::string(key);
-      if (s_key.compare("number_frames") == 0) {
+      if (s_key == "number_frames") {
           if (value.is_number()) {
               this->_number_frames_x = value;
           }
@@ -31,6 +32,9 @@ ImageData::ImageData(const std::string &filename)
           else {
               // TODO exception
           }
+      }
+      else if (s_key == "number_layers") {
+          this->_number_layers = value;
       }
   }
 
@@ -72,4 +76,9 @@ unsigned int ImageData::number_frames_x() const
 unsigned int ImageData::number_frames_y() const
 {
     return this->_number_frames_y;
+}
+
+unsigned int ImageData::number_layers() const
+{
+    return this->_number_layers;
 }

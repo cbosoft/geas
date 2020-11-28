@@ -5,7 +5,7 @@
 void Font::render_character(Transform *parent, char c, Vec2 &bl) const
 {
     auto *tile = new Tile(parent, this->height*this->_scale, this->texture_name);
-    tile->set_variant(this->get_index_of(c));
+    tile->set_variant(0, this->get_index_of(c));
     tile->local_scale(Vec2(this->_scale));
     tile->relative_position(bl.promote(0.0f));
     bl.x(bl.x() + this->get_stride_of(c)*this->_scale);
