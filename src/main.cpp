@@ -33,16 +33,16 @@ int main()
     Physics::global_gravity_scale(1e-2);
 
     auto *t = new Tile(scene->layers["main"], 64.0f, "assets/textures/industrialist1.png");
-    t->absolute_position(Vec3({0.0f, -32.0f, 0.0f}));
+    t->absolute_position(Vec3({64.0f, -128.0f, 0.0f}));
     auto *p = new PlayerAnimator(*t);
     p->load_animations("assets/textures/industrialist1.png");
     p->set_state(0, 0, true, false);
     p->speed(0.1f);
 
-    auto f = new Font("assets/textures/vict.png");
-    f->scale(0.5f);
-    auto tb = new TextBox(scene->layers["main"], Vec2({150.0f, 16.0f}), "assets/textures/text_background.png", "begone foul child!", *f);
-    (void)tb;
+    // auto f = new Font("assets/textures/vict.png");
+    // f->scale(0.5f);
+    // auto tb = new TextBox(scene->layers["main"], Vec2({150.0f, 16.0f}), "assets/textures/text_background.png", "begone foul child!", *f);
+    // (void)tb;
 
     std::thread(player_add, game, scene, 500).detach();
 
