@@ -4,7 +4,7 @@
 Player::Player(Transform *parent)
     : Actor(parent, 3.0f)
     , jump_force(1.5f)
-    , driving_accel(5e-2f)
+    , driving_accel(7e-2f)
     , driving_direction(0)
     , crouching(false)
 {
