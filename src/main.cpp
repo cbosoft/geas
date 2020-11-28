@@ -33,7 +33,7 @@ int main()
     Physics::global_gravity_scale(1e-2);
 
     auto *t = new Tile(scene->layers["main"], 64.0f, "assets/textures/industrialist1.png");
-    t->absolute_position(Vec3({64.0f, -128.0f, 0.0f}));
+    t->absolute_position(Vec3({64.0f, -136.0f, 0.0f}));
     auto *p = new PlayerAnimator(*t);
     p->load_animations("assets/textures/industrialist1.png");
     p->set_state(0, 0, true, false);
