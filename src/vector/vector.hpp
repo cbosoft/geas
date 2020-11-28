@@ -278,6 +278,26 @@ class VectorN {
     {
       this->set(3, value);
     }
+
+    float w() const
+    {
+        return this->get(2);
+    }
+
+    void w(float value)
+    {
+        this->set(2, value);
+    }
+
+    float h() const
+    {
+        return this->get(3);
+    }
+
+    void h(float value)
+    {
+        this->set(3, value);
+    }
     // }}}
     // vector maths {{{
 
