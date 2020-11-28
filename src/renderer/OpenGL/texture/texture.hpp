@@ -11,11 +11,11 @@ class Texture {
     static Texture *from_file(const std::string &path);
     explicit Texture(const ImageData &image);
     void use() const;
-    [[nodiscard]] Vec4 get_rect(unsigned int i) const;
-    [[nodiscard]] Vec4 get_rect(unsigned int r, unsigned int c) const;
+    [[nodiscard]] Vec4 get_rect(unsigned int l, unsigned int i) const;
+    [[nodiscard]] Vec4 get_rect(unsigned int l, unsigned int r, unsigned int c) const;
 
   private:
     unsigned int glid;
-    unsigned int _number_frames_x, _number_frames_y;
+    unsigned int _number_frames_x, _number_frames_y, _number_layers;
     float framewidth, frameheight;
 };

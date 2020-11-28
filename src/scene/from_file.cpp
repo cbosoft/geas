@@ -28,6 +28,12 @@ Scene *Scene::from_file(const std::string &path)
             collision_override_value = *it;
         }
 
+        unsigned int tile_layer = 0;
+        it = layer.find("tile_layer");
+        if (it != layer.end()) {
+            tile_layer = *it;
+        }
+
         const float s = layer["size"];
         const float x_offset = static_cast<float>(layer["x_offset"])*s;
         const float y_offset = static_cast<float>(layer["y_offset"])*s;
@@ -78,7 +84,7 @@ Scene *Scene::from_file(const std::string &path)
                     else {
                         t = new Tile(layer_transform, s, tileset_path);
                     }
-                    t->renderable()->current_frame(variant);
+                    t->set_variant(tile_layer, variant);
                     Vec3 pos({x, y, 0.0f}); // TODO z ordering
                     t->absolute_position(pos);
                 }

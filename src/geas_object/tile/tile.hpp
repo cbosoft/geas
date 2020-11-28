@@ -13,6 +13,6 @@ public:
     ~Tile() override =default;
 
     void update() override {};
-    void set_variant(int i) const;
+    void set_variant(unsigned int layer, unsigned int frame) const;
 
 };

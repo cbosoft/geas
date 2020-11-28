@@ -66,7 +66,9 @@ Tile::Tile(Transform *parent, float s, const Vec4 &colour, bool fixed, bool coll
     r->colour(colour);
 }
 
-void Tile::set_variant(int i) const
+void Tile::set_variant(unsigned int layer, unsigned int frame) const
 {
-    this->renderable()->current_frame(i);
+    auto *r = this->renderable();
+    r->current_frame(frame);
+    r->layer(layer);
 }

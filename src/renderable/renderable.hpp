@@ -29,9 +29,13 @@ public:
     unsigned int current_frame() const;
     void current_frame(unsigned int i);
 
+    unsigned int layer() const;
+    void layer(unsigned int i);
+
 private:
 
     unsigned int _current_frame;
+    unsigned int _layer;
     bool _has_texture;
     std::string _texture_path;
     Vec4 _colour;

@@ -37,6 +37,7 @@ Texture::Texture(const ImageData &image)
   : glid(0)
   , _number_frames_x(image.number_frames_x())
   , _number_frames_y(image.number_frames_y())
+  , _number_layers(image.number_layers())
 {
   glGenTextures(1, &this->glid);
   glBindTexture(GL_TEXTURE_2D, this->glid);
@@ -59,19 +60,19 @@ Texture::Texture(const ImageData &image)
   glGenerateMipmap(GL_TEXTURE_2D);
 
   this->framewidth = 1.0f/static_cast<float>(this->_number_frames_x);
-  this->frameheight = 1.0f/static_cast<float>(this->_number_frames_y);
+  this->frameheight = 1.0f/static_cast<float>(this->_number_frames_y*this->_number_layers);
 }
 
-Vec4 Texture::get_rect(unsigned int i) const
+Vec4 Texture::get_rect(unsigned int l, unsigned int i) const
 {
     unsigned int r = i / this->_number_frames_x;
     unsigned int c = i % this->_number_frames_x;
-    return this->get_rect(r, c);
+    return this->get_rect(l, r, c);
 }
 
-Vec4 Texture::get_rect(unsigned int r, unsigned int c) const
+Vec4 Texture::get_rect(unsigned int l, unsigned int r, unsigned int c) const
 {
-    float y = this->frameheight * static_cast<float>(r);
+    float y = this->frameheight * static_cast<float>(r + (this->_number_layers - l - 1)*this->_number_frames_y);
     float x = this->framewidth * static_cast<float>(c);
     return Vec4({x, y, this->framewidth, this->frameheight});
 }

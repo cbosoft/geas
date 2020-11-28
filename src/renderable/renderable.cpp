@@ -8,6 +8,7 @@
 Renderable::Renderable(GeasObject *parent)
     : Transform(parent)
     , _current_frame(0)
+    , _layer(0)
     , _has_texture(false)
     , _colour(1.0)
     , _size({16.0f, 16.0f})
@@ -79,4 +80,14 @@ unsigned int Renderable::current_frame() const
 void Renderable::current_frame(unsigned int i)
 {
     this->_current_frame = i;
+}
+
+unsigned int Renderable::layer() const
+{
+    return this->_layer;
+}
+
+void Renderable::layer(unsigned int i)
+{
+    this->_layer = i;
 }
