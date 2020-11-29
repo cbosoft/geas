@@ -10,11 +10,17 @@
 
 class UIElement : public Transform {
 public:
-    UIElement (Transform *parent, const std::string &name, json j, const Font &font);
-    std::string move(UIDirection dir);
+    UIElement (Transform *parent, const Vec2 &position, const std::string &name, const Font &font, const std::string &text);
+
+    UIElement *move(UIDirection dir);
+    void set_direction(UIDirection dir, UIElement *dest);
+
+    virtual void action() =0;
+
+    [[nodiscard]] const std::string &get_name() const;
 
 private:
     std::string name;
-    std::map<UIDirection, std::string> targets;
+    std::map<UIDirection, UIElement *> targets;
     //Transform *selection_hint;
 };

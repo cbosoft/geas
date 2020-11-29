@@ -11,20 +11,19 @@ UI::UI()
 
 void UI::accept()
 {
-    // TODO: accept on currently selected accept action
+    if (this->selected)
+        this->selected->action();
 }
 
 void UI::cancel()
 {
-    // TODO: cancel on currently selected UIElement
+    // do nothing
 }
 
 void UI::move(UIDirection dir)
 {
     if (this->selected) {
-        std::string name = this->selected->move(dir);
-        UIElement *target = this->elements[name];
-        this->select(target);
+        this->select(this->selected->move(dir));
     }
 }
 

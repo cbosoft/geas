@@ -10,20 +10,20 @@
 
 class UI : public Scene {
 public:
+    UI();
 
-
-    void move(UIDirection dir);
-    void accept();
-    void cancel();
+    virtual void move(UIDirection dir);
+    virtual void accept();
+    virtual void cancel();
 
     bool is_ui() override { return true; }
 
+    friend class MainMenu;
+
 private:
-    UI();
 
     void select(UIElement *elem);
 
-    std::map<std::string, UIElement *> elements;
     UIElement *selected;
     Tile *selection_hint;
 };
