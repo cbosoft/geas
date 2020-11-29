@@ -12,6 +12,7 @@ public:
 
     explicit Font(const std::string &font_sheet);
     void render_text(Transform *t, const std::string &text, const Vec2 &size) const;
+    void render_text(Transform *t, const std::string &text) const;
     [[nodiscard]] float line_spacing() const;
     void line_spacing(float v);
 

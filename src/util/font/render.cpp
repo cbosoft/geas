@@ -22,6 +22,16 @@ void Font::render_word(Transform *parent, const std::string &word, Vec2 &bl) con
 }
 
 
+void Font::render_text(Transform *t, const std::string &text) const
+{
+    auto chars = text.data();
+    Vec2 bl;
+    for (unsigned int i = 0; i < text.size(); i++) {
+        this->render_character(t, chars[i], bl);
+    }
+}
+
+
 void Font::render_text(Transform *parent, const std::string &text, const Vec2 &size) const
 {
     auto chars = text.data();
