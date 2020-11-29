@@ -18,6 +18,8 @@ public:
     std::map<std::string, Transform *> layers;
     void set_camera_area(const Vec4 &area) const;
 
+    friend class UI;
+
 private:
     Scene();
     Camera *_camera;
