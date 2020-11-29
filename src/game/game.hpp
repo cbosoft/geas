@@ -34,9 +34,6 @@ class Game {
     void set_player(Player *obj);
     [[nodiscard]] Player *get_player() const;
 
-    void camera(Transform *cam);
-    [[nodiscard]] Transform *camera();
-
   private:
     Game();
 
