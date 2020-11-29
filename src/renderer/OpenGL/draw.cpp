@@ -33,6 +33,9 @@ void OpenGLRenderer::draw(Transform *transform, const Vec3 &camera_position)
     if (transform == nullptr)
         return;
 
+    if (!transform->is_enabled())
+        return;
+
     // draw this object
     this->draw(transform->renderable(), camera_position);
 
