@@ -2,7 +2,7 @@
 
 #include "../scene.hpp"
 
-enum UIDirection {UIDir_Up, UIDir_Down, UIDir_Left, UIDir_Right};
+#include "ui_direction.hpp"
 
 class UI : public Scene {
 public:
