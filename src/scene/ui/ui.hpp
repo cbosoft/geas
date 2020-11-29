@@ -11,8 +11,6 @@
 class UI : public Scene {
 public:
 
-    static UI *from_json(nlohmann::json j);
-    static UI *from_file(const std::string &path);
 
     void move(UIDirection dir);
     void accept();
