@@ -57,6 +57,11 @@ void Game::is_alive(bool v)
     this->_is_alive = v;
 }
 
+void Game::quit()
+{
+    this->is_alive(false);
+}
+
 float Game::get_time_delta() const
 {
     return this->time_delta;

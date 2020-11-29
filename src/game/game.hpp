@@ -21,6 +21,7 @@ class Game {
 
     bool is_alive() const;
     void is_alive(bool v);
+    void quit();
 
     float get_time_delta() const;
     float get_time() const;
