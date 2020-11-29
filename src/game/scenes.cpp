@@ -5,12 +5,6 @@
 
 Scene *Game::active_scene() const
 {
-    if (this->_active_scene == nullptr) {
-        // no active scene set currently
-        // throw exception
-        throw NotFound("Active scene does not exist: set it by index or by ref with Game::active_scene(index_or_ref) after creating it.");
-    }
-
     return this->_active_scene;
 }
 
