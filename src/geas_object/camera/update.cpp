@@ -26,5 +26,7 @@ void Camera::update()
     Vec3 current_position = this->absolute_position();
     target_position.z(current_position.z());
 
-    this->absolute_position(target_position);
+    const float smoothing = 0.98f;
+    Vec3 result = current_position * smoothing + target_position * (1.0f - smoothing);
+    this->absolute_position(result);
 }
