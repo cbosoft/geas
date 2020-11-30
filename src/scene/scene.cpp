@@ -25,9 +25,9 @@ Camera *Scene::camera()
 }
 
 
-void Scene::set_camera_area(const Vec4 &a) const
+void Scene::set_camera_area(const Vec4 &a)
 {
-    this->_camera->area(a);
+    this->camera()->area(a);
 }
 
 void Scene::fade_out() const

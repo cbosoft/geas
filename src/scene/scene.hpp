@@ -15,7 +15,7 @@ public:
     virtual bool is_ui() { return false; }
 
     std::map<std::string, Transform *> layers;
-    void set_camera_area(const Vec4 &area) const;
+    void set_camera_area(const Vec4 &area);
     void fade_out() const;
     void fade_in() const;
 
