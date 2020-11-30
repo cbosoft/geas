@@ -16,7 +16,7 @@ public:
     explicit Animator(GeasObject &owner);
     virtual ~Animator();
 
-    void load_animations(const std::string &texture);
+    virtual void load_animations(const std::string &texture);
 
     void update(unsigned int frame_number);
 
@@ -29,6 +29,7 @@ public:
     unsigned int current_frame() const;
 
     void add_animation(Animation *anim);
+
 private:
     static const std::list<Animator *> &animators();
 
