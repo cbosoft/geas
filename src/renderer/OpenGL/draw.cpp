@@ -8,6 +8,27 @@
 
 #include "opengl_renderer.hpp"
 
+void OpenGLRenderer::draw(Scene *scene)
+{
+    if (scene == nullptr)
+        return;
+
+    if (!scene->is_enabled())
+        return;
+
+    Camera *camera = scene->camera();
+    Vec3 camera_position = camera->absolute_position();
+
+    // draw child objects
+    for (const auto& child : scene->children()) {
+        if (child != camera)
+          this->draw(child, camera_position);
+    }
+
+    this->draw((Transform *)camera, camera_position);
+
+}
+
 void OpenGLRenderer::draw(Transform *transform, const Vec3 &camera_position)
 {
     if (transform == nullptr)

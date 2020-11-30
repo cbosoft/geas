@@ -39,6 +39,7 @@ public:
     Vec2 scale{{0.01f, 0.01f}};
 
 private:
+    void draw(Scene *scene) override;
     void draw(Transform *transform, const Vec3 &camera) override;
     void draw(Renderable *renderable, const Vec3 &camera) override;
     bool initialised;

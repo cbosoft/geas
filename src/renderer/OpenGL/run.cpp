@@ -18,12 +18,7 @@ void OpenGLRenderer::run()
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
-        Scene *scene = this->game->active_scene();
-
-        if (scene) {
-            Vec3 camera_position = scene->camera()->absolute_position();
-            this->draw(scene, camera_position);
-        }
+        this->draw(this->game->active_scene());
 
         /* Swap front and back buffers */
         glfwSwapBuffers(glfw_window);
