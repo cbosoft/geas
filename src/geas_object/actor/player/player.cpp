@@ -22,6 +22,6 @@ Player::Player(Transform *parent)
 
   auto *p = new PlayerAnimator(*this);
   p->load_animations("assets/textures/boy.png");
+  p->speed(0.25);
   this->animator(p);
-  this->animator()->speed(0.25);
 }
