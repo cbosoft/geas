@@ -39,4 +39,4 @@ Animation::Animation(const std::string &name, json j)
 bool Animation::interruptable() const { return this->_interruptable; }
 bool Animation::looping() const { return this->_looping; }
 const std::string &Animation::name() const { return this->_name; }
-bool Animation::ended(unsigned int at_frame) const { return (!this->_looping) && this->ub <= at_frame; }
+bool Animation::ended(unsigned int at_frame) const { return (!this->_looping) && (this->ub-1 <= at_frame); }
