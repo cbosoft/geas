@@ -106,3 +106,8 @@ void Animator::load_animations_json(json loops_obj)
         this->animations[name] = a;
     }
 }
+
+void Animator::add_animation(Animation *anim)
+{
+    this->animations[anim->name()] = anim;
+}

@@ -28,6 +28,7 @@ public:
 
     unsigned int current_frame() const;
 
+    void add_animation(Animation *anim);
 private:
     static const std::list<Animator *> &animators();
 
