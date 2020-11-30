@@ -38,6 +38,10 @@ class Game {
     void set_player(Player *obj);
     [[nodiscard]] Player *get_player() const;
 
+    void set_tunnel_tag(const std::string &tag);
+    void set_tunnel_tag(const std::string &scene_A, const std::string &scene_B, const std::string &descriptor);
+    std::string get_tunnel_tag();
+
   private:
     Game();
 
@@ -60,6 +64,7 @@ class Game {
     typedef std::lock_guard<std::mutex> lock_guard;
     mutable std::mutex mutex;
     Player *player;
+    std::string tunnel_tag;
 
 
 };
