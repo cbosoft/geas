@@ -7,7 +7,7 @@
 
 class GeasObject;
 
-class RectCollider final : Transform {
+class RectCollider final : public Transform {
 
 public:
     RectCollider(GeasObject *parent, const Vec4 &rect);
