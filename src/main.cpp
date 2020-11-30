@@ -7,9 +7,9 @@
 #include "resourcemanager/resourcemanager.hpp"
 #include "geas_object/actor/player/player.hpp"
 #include "util/font/font.hpp"
-//#include "geas_object/sliced_sprite/sliced_sprite.hpp"
 #include "util/textbox/textbox.hpp"
 #include "scene/ui/main_menu/main_menu.hpp"
+#include "scene/room/room.hpp"
 
 void player_add(Game *game, Scene *scene, int delay)
 {
@@ -25,7 +25,7 @@ void player_add(Game *game, Scene *scene, int delay)
 int main()
 {
     Game *game = Game::singleton();
-    auto *test_room = Scene::from_file("assets/rooms/test.json");
+    auto *test_room = Room::from_file("assets/rooms/test.json");
     auto *main_menu = new MainMenu();
     game->active_scene(main_menu);
     game->add_scene(test_room);

@@ -1,20 +1,20 @@
 #include <iostream>
 
-#include "../resourcemanager/resourcemanager.hpp"
-#include "../geas_object/tile/tile.hpp"
-#include "scene.hpp"
+#include "../../resourcemanager/resourcemanager.hpp"
+#include "../../geas_object/tile/tile.hpp"
+#include "room.hpp"
 
-Scene *Scene::from_file(const std::string &path)
+Room *Room::from_file(const std::string &path)
 {
-    json scene_spec = ResourceManager::singleton().get_json(path);
+    json room_spec = ResourceManager::singleton().get_json(path);
 
-    std::string name = scene_spec["name"];
-    std::cerr << "Loading scene \"" << name << "\"" << std::endl;
-    auto *scene = new Scene(name);
+    std::string name = room_spec["name"];
+    std::cerr << "Loading room \"" << name << "\"" << std::endl;
+    auto *room = new Room(name);
 
     Vec2 bl, tr;
 
-    for (json layer : scene_spec["layers"]) {
+    for (json layer : room_spec["layers"]) {
         std::string tileset_path = layer["tileset"];
         json tileset_meta = ResourceManager::singleton().get_metadata(tileset_path);
         json collision_information;
@@ -44,9 +44,9 @@ Scene *Scene::from_file(const std::string &path)
 
         float h = static_cast<float>(layer["tiles"].size())*s;
         float y = h + y_offset, x;
-        Transform *layer_transform = new Transform(scene);
+        Transform *layer_transform = new Transform(room);
         std::string sname = layer["name"];
-        scene->layers[sname] = layer_transform;
+        room->layers[sname] = layer_transform;
         for (const auto &row : layer["tiles"]) {
             x = x_offset;
             y -= s;
@@ -120,9 +120,21 @@ Scene *Scene::from_file(const std::string &path)
 
     }
 
+    for (const auto &[tunnel_tag, position_spec] : room_spec["tunnels"].items()) {
+        Vec2 position({position_spec[0], position_spec[1]});
+        room->tunnel_positions[tunnel_tag] = position;
+    }
+
     const float camoff = 240.0f;
+    auto it = room_spec.find("camera_bounds");
+    if (it != room_spec.end()) {
+        json bounds = *it;
+        bl.x(bounds[0]);
+        bl.y(bounds[1]);
+        tr.x(bounds[2]);
+        tr.y(bounds[3]);
+    }
     Vec4 camera_area({bl.x() + camoff, bl.y()+camoff, tr.x() - bl.x() - camoff*2, tr.y() - bl.y() - camoff*2});
-    scene->set_camera_area(camera_area);
-    scene->camera()->absolute_position(Vec3({0.0f, 128.0f, 0.0f}));
-    return scene;
+    room->set_camera_area(camera_area);
+    return room;
 }

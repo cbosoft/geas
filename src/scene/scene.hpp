@@ -6,9 +6,8 @@
 
 class Scene : public Transform {
 public:
+    explicit Scene(const std::string &name);
     ~Scene();
-
-    static Scene *from_file(const std::string &path);
 
     Camera *camera();
 
@@ -21,11 +20,9 @@ public:
 
     const std::string &name() const;
 
-    friend class UI;
     virtual void activate();
 
 private:
-    explicit Scene(const std::string &name);
 
     std::string _name;
     Camera *_camera;
