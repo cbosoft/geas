@@ -14,6 +14,9 @@ void Game::active_scene(Scene *scene)
     if (it == this->scenes.end()) {
         this->scenes[scene->name()] = scene;
     }
+    else if (scene != it->second) {
+        throw NameConflict(Formatter() << "Scene name conflict found; cannot have two different scenes with the same name (\"" << it->first << "\").");
+    }
     this->_active_scene = scene;
 }
 
