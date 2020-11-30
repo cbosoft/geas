@@ -100,7 +100,8 @@ void Game::process_input_ui(int key, int scancode, int action, int mods)
 
       case GLFW_KEY_ESCAPE:
       case GLFW_KEY_Q:
-          ui->cancel();
+          if (action == GLFW_PRESS)
+            ui->cancel();
           break;
 
       case GLFW_KEY_D:
@@ -135,7 +136,8 @@ void Game::process_input_ui(int key, int scancode, int action, int mods)
       case GLFW_KEY_E:
       case GLFW_KEY_K:
       case GLFW_KEY_SPACE:
-          ui->accept();
+          if (action == GLFW_PRESS)
+            ui->accept();
           break;
 
 
