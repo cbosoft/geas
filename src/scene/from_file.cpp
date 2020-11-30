@@ -6,11 +6,11 @@
 
 Scene *Scene::from_file(const std::string &path)
 {
-    auto *scene = new Scene();
     json scene_spec = ResourceManager::singleton().get_json(path);
 
     std::string name = scene_spec["name"];
     std::cerr << "Loading scene \"" << name << "\"" << std::endl;
+    auto *scene = new Scene(name);
 
     Vec2 bl, tr;
 

@@ -19,9 +19,13 @@ public:
     void fade_out() const;
     void fade_in() const;
 
+    const std::string &name() const;
+
     friend class UI;
 
 private:
-    Scene();
+    explicit Scene(const std::string &name);
+
+    std::string _name;
     Camera *_camera;
 };

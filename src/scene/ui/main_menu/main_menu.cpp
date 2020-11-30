@@ -3,6 +3,7 @@
 #include "../../../geas_object/tile/tile.hpp"
 
 MainMenu::MainMenu()
+    :   UI("main_menu")
 {
     Font font{"assets/fonts/vict.png"};
     [[maybe_unused]] auto *background = new Tile(this, 640.0f, "assets/textures/plain_ui_bg.png");

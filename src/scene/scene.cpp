@@ -1,7 +1,9 @@
+#include <iostream>
 #include "scene.hpp"
 
-Scene::Scene()
+Scene::Scene(const std::string &name)
     : Transform()
+    , _name(name)
     , _camera(nullptr)
 {
     // do nothing
@@ -39,4 +41,9 @@ void Scene::fade_in() const
 {
     if (this->_camera)
         this->_camera->fade_in();
+}
+
+const std::string &Scene::name() const
+{
+    return this->_name;
 }

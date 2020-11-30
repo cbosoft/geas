@@ -1,8 +1,8 @@
 #include <iostream>
 #include "ui.hpp"
 
-UI::UI()
-    : Scene()
+UI::UI(const std::string &name)
+    : Scene(name)
     , selected(nullptr)
     , selection_hint(nullptr)
 {

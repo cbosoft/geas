@@ -10,7 +10,7 @@
 
 class UI : public Scene {
 public:
-    UI();
+    UI(const std::string &name);
 
     virtual void move(UIDirection dir);
     virtual void accept();
