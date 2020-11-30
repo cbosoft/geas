@@ -1,7 +1,8 @@
 #include "scene_transition_element.hpp"
+#include "../../../../game/game.hpp"
 
 void SceneTransitButton::action()
 {
-    // TODO: transition to scene with name this->destination
-    (void)this->_destination;
+    auto *game = Game::singleton();
+    game->transition_to(this->_destination, 500);
 }
