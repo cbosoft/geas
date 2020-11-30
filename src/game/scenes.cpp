@@ -10,14 +10,20 @@ Scene *Game::active_scene() const
 
 void Game::active_scene(Scene *scene)
 {
-    auto it = this->scenes.find(scene->name());
-    if (it == this->scenes.end()) {
-        this->scenes[scene->name()] = scene;
+    if (scene) {
+        auto it = this->scenes.find(scene->name());
+        if (it == this->scenes.end()) {
+            this->scenes[scene->name()] = scene;
+        } else if (scene != it->second) {
+            throw NameConflict(
+                    Formatter() << "Scene name conflict found; cannot have two different scenes with the same name (\""
+                                << it->first << "\").");
+        }
+        this->_active_scene = scene;
     }
-    else if (scene != it->second) {
-        throw NameConflict(Formatter() << "Scene name conflict found; cannot have two different scenes with the same name (\"" << it->first << "\").");
+    else {
+        this->_active_scene = nullptr;
     }
-    this->_active_scene = scene;
 }
 
 void Game::active_scene(const std::string &scene_name)
