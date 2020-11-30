@@ -62,3 +62,9 @@ void Physics::add_impulse(const Vec2 &force)
 {
     this->force_total += force;
 }
+
+
+RectCollider *Physics::get_collider() const
+{
+    return this->collider;
+}
