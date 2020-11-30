@@ -20,6 +20,7 @@ void Game::active_scene(Scene *scene)
                                 << it->first << "\").");
         }
         this->_active_scene = scene;
+        this->_active_scene->enable();
     }
     else {
         this->_active_scene = nullptr;
@@ -31,6 +32,7 @@ void Game::active_scene(const std::string &scene_name)
     auto it = this->scenes.find(scene_name);
     if (it != this->scenes.end()) {
         this->_active_scene = this->scenes[scene_name];
+        this->_active_scene->enable();
     }
     else {
         throw OutOfRange(Formatter() << "Scene \"" << scene_name << "\" is unknown to game; have you added it?");
