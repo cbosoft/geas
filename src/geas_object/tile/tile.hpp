@@ -2,7 +2,7 @@
 
 #include "../geas_object.hpp"
 
-class Tile final : public GeasObject {
+class Tile : public GeasObject {
 public:
     // TODO: need to tidy up construction
     // really need 4 ctors?
