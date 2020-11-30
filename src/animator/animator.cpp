@@ -9,6 +9,7 @@ Animator::Animator(GeasObject &owner)
     : owner(owner)
     , _current_anim(nullptr)
     , _inv_speed(1)
+    , _current_frame(0)
 {
     _animators.push_back(this);
 }
