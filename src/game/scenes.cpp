@@ -56,3 +56,16 @@ void Game::transition_to(const std::string &scene_name, unsigned int delay_ms)
     }
     this->transition_to(it->second, delay_ms);
 }
+
+void Game::add_scene(Scene *scene)
+{
+    const std::string &scene_name = scene->name();
+
+    auto it = this->scenes.find(scene_name);
+    if (it == this->scenes.end()) {
+        this->scenes[scene_name] = scene;
+    }
+    else {
+        throw NameConflict(Formatter() << "tried to add a scene with a name \"" << scene_name << "\"already in use; cannot have two scenes with the same name.");
+    }
+}

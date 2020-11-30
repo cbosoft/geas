@@ -29,7 +29,7 @@ class Game {
     [[nodiscard]] Scene *active_scene() const;
     void active_scene(Scene *scene);
     void active_scene(const std::string& scene_name);
-    void add_scene(Scene *scene, const std::string &name);
+    void add_scene(Scene *scene);
     void transition_to(Scene *scene, unsigned int delay_ms=800);
     void transition_to(const std::string &scene_name, unsigned int delay_ms=800);
 
