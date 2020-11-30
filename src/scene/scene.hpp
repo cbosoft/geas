@@ -11,7 +11,7 @@ public:
 
     static Scene *from_file(const std::string &path);
 
-    Camera *camera() const;
+    Camera *camera();
 
     virtual bool is_ui() { return false; }
 

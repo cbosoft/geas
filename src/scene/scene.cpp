@@ -2,9 +2,9 @@
 
 Scene::Scene()
     : Transform()
+    , _camera(nullptr)
 {
     // do nothing
-    this->_camera = new Camera(this);
 }
 
 Scene::~Scene()
@@ -13,8 +13,12 @@ Scene::~Scene()
 }
 
 
-Camera *Scene::camera() const
+Camera *Scene::camera()
 {
+    if (!this->_camera) {
+        this->_camera = new Camera(this);
+        this->_camera->enable();
+    }
     return this->_camera;
 }
 
