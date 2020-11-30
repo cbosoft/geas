@@ -43,3 +43,12 @@ void Game::transition_to(Scene *scene, unsigned int delay_ms)
     c = scene->camera();
     c->fade_in();
 }
+
+void Game::transition_to(const std::string &scene_name, unsigned int delay_ms)
+{
+    auto it = this->scenes.find(scene_name);
+    if (it == this->scenes.end()) {
+        throw OutOfRange(Formatter() << "Could not transition to unknown scene \"" << scene_name << "\". Have you definitely added it?");
+    }
+    this->transition_to(it->second, delay_ms);
+}

@@ -31,6 +31,7 @@ class Game {
     void active_scene(const std::string& scene_name);
     void add_scene(Scene *scene, const std::string &name);
     void transition_to(Scene *scene, unsigned int delay_ms=800);
+    void transition_to(const std::string &scene_name, unsigned int delay_ms=800);
 
     void process_input(int key, int scancode, int action, int mods);
 
