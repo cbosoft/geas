@@ -17,6 +17,8 @@ public:
 
     std::map<std::string, Transform *> layers;
     void set_camera_area(const Vec4 &area) const;
+    void fade_out() const;
+    void fade_in() const;
 
     friend class UI;
 
