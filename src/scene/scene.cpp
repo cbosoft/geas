@@ -47,3 +47,8 @@ const std::string &Scene::name() const
 {
     return this->_name;
 }
+
+void Scene::activate()
+{
+    this->enable();
+}

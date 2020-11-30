@@ -22,6 +22,7 @@ public:
     const std::string &name() const;
 
     friend class UI;
+    virtual void activate();
 
 private:
     explicit Scene(const std::string &name);
