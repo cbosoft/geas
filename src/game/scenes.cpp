@@ -25,3 +25,23 @@ void Game::active_scene(unsigned int i)
         throw OutOfRange("Scene index is out of range.");
     }
 }
+
+void Game::transition_to(Scene *scene, unsigned int delay_ms)
+{
+    Camera *c = nullptr;
+    if (this->active_scene()) {
+        c = this->active_scene()->camera();
+        c->fade_out();
+        std::this_thread::sleep_for(std::chrono::milliseconds(delay_ms));
+        this->active_scene()->disable();
+        this->active_scene(nullptr);
+        c = nullptr;
+    }
+    else {
+        std::this_thread::sleep_for(std::chrono::milliseconds(delay_ms));
+    }
+    this->active_scene(scene);
+    scene->enable();
+    c = scene->camera();
+    c->fade_in();
+}

@@ -29,6 +29,8 @@ class Game {
     [[nodiscard]] Scene *active_scene() const;
     void active_scene(Scene *scene);
     void active_scene(unsigned int i);
+    void transition_to(Scene *scene, unsigned int delay_ms);
+
     void process_input(int key, int scancode, int action, int mods);
 
     void set_player(Player *obj);
