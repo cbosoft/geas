@@ -2,7 +2,7 @@
 
 #include <thread>
 #include <list>
-#include <vector>
+#include <map>
 #include <mutex>
 
 #include "../geas_object/actor/player/player.hpp"
@@ -28,7 +28,8 @@ class Game {
 
     [[nodiscard]] Scene *active_scene() const;
     void active_scene(Scene *scene);
-    void active_scene(unsigned int i);
+    void active_scene(const std::string& scene_name);
+    void add_scene(Scene *scene, const std::string &name);
     void transition_to(Scene *scene, unsigned int delay_ms);
 
     void process_input(int key, int scancode, int action, int mods);
@@ -51,7 +52,7 @@ class Game {
     float time, time_delta, time_scale;
     float time_irl, time_delta_irl;
     std::list<std::thread> threads;
-    std::vector<Scene *> scenes;
+    std::map<std::string, Scene *> scenes;
     Scene *_active_scene;
     bool _is_alive;
     ThreadedQueue<PlayerInput *> input_queue;

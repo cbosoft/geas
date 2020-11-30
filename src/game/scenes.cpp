@@ -10,19 +10,17 @@ Scene *Game::active_scene() const
 
 void Game::active_scene(Scene *scene)
 {
-    if (std::find(this->scenes.begin(), this->scenes.end(), scene) == this->scenes.end()) {
-        this->scenes.push_back(scene);
-    }
     this->_active_scene = scene;
 }
 
-void Game::active_scene(unsigned int i)
+void Game::active_scene(const std::string &scene_name)
 {
-    if (i < this->scenes.size()) {
-        this->_active_scene = this->scenes[i];
+    auto it = this->scenes.find(scene_name);
+    if (it != this->scenes.end()) {
+        this->_active_scene = this->scenes[scene_name];
     }
     else {
-        throw OutOfRange("Scene index is out of range.");
+        throw OutOfRange(Formatter() << "Scene \"" << scene_name << "\" is unknown to game; have you added it?");
     }
 }
 

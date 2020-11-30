@@ -19,7 +19,8 @@ Game::Game()
 Game::~Game()
 {
 
-    for (Scene *sceneptr : this->scenes) {
+    for (const auto &kv : this->scenes) {
+        Scene *sceneptr = kv.second;
         delete sceneptr;
     }
 
