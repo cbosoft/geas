@@ -10,6 +10,10 @@ Scene *Game::active_scene() const
 
 void Game::active_scene(Scene *scene)
 {
+    auto it = this->scenes.find(scene->name());
+    if (it == this->scenes.end()) {
+        this->scenes[scene->name()] = scene;
+    }
     this->_active_scene = scene;
 }
 
