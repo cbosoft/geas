@@ -10,6 +10,7 @@ class Animator;
 class Animation {
 public:
     Animation(const std::string &name, json j);
+    Animation(const std::string &name, unsigned int lb, unsigned int ub);
 
     bool interruptable() const;
     bool looping() const;

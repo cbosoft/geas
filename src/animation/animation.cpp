@@ -36,6 +36,16 @@ Animation::Animation(const std::string &name, json j)
     }
 }
 
+Animation::Animation(const std::string &name, unsigned int _lb, unsigned int _ub)
+    :   lb(_lb)
+    ,   ub(_ub)
+    ,   _interruptable(false)
+    ,   _looping(true)
+    ,   _name(name)
+{
+    // do nothing
+}
+
 bool Animation::interruptable() const { return this->_interruptable; }
 bool Animation::looping() const { return this->_looping; }
 const std::string &Animation::name() const { return this->_name; }
