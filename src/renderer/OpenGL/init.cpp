@@ -138,6 +138,9 @@ void OpenGLRenderer::init()
         std::cout << "GLEW " << glewGetString(GLEW_VERSION) << " initialised" << std::endl;
     }
 
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable( GL_BLEND );
+
 #ifdef DEBUG
     int flags;
     glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
