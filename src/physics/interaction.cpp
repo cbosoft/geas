@@ -3,6 +3,7 @@
 #include "../geas_object/geas_object.hpp"
 #include "../util/formatter.hpp"
 #include "../util/debug.hpp"
+#include "trigger/trigger.hpp"
 
 #include "physics.hpp"
 
@@ -56,30 +57,48 @@ void Physics::interact_with(Physics *other)
         Vec2 dry_vec = Vec2({0.0f, dr.y()});
 
         if ((freebody->collider->intersects(drx_vec, fixedbody->collider)) || (fixedbody->collider->intersects(drx_vec*-1.0, freebody->collider))) {
-            float npx = freebody->owner.absolute_position().x() - (freebody->momentum.x() * freebody->_inv_mass * elasticity)*Physics::time_scale();
-            freebody->maybe_new_position.x(npx);
 
-            if (dr.x() > 0.0f) {
-                freebody->owner.contact_right(true);
-                fixedbody->owner.contact_left(true);
+            if (freebody->is_trigger() || fixedbody->is_trigger()) {
+                // trigger
+                auto *t = dynamic_cast<Trigger *>(freebody->is_trigger() ? freebody : fixedbody);
+                auto *o = (freebody->is_trigger() ? fixedbody : freebody);
+                t->trigger(o->owner);
             }
             else {
-                freebody->owner.contact_left(true);
-                fixedbody->owner.contact_right(true);
+                float npx = freebody->owner.absolute_position().x() -
+                            (freebody->momentum.x() * freebody->_inv_mass * elasticity) * Physics::time_scale();
+                freebody->maybe_new_position.x(npx);
+
+                if (dr.x() > 0.0f) {
+                    freebody->owner.contact_right(true);
+                    fixedbody->owner.contact_left(true);
+                } else {
+                    freebody->owner.contact_left(true);
+                    fixedbody->owner.contact_right(true);
+                }
             }
         }
 
         if ((freebody->collider->intersects(dry_vec, fixedbody->collider)) || (fixedbody->collider->intersects(dry_vec*-1.0, freebody->collider))) {
-            float npy = freebody->owner.absolute_position().y() - (freebody->momentum.y() * freebody->_inv_mass * elasticity)*Physics::time_scale();
-            freebody->maybe_new_position.y(npy);
 
-            if (dr.y() > 0.0f) {
-                freebody->owner.contact_top(true);
-                fixedbody->owner.contact_bottom(true);
+            if (freebody->is_trigger() || fixedbody->is_trigger()) {
+                // trigger
+                auto *t = dynamic_cast<Trigger *>(freebody->is_trigger() ? freebody : fixedbody);
+                auto *o = (freebody->is_trigger() ? fixedbody : freebody);
+                t->trigger(o->owner);
             }
             else {
-                freebody->owner.contact_bottom(true);
-                fixedbody->owner.contact_top(true);
+                float npy = freebody->owner.absolute_position().y() -
+                            (freebody->momentum.y() * freebody->_inv_mass * elasticity) * Physics::time_scale();
+                freebody->maybe_new_position.y(npy);
+
+                if (dr.y() > 0.0f) {
+                    freebody->owner.contact_top(true);
+                    fixedbody->owner.contact_bottom(true);
+                } else {
+                    freebody->owner.contact_bottom(true);
+                    fixedbody->owner.contact_top(true);
+                }
             }
         }
 

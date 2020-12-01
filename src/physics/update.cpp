@@ -7,6 +7,7 @@
 #include "../util/debug.hpp"
 #include "../util/formatter.hpp"
 #include "physics.hpp"
+#include "trigger/trigger.hpp"
 
 //static double ptime = 0.0;
 static std::chrono::time_point<std::chrono::system_clock> t0;
@@ -30,6 +31,11 @@ void Physics::update()
             continue;
 
         entity->owner.update();
+
+        if (entity->is_trigger()) {
+            auto *t = dynamic_cast<Trigger *>(entity);
+            t->cache_value();
+        }
 
         if (entity->fixed)
             continue;

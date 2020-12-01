@@ -17,9 +17,9 @@ class Physics {
   public:
     friend class RectCollider;
 
-    ~Physics();
+    Physics(GeasObject &owner);
+    virtual ~Physics();
 
-    static Physics *create(GeasObject &owner);
     static void update();
     void set_mass(float mass);
     void set_gravity(float gravity);
@@ -41,6 +41,7 @@ class Physics {
 
     void add_impulse(const Vec2 &force);
 
+    [[nodiscard]] virtual bool is_trigger() const {return false; }
 
     static float global_gravity_scale();
     static void global_gravity_scale(float v);
@@ -57,12 +58,12 @@ class Physics {
 
     float drag;
 
+    friend class Trigger;
+
 private:
     void interact_with(Physics *other);
     static const std::list<Physics *> &get_list();
     static void remove_ref(Physics *physics);
-
-    Physics(GeasObject &owner);
 
     bool fixed{false};
     GeasObject &owner;
