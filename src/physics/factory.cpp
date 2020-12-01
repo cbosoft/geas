@@ -14,6 +14,7 @@ Physics::Physics(GeasObject &owner)
         , collider(nullptr)
         , material(Material::get_default())
         , direction_constraints_mask(0)
+        , _enabled(true)
 {
     this->set_mass(1.0);
     this->set_gravity(1.0);
