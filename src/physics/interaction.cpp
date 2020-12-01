@@ -43,6 +43,9 @@ void Physics::interact_with(Physics *other)
     if (!(this->collider && other->collider))
         return;
 
+    if (!(this->is_enabled() && other->is_enabled()))
+        return;
+
 
     const float elasticity = (this->material->elasticity() + other->material->elasticity()) * 0.5f;
 

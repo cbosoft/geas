@@ -29,6 +29,10 @@ class Physics {
     void set_material(Material *material);
     void set_fixed(bool is_fixed=true);
 
+    bool is_enabled() const;
+    void enable();
+    void disable();
+
     Vec3 get_position() const;
     const Vec2 &get_momentum() const;
 
@@ -75,5 +79,6 @@ private:
     Material *material;
     bitmask_t direction_constraints_mask;
     Vec3 maybe_new_position;
+    bool _enabled;
 
 };

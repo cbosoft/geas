@@ -54,4 +54,18 @@ void Physics::add_impulse(const Vec2 &force)
 RectCollider *Physics::get_collider() const
 {
     return this->collider;
+
+bool Physics::is_enabled() const
+{
+    return this->_enabled;
+}
+
+void Physics::enable()
+{
+    this->_enabled = true;
+}
+
+void Physics::disable()
+{
+    this->_enabled = false;
 }
