@@ -7,7 +7,7 @@ Camera::Camera(Transform *parent, Transform *target)
     , _target(target)
 {
     // do nothing
-    this->physics = Physics::create(*this);
+    this->physics = new Physics(*this);
     this->physics->set_fixed();
 
     auto *r = new Renderable(this);

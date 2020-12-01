@@ -13,7 +13,7 @@ Tile::Tile(Transform *parent, float s, const std::string &texture_path)
 Tile::Tile(Transform *parent, float s, const std::string &texture_path, Vec4 rect)
         : GeasObject(parent)
 {
-    this->physics = Physics::create(*this);
+    this->physics = new Physics(*this);
     this->physics->set_fixed();
 
     this->physics->set_collider(rect);
@@ -29,7 +29,7 @@ Tile::Tile(Transform *parent, float s, const std::string &texture_path, bool fix
     : GeasObject(parent)
 {
     if (collision || !fixed) {
-        this->physics = Physics::create(*this);
+        this->physics = new Physics(*this);
         this->physics->set_fixed(fixed);
 
         if (collision) {
@@ -50,7 +50,7 @@ Tile::Tile(Transform *parent, float s, const Vec4 &colour, bool fixed, bool coll
         : GeasObject(parent)
 {
     if (collision || !fixed) {
-        this->physics = Physics::create(*this);
+        this->physics = new Physics(*this);
         this->physics->set_fixed(fixed);
 
         if (collision) {

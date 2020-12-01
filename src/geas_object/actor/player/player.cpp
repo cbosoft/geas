@@ -14,7 +14,7 @@ Player::Player(Transform *parent)
   r->size(Vec2({32.0f, 32.0f}));
   this->renderable(r);
 
-  this->physics = Physics::create(*this);
+  this->physics = new Physics(*this);
   this->physics->set_collider(new RectCollider(this,
         Vec2({8.0, 0.0}),
         Vec2({16.0, 32.0}))

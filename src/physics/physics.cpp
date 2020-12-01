@@ -1,20 +1,7 @@
 #include "../geas_object/geas_object.hpp"
 #include "physics.hpp"
 
-Physics::Physics(GeasObject &owner)
-  :
-      drag(-0.1)
-    , owner(owner)
-    , mass(1.0f)
-    , _inv_mass(1.0f)
-    , gravity_scale(1.0f)
-    , collider(nullptr)
-    , material(Material::get_default())
-    , direction_constraints_mask(0)
-{
-  this->set_mass(1.0);
-  this->set_gravity(1.0);
-}
+// constructor in "factory.cpp"
 
 Physics::~Physics()
 {
