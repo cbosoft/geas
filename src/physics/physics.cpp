@@ -54,6 +54,12 @@ void Physics::add_impulse(const Vec2 &force)
 RectCollider *Physics::get_collider() const
 {
     return this->collider;
+}
+
+GeasObject &Physics::get_owner() const
+{
+    return this->owner;
+}
 
 bool Physics::is_enabled() const
 {

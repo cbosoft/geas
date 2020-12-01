@@ -36,6 +36,8 @@ class Physics {
     Vec3 get_position() const;
     const Vec2 &get_momentum() const;
 
+    GeasObject &get_owner() const;
+
     void add_constraint(DirectionalConstraint constraint);
     void add_constraint(bitmask_t mask);
     void remove_constraint(DirectionalConstraint constraint);
