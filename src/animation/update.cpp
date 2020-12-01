@@ -1,6 +1,6 @@
 #include "animation.hpp"
 
-bool Animation::update(unsigned int current_frame, unsigned int &next_frame) const
+bool Animation::update(unsigned int current_frame, unsigned int &next_frame)
 {
     if (this->ended(current_frame))
         return false;

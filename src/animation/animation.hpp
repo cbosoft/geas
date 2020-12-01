@@ -15,7 +15,7 @@ public:
     bool interruptable() const;
     bool looping() const;
     bool ended(unsigned int at_frame) const;
-    bool update(unsigned int current_frame, unsigned int &next_frame) const;
+    virtual bool update(unsigned int current_frame, unsigned int &next_frame);
 
     const std::string &name() const;
 
