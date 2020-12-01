@@ -6,7 +6,7 @@
 MainMenu::MainMenu()
     :   UI("main_menu")
 {
-    Font font{"assets/fonts/vict.png"};
+    Font font{"assets/fonts/big_serif.png"};
     [[maybe_unused]] auto *background = new AnimatedTile(this, 640.0f, "assets/textures/plain_ui_bg.png");
     auto *continue_button = new SceneTransitButton(this, Vec2(0.0f), "continue", "continue", font, "test_room");
     auto *quit_button = new QuitButton(this, Vec2({0.0f, -32.0f}), "quit", "quit", font);
