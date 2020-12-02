@@ -16,7 +16,9 @@ void Room::activate()
         p->parent(this);
     }
 
-    p->absolute_position(pos.promote(0.0f));
+    Vec3 pos3 = pos.promote(0.0f);
+    p->absolute_position(pos3);
     this->camera()->target(p);
+    this->camera()->absolute_position(pos3);
     Scene::activate();
 }
