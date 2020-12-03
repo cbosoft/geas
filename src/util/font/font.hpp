@@ -19,6 +19,10 @@ public:
     [[nodiscard]] float scale() const;
     void scale(float v);
 
+    [[nodiscard]] float base_height() const;
+    [[nodiscard]] float height() const;
+    [[nodiscard]] float line_height() const;
+
 private:
 
     void render_character(Transform *t, char c, Vec2 &bl) const;
@@ -29,5 +33,5 @@ private:
     std::map<char, float> stride;
     std::map<char, unsigned int> indices;
     std::string texture_name;
-    float height, _line_spacing, _scale;
+    float _height, _line_spacing, _scale;
 };

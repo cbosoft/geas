@@ -5,12 +5,12 @@
 
 Font::Font(const std::string &font_sheet)
     : texture_name(font_sheet)
-    , height(16.0f)
+    , _height(16.0f)
     , _line_spacing(1.5f)
     , _scale(1.0f)
 {
     json j = ResourceManager::singleton().get_metadata(font_sheet);
-    this->height = j["height"];
+    this->_height = j["height"];
     int index = 0;
     for (const auto &char_and_width : j["widths"]) {
         std::string skey = char_and_width[0];
@@ -59,4 +59,19 @@ unsigned int Font::get_index_of(char c) const
         return it->second;
     }
     return 0;
+}
+
+float Font::height() const
+{
+    return this->_height*this->_scale;
+}
+
+float Font::base_height() const
+{
+    return this->_height;
+}
+
+float Font::line_height() const
+{
+    return this->_height*this->_scale*this->_line_spacing;
 }

@@ -9,11 +9,9 @@ TextBox::TextBox(Transform *parent, const Vec2 &size, const std::string &fill_sp
     (void) text;
     (void) font;
 
-    // TODO!
-    auto *ss = new SlicedSprite(this, size, fill_sprite);
-    (void) ss;
+    [[maybe_unused]] auto *ss = new SlicedSprite(this, size, fill_sprite);
     auto *tl = new Transform(this);
-    tl->relative_position(Vec3({4.0f, size.y()-4.0f, 0.0f}));
+    tl->relative_position(Vec3({4.0f, size.y()-4.0f-font.height(), 0.0f}));
     font.render_text(tl, text, size);
 
 }

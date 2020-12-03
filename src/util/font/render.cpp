@@ -4,7 +4,7 @@
 
 void Font::render_character(Transform *parent, char c, Vec2 &bl) const
 {
-    auto *tile = new Tile(parent, this->height*this->_scale, this->texture_name);
+    auto *tile = new Tile(parent, this->_height*this->_scale, this->texture_name);
     tile->set_variant(0, this->get_index_of(c));
     tile->local_scale(Vec2(this->_scale));
     tile->relative_position(bl.promote(0.0f));
@@ -60,7 +60,7 @@ void Font::render_text(Transform *parent, const std::string &text, const Vec2 &s
         float width = this->word_length(word);
         std::cerr << width << " " << bl.x() << " " << size.x() << std::endl;
         if (bl.x() + width > size.x()) {
-            bl.y(bl.y() - this->height*this->_line_spacing*this->_scale);
+            bl.y(bl.y() - this->_height*this->_line_spacing*this->_scale);
             bl.x(0.0f);
         }
         this->render_word(parent, word, bl);
