@@ -11,3 +11,8 @@ void Text::set_text(std::string s)
 {
     this->render_text(this, this->_glyphs, s);
 }
+
+void Text::set_text(std::string s, const Vec2 &size)
+{
+    this->render_text(this, this->_glyphs, s, size);
+}

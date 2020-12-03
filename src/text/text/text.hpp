@@ -10,6 +10,7 @@ public:
     Text(Transform *parent, const std::string &font_name);
 
     void set_text(std::string s);
+    void set_text(std::string s, const Vec2 &size);
 
 private:
     std::vector<Glyph *> _glyphs;

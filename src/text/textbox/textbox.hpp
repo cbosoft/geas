@@ -3,9 +3,9 @@
 #include <string>
 
 #include "../../transform/transform.hpp"
-#include "../font/font.hpp"
+#include "../text/text.hpp"
 
-class TextBox : public Transform {
+class TextBox : public Text {
 public:
-    TextBox(Transform *parent, const Vec2 &size, const std::string &fill_sprite, const std::string &text, const Font &font);
+    TextBox(Transform *parent, const std::string &font_name, const Vec2 &size, const std::string &fill_sprite);
 };
