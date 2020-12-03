@@ -6,11 +6,10 @@
 #include "../transform/transform.hpp"
 #include "../util/json.hpp"
 
-class GeasObject;
 class Renderable final : public Transform {
     // TODO: thread safety!
 public:
-    Renderable(GeasObject *parent);
+    Renderable(Transform *parent);
     ~Renderable() noexcept;
 
     void set_texture(const std::string &path);

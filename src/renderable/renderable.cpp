@@ -1,11 +1,10 @@
 #include <iostream>
 
-#include "../geas_object/geas_object.hpp"
 #include "../renderer/renderer.hpp"
 #include "../resourcemanager/resourcemanager.hpp"
 #include "renderable.hpp"
 
-Renderable::Renderable(GeasObject *parent)
+Renderable::Renderable(Transform *parent)
     : Transform(parent)
     , _current_frame(0)
     , _layer(0)
