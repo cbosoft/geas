@@ -58,7 +58,7 @@ unsigned int Font::get_index_of(char c) const
     if (it != this->indices.end()) {
         return it->second;
     }
-    return 0;
+    return (c == ' ' ? 0 : this->get_index_of(' '));
 }
 
 float Font::height() const
