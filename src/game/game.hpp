@@ -42,6 +42,8 @@ class Game {
     void set_tunnel_tag(const std::string &scene_A, const std::string &scene_B, const std::string &descriptor);
     std::string get_tunnel_tag();
 
+    static std::string gen_tunnel_tag(const std::string &A, const std::string &B, const std::string &descriptor);
+
 #ifdef DEBUG
     void show_colliders(bool v);
     [[nodiscard]] bool should_show_colliders() const;

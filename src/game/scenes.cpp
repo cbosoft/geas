@@ -88,14 +88,7 @@ void Game::set_tunnel_tag(const std::string &tag)
 
 void Game::set_tunnel_tag(const std::string &scene_A, const std::string &scene_B, const std::string &descriptor)
 {
-    char Ac = scene_A[0], Bc = scene_B[0];
-    const std::string &first = (Ac < Bc ? scene_A : scene_B);
-    const std::string &second = (Ac < Bc ? scene_B : scene_A);
-    std::string tag = first + "->" + second;
-    if (!descriptor.empty()) {
-        tag += ":" + descriptor;
-    }
-    this->set_tunnel_tag(tag);
+    this->set_tunnel_tag(Game::gen_tunnel_tag(scene_A, scene_B, descriptor));
 }
 
 std::string Game::get_tunnel_tag()
@@ -103,4 +96,16 @@ std::string Game::get_tunnel_tag()
     std::string rv = this->tunnel_tag;
     this->tunnel_tag = "";
     return rv;
+}
+
+std::string Game::gen_tunnel_tag(const std::string &scene_A, const std::string &scene_B, const std::string &descriptor)
+{
+    char Ac = scene_A[0], Bc = scene_B[0];
+    const std::string &first = (Ac < Bc ? scene_A : scene_B);
+    const std::string &second = (Ac < Bc ? scene_B : scene_A);
+    std::string tag = first + "->" + second;
+    if (!descriptor.empty()) {
+        tag += ":" + descriptor;
+    }
+    return tag;
 }
