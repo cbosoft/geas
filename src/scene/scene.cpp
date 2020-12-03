@@ -4,7 +4,7 @@
 Scene::Scene(const std::string &name)
     : Transform()
     , _name(name)
-    , _camera(nullptr)
+    , _camera(new Camera(this))
 {
     // do nothing
 }
@@ -15,17 +15,13 @@ Scene::~Scene()
 }
 
 
-Camera *Scene::camera()
+Camera *Scene::camera() const
 {
-    if (!this->_camera) {
-        this->_camera = new Camera(this);
-        this->_camera->enable();
-    }
     return this->_camera;
 }
 
 
-void Scene::set_camera_area(const Vec4 &a)
+void Scene::set_camera_area(const Vec4 &a) const
 {
     this->camera()->area(a);
 }

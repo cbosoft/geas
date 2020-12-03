@@ -9,12 +9,12 @@ public:
     explicit Scene(const std::string &name);
     ~Scene();
 
-    Camera *camera();
+    Camera *camera() const;
 
     virtual bool is_ui() { return false; }
 
     std::map<std::string, Transform *> layers;
-    void set_camera_area(const Vec4 &area);
+    void set_camera_area(const Vec4 &area) const;
     void fade_out() const;
     void fade_in() const;
 
