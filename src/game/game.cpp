@@ -12,6 +12,9 @@ Game::Game()
     , _active_scene(nullptr)
     , _is_alive(true)
     , player(nullptr)
+#ifdef DEBUG
+    , _show_colliders(false)
+#endif
 {
     this->renderer = Renderer::get(this);
 }

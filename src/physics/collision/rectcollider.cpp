@@ -1,7 +1,13 @@
 #include <vector>
 #include "../../util/exception.hpp"
 #include "../../geas_object/geas_object.hpp"
+
+#ifdef DEBUG
+#include "../../game/game.hpp"
+#endif
+
 #include "rectcollider.hpp"
+
 const static float _rect_overlap = 1.0f;
 
 RectCollider::RectCollider(GeasObject *owner, const Vec4 &rect)
@@ -22,11 +28,13 @@ RectCollider::RectCollider(GeasObject *owner, const Vec4 &rect)
     this->tl.relative_position(Vec3({0.0f, size.y(), 0.0f}));
 
 #ifdef DEBUG
-    auto *r = new Renderable(owner);
-    r->set_texture("assets/textures/rectcollider.png");
-    r->size(this->size);
-    r->relative_position(this->relative_position());
-    this->_renderable = r;
+    if (Game::singleton()->should_show_colliders()) {
+        auto *r = new Renderable(owner);
+        r->set_texture("assets/textures/rectcollider.png");
+        r->size(this->size);
+        r->relative_position(this->relative_position());
+        this->_renderable = r;
+    }
 #endif
 }
 
@@ -49,11 +57,13 @@ RectCollider::RectCollider(GeasObject *owner, const Vec2 &bl_offset, const Vec2 
     this->tl.relative_position(Vec3({0.0f, size_after_offset.y(), 0.0f}));
 
 #ifdef DEBUG
-    auto *r = new Renderable(owner);
-    r->set_texture("assets/textures/rectcollider.png");
-    r->size(this->size);
-    r->relative_position(this->relative_position());
-    this->_renderable = r;
+    if (Game::singleton()->should_show_colliders()) {
+        auto *r = new Renderable(owner);
+        r->set_texture("assets/textures/rectcollider.png");
+        r->size(this->size);
+        r->relative_position(this->relative_position());
+        this->_renderable = r;
+    }
 #endif
 }
 
