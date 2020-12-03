@@ -2,14 +2,15 @@
 
 #include "ui_element.hpp"
 #include "../../../geas_object/tile/tile.hpp"
-#include "../../../text/font/font.hpp"
+#include "../../../text/text/text.hpp"
 
-UIElement::UIElement(Transform *parent, const Vec2 &position, const std::string &iname, const Font &font, const std::string &text)
+UIElement::UIElement(Transform *parent, const Vec2 &position, const std::string &iname, const std::string &font_name, const std::string &text)
     :   Transform(parent)
     ,   name(iname)
 {
     this->relative_position(position.promote(0.0f));
-    font.render_text(this, text);
+    auto *t = new Text(this, font_name);
+    t->set_text(text);
 }
 
 UIElement *UIElement::move(UIDirection dir)

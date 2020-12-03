@@ -4,7 +4,7 @@
 
 class QuitButton : public UIElement {
 public:
-    QuitButton(Transform *parent, const Vec2 &position, const std::string &name, const std::string &text, const Font &font);
+    QuitButton(Transform *parent, const Vec2 &position, const std::string &name, const std::string &font, const std::string &text);
 
     void action() override;
 

@@ -10,7 +10,7 @@
 
 class UIElement : public Transform {
 public:
-    UIElement (Transform *parent, const Vec2 &position, const std::string &name, const Font &font, const std::string &text);
+    UIElement (Transform *parent, const Vec2 &position, const std::string &name, const std::string &font_name, const std::string &text);
 
     UIElement *move(UIDirection dir);
     void set_direction(UIDirection dir, UIElement *dest);
