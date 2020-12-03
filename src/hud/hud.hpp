@@ -1,12 +1,14 @@
 #pragma once
 
+#include <chrono>
+
 #include "../transform/transform.hpp"
 #include "../text/font/font.hpp"
 #include "../text/text/text.hpp"
 
 class HUD : public Transform {
 public:
-    HUD(Transform *parent);
+    explicit HUD(Transform *parent);
 
     Renderable *renderable() const override;
 
@@ -14,4 +16,5 @@ public:
 
 private:
     Text *_text;
+    mutable std::chrono::time_point<std::chrono::system_clock> t0;
 };
