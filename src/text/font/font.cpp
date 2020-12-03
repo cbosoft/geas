@@ -4,7 +4,7 @@
 #include "font.hpp"
 
 Font::Font(const std::string &font_sheet)
-    : texture_name(font_sheet)
+    : _texture_name(font_sheet)
     , _height(16.0f)
     , _line_spacing(1.5f)
     , _scale(1.0f)
@@ -74,4 +74,9 @@ float Font::base_height() const
 float Font::line_height() const
 {
     return this->_height*this->_scale*this->_line_spacing;
+}
+
+const std::string &Font::texture_name() const
+{
+    return this->_texture_name;
 }

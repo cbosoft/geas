@@ -1,38 +1,50 @@
 #include <iostream>
 #include "font.hpp"
 #include "../../geas_object/tile/tile.hpp"
+#include "../glyph/glyph.hpp"
 
-void Font::render_character(Transform *parent, char c, Vec2 &bl) const
+void Font::render_character(Transform *parent, std::vector<Glyph *> &glyphs, char c, Vec2 &bl, unsigned int &char_index) const
 {
-    auto *tile = new Tile(parent, this->_height*this->_scale, this->texture_name);
-    tile->set_variant(0, this->get_index_of(c));
-    tile->local_scale(Vec2(this->_scale));
-    tile->relative_position(bl.promote(0.0f));
+    Glyph *glyph = nullptr;
+    if (char_index >= glyphs.size()) {
+        glyph = new Glyph(parent, this);
+        glyphs.push_back(glyph);
+    }
+    else {
+        glyph = glyphs[char_index];
+    }
+    glyph->set_char(c);
+    glyph->relative_position(bl.promote(0.0f));
     bl.x(bl.x() + this->get_stride_of(c)*this->_scale);
+    char_index++;
 }
 
-void Font::render_word(Transform *parent, const std::string &word, Vec2 &bl) const
+void Font::render_word(Transform *parent, std::vector<Glyph *> &glyphs, const std::string &word, Vec2 &bl, unsigned int &char_index) const
 {
     auto chars = word.data();
     for (unsigned int i = 0; i < word.size(); i++) {
         char c = chars[i];
-        this->render_character(parent, c, bl);
+        this->render_character(parent, glyphs, c, bl, char_index);
     }
-    this->render_character(parent, ' ', bl);
+    this->render_character(parent, glyphs, ' ', bl, char_index);
 }
 
 
-void Font::render_text(Transform *t, const std::string &text) const
+void Font::render_text(Transform *t, std::vector<Glyph *> &glyphs, const std::string &text) const
 {
     auto chars = text.data();
     Vec2 bl;
+    unsigned int char_index = 0;
     for (unsigned int i = 0; i < text.size(); i++) {
-        this->render_character(t, chars[i], bl);
+        this->render_character(t, glyphs, chars[i], bl, char_index);
+    }
+    for (unsigned int i = char_index; i < glyphs.size(); i++) {
+        glyphs[i]->set_char(' ');
     }
 }
 
 
-void Font::render_text(Transform *parent, const std::string &text, const Vec2 &size) const
+void Font::render_text(Transform *parent, std::vector<Glyph *> &glyphs, const std::string &text, const Vec2 &size) const
 {
     auto chars = text.data();
     std::list<Vec2> positions;
@@ -55,6 +67,7 @@ void Font::render_text(Transform *parent, const std::string &text, const Vec2 &s
             words.push_back(word);
     }
 
+    unsigned int char_index = 0;
     Vec2 bl;
     for (const auto &word : words) {
         float width = this->word_length(word);
@@ -63,7 +76,11 @@ void Font::render_text(Transform *parent, const std::string &text, const Vec2 &s
             bl.y(bl.y() - this->_height*this->_line_spacing*this->_scale);
             bl.x(0.0f);
         }
-        this->render_word(parent, word, bl);
+        this->render_word(parent, glyphs, word, bl, char_index);
+    }
+
+    for (unsigned int i = char_index; i < glyphs.size(); i++) {
+        glyphs[i]->set_char(' ');
     }
 }
 
