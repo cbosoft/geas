@@ -11,10 +11,15 @@
 int main()
 {
     Game *game = Game::singleton();
+#ifdef DEBUG
+    game->show_colliders(true);
+#endif
     auto *test_room = Room::from_file("assets/rooms/test.json");
+    auto *another = Room::from_file("assets/rooms/test2.json");
     auto *main_menu = new MainMenu();
     game->active_scene(main_menu);
     game->add_scene(test_room);
+    game->add_scene(another);
 
     Physics::update_rate_hz(500);
     Physics::time_scale(1.0f);
