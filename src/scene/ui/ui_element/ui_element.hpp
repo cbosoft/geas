@@ -5,7 +5,7 @@
 
 #include "../../../transform/transform.hpp"
 #include "../../../util/json.hpp"
-#include "../../../util/font/font.hpp"
+#include "../../../text/font/font.hpp"
 #include "../ui_direction.hpp"
 
 class UIElement : public Transform {

@@ -1,6 +1,6 @@
 #include <iostream>
 #include "../../resourcemanager/resourcemanager.hpp"
-#include "../json.hpp"
+#include "../../util/json.hpp"
 #include "font.hpp"
 
 Font::Font(const std::string &font_sheet)

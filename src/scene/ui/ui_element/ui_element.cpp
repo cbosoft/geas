@@ -2,7 +2,7 @@
 
 #include "ui_element.hpp"
 #include "../../../geas_object/tile/tile.hpp"
-#include "../../../util/font/font.hpp"
+#include "../../../text/font/font.hpp"
 
 UIElement::UIElement(Transform *parent, const Vec2 &position, const std::string &iname, const Font &font, const std::string &text)
     :   Transform(parent)
