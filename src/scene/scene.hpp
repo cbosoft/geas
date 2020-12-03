@@ -10,6 +10,7 @@ public:
     ~Scene();
 
     Camera *camera() const;
+    Transform *hud() const;
 
     virtual bool is_ui() { return false; }
 
@@ -25,5 +26,6 @@ public:
 private:
 
     std::string _name;
+    Transform *_hud;
     Camera *_camera;
 };

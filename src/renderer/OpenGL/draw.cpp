@@ -17,13 +17,16 @@ void OpenGLRenderer::draw(Scene *scene)
         return;
 
     Camera *camera = scene->camera();
+    Transform *hud = scene->hud();
     Vec3 camera_position = camera->absolute_position();
 
     // draw child objects
     for (const auto& child : scene->children()) {
-        if (child != camera)
+        if (child != camera && child != hud)
           this->draw(child, camera_position);
     }
+
+    this->draw((Transform *)hud, camera_position);
 
     this->draw((Transform *)camera, camera_position);
 

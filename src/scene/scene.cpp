@@ -4,6 +4,7 @@
 Scene::Scene(const std::string &name)
     : Transform()
     , _name(name)
+    , _hud(new Transform(this))
     , _camera(new Camera(this))
 {
     // do nothing
@@ -18,6 +19,11 @@ Scene::~Scene()
 Camera *Scene::camera() const
 {
     return this->_camera;
+}
+
+Transform *Scene::hud() const
+{
+    return this->_hud;
 }
 
 
