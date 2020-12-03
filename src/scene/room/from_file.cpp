@@ -1,7 +1,9 @@
 #include <iostream>
 
+#include "../../game/game.hpp"
 #include "../../resourcemanager/resourcemanager.hpp"
 #include "../../geas_object/tile/tile.hpp"
+#include "../../tunnel/tunnel.hpp"
 #include "room.hpp"
 
 Room *Room::from_file(const std::string &path)
@@ -120,9 +122,23 @@ Room *Room::from_file(const std::string &path)
 
     }
 
-    for (const auto &[tunnel_tag, position_spec] : room_spec["tunnels"].items()) {
-        Vec2 position({position_spec[0], position_spec[1]});
-        room->tunnel_positions[tunnel_tag] = position;
+    for (const auto &tunnel_spec : room_spec["tunnels"]) {
+        std::string end = tunnel_spec["end"];
+        std::string descriptor;
+        auto tunit = tunnel_spec.find("descriptor");
+        if (tunit != tunnel_spec.end()) {
+            descriptor = *tunit;
+        }
+        std::string tag = Game::gen_tunnel_tag(room->name(), end, descriptor);
+        auto pos_json = tunnel_spec["position"];
+        Vec2 pos({pos_json[0], pos_json[1]});
+        room->tunnel_positions[tag] = pos;
+
+        bool active = tunnel_spec["active"];
+        if (active) {
+            auto *tunnel = new Tunnel(room, end, descriptor);
+            tunnel->absolute_position(pos.promote(0.0f));
+        }
     }
 
     const float camoff = 240.0f;
