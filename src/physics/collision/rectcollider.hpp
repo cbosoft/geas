@@ -21,11 +21,14 @@ public:
     [[nodiscard]] bool intersects(const Vec2 &newbase, const RectCollider *other) const;
     [[nodiscard]] bool contains_point(const Vec2 &pt) const;
 
+    Renderable *renderable() const override;
+
 private:
 
     std::list<Vec2> get_corners() const;
 
     Vec2 size;
     Transform tr, br, bl, tl;
+    Renderable *_renderable;
 
 };

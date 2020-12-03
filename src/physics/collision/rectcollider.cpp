@@ -10,6 +10,7 @@ RectCollider::RectCollider(GeasObject *owner, const Vec4 &rect)
         , br(this)
         , bl(this)
         , tl(this)
+        , _renderable(nullptr)
 {
     Vec2 bl_offset({rect.x() - _rect_overlap, rect.y() - _rect_overlap});
     this->size.x(rect.get(2) + _rect_overlap*2);
@@ -19,6 +20,14 @@ RectCollider::RectCollider(GeasObject *owner, const Vec4 &rect)
     this->tr.relative_position(size.promote(0.0f));
     this->br.relative_position(Vec3({size.x(), 0.0f, 0.0f}));
     this->tl.relative_position(Vec3({0.0f, size.y(), 0.0f}));
+
+#ifdef DEBUG
+    auto *r = new Renderable(owner);
+    r->set_texture("assets/textures/rectcollider.png");
+    r->size(this->size);
+    r->relative_position(this->relative_position());
+    this->_renderable = r;
+#endif
 }
 
 RectCollider::RectCollider(GeasObject *owner, const Vec2 &bl_offset, const Vec2 &size)
@@ -28,6 +37,7 @@ RectCollider::RectCollider(GeasObject *owner, const Vec2 &bl_offset, const Vec2 
     , br(this)
     , bl(this)
     , tl(this)
+        , _renderable(nullptr)
 {
     Vec3 bl_pos = bl_offset.promote(0.0f);
     bl_pos += Vec2(-_rect_overlap).promote(0.0f);
@@ -37,6 +47,14 @@ RectCollider::RectCollider(GeasObject *owner, const Vec2 &bl_offset, const Vec2 
     this->tr.relative_position(size_after_offset);
     this->br.relative_position(Vec3({size_after_offset.x(), 0.0f, 0.0f}));
     this->tl.relative_position(Vec3({0.0f, size_after_offset.y(), 0.0f}));
+
+#ifdef DEBUG
+    auto *r = new Renderable(owner);
+    r->set_texture("assets/textures/rectcollider.png");
+    r->size(this->size);
+    r->relative_position(this->relative_position());
+    this->_renderable = r;
+#endif
 }
 
 RectCollider::~RectCollider()
@@ -198,6 +216,11 @@ bool RectCollider::contains_point(const Vec2 &pt) const
         );
 }
 
+
+Renderable *RectCollider::renderable() const
+{
+    return this->_renderable;
+}
 
 
 
