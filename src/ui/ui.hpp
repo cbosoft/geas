@@ -25,5 +25,7 @@ private:
     void select(UIElement *elem);
 
     UIElement *selected;
-    Tile *selection_hint;
+    Transform *selection_hint;
+
+    Vec3 selector_offset;
 };

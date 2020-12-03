@@ -36,7 +36,7 @@ void UI::select(UIElement *elem)
         return;
 
     Vec3 target_position = elem->relative_position();
-    target_position += Vec3({-24.0f, 0.0f, 0.0f});
+    target_position += this->selector_offset;
     this->selection_hint->relative_position(target_position);
     this->selected = elem;
 }
