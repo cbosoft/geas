@@ -5,7 +5,7 @@
 #include "geas_object/tile/tile.hpp"
 #include "resourcemanager/resourcemanager.hpp"
 #include "geas_object/actor/player/player.hpp"
-#include "scene/ui/main_menu/main_menu.hpp"
+#include "ui/main_menu/main_menu.hpp"
 #include "scene/room/room.hpp"
 
 int main()

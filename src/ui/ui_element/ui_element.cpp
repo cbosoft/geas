@@ -1,8 +1,8 @@
 #include <iostream>
 
 #include "ui_element.hpp"
-#include "../../../geas_object/tile/tile.hpp"
-#include "../../../text/text/text.hpp"
+#include "../../geas_object/tile/tile.hpp"
+#include "../../text/text/text.hpp"
 
 UIElement::UIElement(Transform *parent, const Vec2 &position, const std::string &iname, const std::string &font_name, const std::string &text)
     :   Transform(parent)

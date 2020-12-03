@@ -3,8 +3,8 @@
 #include <string>
 #include <map>
 
-#include "../scene.hpp"
-#include "../../geas_object/tile/tile.hpp"
+#include "../scene/scene.hpp"
+#include "../geas_object/tile/tile.hpp"
 #include "ui_direction.hpp"
 #include "ui_element/ui_element.hpp"
 

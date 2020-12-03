@@ -3,9 +3,9 @@
 #include <string>
 #include <map>
 
-#include "../../../transform/transform.hpp"
-#include "../../../util/json.hpp"
-#include "../../../text/font/font.hpp"
+#include "../../transform/transform.hpp"
+#include "../../util/json.hpp"
+#include "../../text/font/font.hpp"
 #include "../ui_direction.hpp"
 
 class UIElement : public Transform {

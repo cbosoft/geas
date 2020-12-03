@@ -2,7 +2,7 @@
 #include <GLFW/glfw3.h>
 
 #include "game.hpp"
-#include "../scene/ui/ui.hpp"
+#include "../ui/ui.hpp"
 
 void Game::process_input(int key, int scancode, int action, int mods)
 {

@@ -1,6 +1,6 @@
 #include "main_menu.hpp"
 
-#include "../../../geas_object/tile/animated_tile/animated_tile.hpp"
+#include "../../geas_object/tile/animated_tile/animated_tile.hpp"
 
 MainMenu::MainMenu()
     :   UI("main_menu")

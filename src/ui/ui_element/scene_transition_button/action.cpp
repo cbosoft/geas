@@ -1,5 +1,5 @@
 #include "scene_transition_element.hpp"
-#include "../../../../game/game.hpp"
+#include "../../../game/game.hpp"
 
 void SceneTransitButton::action()
 {
