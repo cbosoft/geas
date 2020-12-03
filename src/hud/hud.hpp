@@ -2,6 +2,7 @@
 
 #include "../transform/transform.hpp"
 #include "../text/font/font.hpp"
+#include "../text/text/text.hpp"
 
 class HUD : public Transform {
 public:
@@ -12,6 +13,5 @@ public:
     void update() const;
 
 private:
-    Font font;
-    Transform *hptext;
+    Text *_text;
 };
