@@ -1,10 +1,12 @@
 #include "transform.hpp"
+#include "../renderable/renderable.hpp"
 
 Transform::Transform()
     : _relative_position(Vec3(0.0))
     , _local_scale(Vec2(1.0))
     , _parent(nullptr)
     , _enabled(false)
+    , _static_positioning(false)
 {
   // do nothing
 }
@@ -15,6 +17,7 @@ Transform::Transform(Transform *parent)
     , _local_scale(Vec2(1.0))
     , _parent(parent)
     , _enabled(false)
+    , _static_positioning(parent->_static_positioning)
 {
     parent->add_child(this);
 }
@@ -140,4 +143,30 @@ bool Transform::is_enabled() const
 {
     std::scoped_lock _sl(this->_mutex);
     return this->_enabled;
+}
+
+void Transform::set_static_positioning()
+{
+    std::scoped_lock _sl(this->_mutex);
+    this->_static_positioning = true;
+
+    for (auto child : this->_children) {
+        child->set_static_positioning();
+    }
+}
+
+void Transform::set_relative_positioning()
+{
+    std::scoped_lock _sl(this->_mutex);
+    this->_static_positioning = false;
+
+    for (auto child : this->_children) {
+        child->set_relative_positioning();
+    }
+}
+
+bool Transform::is_static() const
+{
+    std::scoped_lock _sl(this->_mutex);
+    return this->_static_positioning;
 }

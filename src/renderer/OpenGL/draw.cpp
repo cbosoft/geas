@@ -54,7 +54,9 @@ void OpenGLRenderer::draw(Renderable *renderable, const Vec3 &camera_position) {
     if (renderable == nullptr)
         return;
 
-    Vec3 pos = renderable->absolute_position() - camera_position;
+    Vec3 pos = renderable->absolute_position();
+    if (!renderable->is_static())
+        pos = pos - camera_position;
     Vec4 colour = renderable->colour();
 
 

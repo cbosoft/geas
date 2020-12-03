@@ -43,6 +43,10 @@ class Transform {
 
     [[nodiscard]] const std::list<Transform*>& children() const;
 
+    void set_static_positioning();
+    void set_relative_positioning();
+    bool is_static() const;
+
   private:
 
     void add_child(Transform *child);
@@ -52,5 +56,5 @@ class Transform {
     Transform *_parent;
     std::list<Transform *> _children;
     mutable std::mutex _mutex;
-    bool _enabled;
+    bool _enabled, _static_positioning;
 };
