@@ -21,8 +21,8 @@ public:
 
     void clear_no_shrink();
 
-    void set_monochrome_rect_centred(const Vec3 &centre, const Vec2 &size, const Vec4 &colour);
-    void set_textured_rect_centred(const Vec3 &centre, const Vec2 &size, const Vec4 &colour, const Vec4 &rect);
+    void set_monochrome_rect(const Vec3 &pos, const Vec2 &size, const Vec4 &colour, const Vec2 &scale);
+    void set_textured_rect(const Vec3 &pos, const Vec2 &size, const Vec4 &colour, const Vec4 &rect, const Vec2 &scale);
 
     void add(const GLVertex &vertex);
     void add(const Vec3 &position, const Vec4 &colour, const Vec2 &texture);

@@ -13,6 +13,7 @@ Camera::Camera(Transform *parent, Transform *target)
     auto *r = new Renderable(this);
     r->set_texture("assets/textures/camera_shade.png");
     r->size(Vec2({640.0f, 480.0f}));
+    r->relative_position(Vec3({-320,-240,0}));
     this->renderable(r);
 
     auto *c = new CameraAnimator(*this);

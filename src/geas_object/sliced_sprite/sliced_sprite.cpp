@@ -8,7 +8,6 @@ SlicedSprite::SlicedSprite(Transform *parent, const Vec2 &size, const std::strin
     : GeasObject(parent)
 {
 
-    // TODO create slices for left, right, top, bottom, topleft, topright, bottomleft, and bottomright.
     const float o = 32.0f;
     std::list<Vec2> sizes {
         Vec2({o, o}),
@@ -38,7 +37,6 @@ SlicedSprite::SlicedSprite(Transform *parent, const Vec2 &size, const std::strin
         auto pos = *ps_it;
         Vec3 sz = (*sz_it).promote(0.0f);
         auto *slice = new Slice(this, sprite_path, variant, sz);
-        pos += sz*0.5f; // positions are centres!
         slice->relative_position(pos.promote(0.0f));
     }
 
