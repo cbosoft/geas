@@ -111,3 +111,8 @@ void Animator::add_animation(Animation *anim)
 {
     this->animations[anim->name()] = anim;
 }
+
+void Animator::check_state()
+{
+    // do nothing
+}

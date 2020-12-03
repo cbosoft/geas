@@ -33,7 +33,7 @@ public:
 private:
     static const std::list<Animator *> &animators();
 
-    virtual void check_state() =0;
+    virtual void check_state();
     void set_frame(unsigned int i) const;
     void load_animations_json(json loops_obj);
 
