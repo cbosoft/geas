@@ -16,13 +16,13 @@ public:
     virtual void accept();
     virtual void cancel();
 
+    void select(UIElement *elem);
+    void set_selection_offset(const Vec2 &offset);
+    void set_selection_hint(Transform *hint);
+
     bool is_ui() override { return true; }
 
-    friend class MainMenu;
-
 private:
-
-    void select(UIElement *elem);
 
     UIElement *selected;
     Transform *selection_hint;

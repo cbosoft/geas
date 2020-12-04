@@ -40,3 +40,14 @@ void UI::select(UIElement *elem)
     this->selection_hint->relative_position(target_position);
     this->selected = elem;
 }
+
+void UI::set_selection_offset(const Vec2 &offset)
+{
+    this->selector_offset = offset.promote(0.0f);
+}
+
+void UI::set_selection_hint(Transform *hint)
+{
+    delete this->selection_hint;
+    this->selection_hint = hint;
+}
