@@ -17,3 +17,18 @@ void Actor::set_melee_hitbox(HitBox *hitbox)
 {
     this->melee_hitbox = hitbox;
 }
+
+bool Actor::is_dead() const
+{
+    return this->HP <= 0.0f;
+}
+
+float Actor::get_HP() const
+{
+    return this->HP;
+}
+
+void Actor::hurt(float dam)
+{
+    this->HP -= dam;
+}
