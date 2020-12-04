@@ -130,9 +130,14 @@ Room *Room::from_file(const std::string &path)
             descriptor = *tunit;
         }
         std::string tag = Game::gen_tunnel_tag(room->name(), end, descriptor);
+
         auto pos_json = tunnel_spec["position"];
         Vec2 pos({pos_json[0], pos_json[1]});
-        room->tunnel_positions[tag] = pos;
+
+        auto exit_offset_json = tunnel_spec["exit_offset"];
+        Vec2 exit_offset({exit_offset_json[0], exit_offset_json[1]});
+
+        room->tunnel_positions[tag] = pos + exit_offset;
 
         bool active = tunnel_spec["active"];
         if (active) {
