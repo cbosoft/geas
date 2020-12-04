@@ -57,6 +57,8 @@ void Game::transition_to(Scene *scene, unsigned int delay_ms)
     scene->activate();
     c = scene->camera();
     c->fade_in();
+
+    this->set_recently_transitioned();
 }
 
 void Game::transition_to(const std::string &scene_name, unsigned int delay_ms)

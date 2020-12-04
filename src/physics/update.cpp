@@ -58,25 +58,32 @@ void Physics::update()
     }
 
 
+    auto *game = Game::singleton();
+
     // For all pairs of objects, check if the objects will interact. If they do, alter their projected new position accordingly.
     for (Physics *a : non_fixed_entities) {
 
         Vec3 apos = a->get_position();
         for (Physics *b : entities) {
 
-          if (a == b)
-              break;
+            if (a == b)
+                break;
 
             if (!b->is_enabled() || !b->owner.is_enabled())
                 continue;
 
-          Vec3 dr = apos - b->get_position();
-          float dist = dr.magnitude();
-          if (dist > Physics::interaction_threshold())
-              continue;
+            Vec3 dr = apos - b->get_position();
+            float dist = dr.magnitude();
+            if (dist > Physics::interaction_threshold())
+                continue;
 
-          // Expensive!
-          a->interact_with(b);
+            // Expensive!
+            a->interact_with(b);
+
+            // interact with may cause a scene-scene transition, therefore invalidating any pending physics. Need
+            // therefore to restart physics thread.
+            if (game->recently_transitioned())
+                return;
 
         }
     }

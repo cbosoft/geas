@@ -44,6 +44,8 @@ class Game {
 
     static std::string gen_tunnel_tag(const std::string &A, const std::string &B, const std::string &descriptor);
 
+    bool recently_transitioned();
+
 #ifdef DEBUG
     void show_colliders(bool v);
     [[nodiscard]] bool should_show_colliders() const;
@@ -60,6 +62,8 @@ class Game {
     void physics_thread_worker();
     void input_thread_worker();
 
+    void set_recently_transitioned();
+
     Renderer *renderer;
     float time, time_delta, time_scale;
     float time_irl, time_delta_irl;
@@ -72,6 +76,7 @@ class Game {
     mutable std::mutex mutex;
     Player *player;
     std::string tunnel_tag;
+    bool _recently_transitioned;
 
 #ifdef DEBUG
     bool _show_colliders;

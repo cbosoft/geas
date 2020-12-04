@@ -93,3 +93,18 @@ Player *Game::get_player() const
 {
     return this->player;
 }
+
+bool Game::recently_transitioned()
+{
+    std::scoped_lock _lock(this->mutex);
+    bool rv = this->_recently_transitioned;
+    this->_recently_transitioned = false;
+    return rv;
+}
+
+void Game::set_recently_transitioned()
+{
+    std::scoped_lock _lock(this->mutex);
+    this->_recently_transitioned = true;
+
+}
