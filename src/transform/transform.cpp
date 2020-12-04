@@ -132,7 +132,7 @@ void Transform::enable()
 {
     std::scoped_lock _sl(this->_mutex);
     this->_enabled = true;
-    for (auto child : this->_children) {
+    for (Transform *child : this->_children) {
         child->enable();
     }
 }
@@ -141,7 +141,7 @@ void Transform::disable()
 {
     std::scoped_lock _sl(this->_mutex);
     this->_enabled = false;
-    for (auto child : this->_children) {
+    for (Transform *child : this->_children) {
         child->disable();
     }
 }
