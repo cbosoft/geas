@@ -63,15 +63,15 @@ GeasObject &Physics::get_owner() const
 
 bool Physics::is_enabled() const
 {
-    return this->_enabled;
+    return this->owner.is_enabled();
 }
 
 void Physics::enable()
 {
-    this->_enabled = true;
+    this->owner.enable();
 }
 
 void Physics::disable()
 {
-    this->_enabled = false;
+    this->owner.disable();
 }
