@@ -10,6 +10,7 @@ Game::Game()
     , time_irl(0.0)
     , time_delta_irl(0.0)
     , _active_scene(nullptr)
+    , _previous_scene(nullptr)
     , _is_alive(true)
     , player(nullptr)
 #ifdef DEBUG
@@ -107,4 +108,9 @@ void Game::set_recently_transitioned()
     std::scoped_lock _lock(this->mutex);
     this->_recently_transitioned = true;
 
+}
+
+Scene *Game::previously_active_scene() const
+{
+    return this->_previous_scene;
 }

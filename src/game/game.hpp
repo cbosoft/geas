@@ -29,6 +29,7 @@ class Game {
     [[nodiscard]] Scene *active_scene() const;
     void active_scene(Scene *scene);
     void active_scene(const std::string& scene_name);
+    [[nodiscard]] Scene *previously_active_scene() const;
     void add_scene(Scene *scene);
     void transition_to(Scene *scene, unsigned int delay_ms=100);
     void transition_to(const std::string &scene_name, unsigned int delay_ms=800);
@@ -69,7 +70,7 @@ class Game {
     float time_irl, time_delta_irl;
     std::list<std::thread> threads;
     std::map<std::string, Scene *> scenes;
-    Scene *_active_scene;
+    Scene *_active_scene, *_previous_scene;
     bool _is_alive;
     ThreadedQueue<PlayerInput *> input_queue;
     typedef std::lock_guard<std::mutex> lock_guard;

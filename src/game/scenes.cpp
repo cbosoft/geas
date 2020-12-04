@@ -10,6 +10,11 @@ Scene *Game::active_scene() const
 
 void Game::active_scene(Scene *scene)
 {
+    if (this->_active_scene) {
+        this->_previous_scene = this->_active_scene;
+        this->_previous_scene->disable();
+    }
+
     if (scene) {
         auto it = this->scenes.find(scene->name());
         if (it == this->scenes.end()) {
