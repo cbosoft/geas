@@ -13,6 +13,7 @@ Game::Game()
     , _previous_scene(nullptr)
     , _is_alive(true)
     , player(nullptr)
+    , _recently_transitioned(false)
 #ifdef DEBUG
     , _show_colliders(false)
 #endif
