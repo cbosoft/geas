@@ -24,7 +24,8 @@ void Game::process_input_game(int key, int scancode, int action, int mods)
     switch (key) {
 
         case GLFW_KEY_ESCAPE:
-            this->is_alive(false);
+            //this->is_alive(false);
+            this->transition_to("pause_menu", 0);
             break;
 
         case GLFW_KEY_D:
