@@ -17,6 +17,6 @@ void TunnelTrigger::on_trigger(GeasObject &with)
         // transport player to destination
         std::string current_scene = game->active_scene()->name();
         game->set_tunnel_tag(current_scene, this->destination, this->descriptor);
-        game->transition_to(this->destination);
+        game->transition_to(this->destination, 50);
     }
 }
