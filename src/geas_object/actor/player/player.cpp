@@ -15,9 +15,7 @@ Player::Player(Transform *parent)
   this->renderable(r);
 
   this->physics = new Physics(*this);
-  this->physics->set_collider(new RectCollider(this,
-        Vec4({8.0, 0.0, 16.0, 32.0}))
-    );
+  this->physics->set_collider(Vec4({8.0, 0.0, 16.0, 32.0}));
 
   auto *p = new PlayerAnimator(*this);
   p->load_animations("assets/textures/boy.png");
