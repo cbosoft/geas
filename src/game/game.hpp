@@ -62,6 +62,7 @@ class Game {
     void graphics_thread_worker();
     void physics_thread_worker();
     void input_thread_worker();
+    void behaviour_thread_worker();
 
     void set_recently_transitioned();
 
