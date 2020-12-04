@@ -6,3 +6,8 @@ SceneTransitButton::SceneTransitButton(Transform *parent, const Vec2 &position, 
 {
     // do nothing
 }
+
+void SceneTransitButton::set_destination(const std::string &destination)
+{
+    this->_destination = destination;
+}

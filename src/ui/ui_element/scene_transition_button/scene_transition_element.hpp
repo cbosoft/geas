@@ -8,6 +8,8 @@ public:
 
     void action() override;
 
+    void set_destination(const std::string &destination);
+
 private:
     std::string _destination;
 };
