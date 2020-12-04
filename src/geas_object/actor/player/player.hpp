@@ -9,10 +9,10 @@ class Player final : public Actor {
 
     void update() override;
 
-    void move(int dir);
-    void jump();
+    void move(int dir) override;
+    void jump() override;
     void hurt(float v) override;
-    void crouch(bool v);
+    void crouch(bool v) override;
 
 private:
 
