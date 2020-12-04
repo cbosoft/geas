@@ -47,9 +47,13 @@ class Transform {
     void set_relative_positioning();
     bool is_static() const;
 
+    Transform *root();
+    const Transform *root() const;
+
   private:
 
     void add_child(Transform *child);
+    void rem_child(Transform *child);
 
     Vec3 _relative_position;
     Vec2 _local_scale;

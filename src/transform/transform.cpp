@@ -12,14 +12,9 @@ Transform::Transform()
 }
 
 Transform::Transform(Transform *parent)
-  :
-    _relative_position(Vec3(0.0))
-    , _local_scale(Vec2(1.0))
-    , _parent(parent)
-    , _enabled(false)
-    , _static_positioning(parent->_static_positioning)
+    :   Transform()
 {
-    parent->add_child(this);
+    this->parent(parent);
 }
 
 Transform::~Transform()
@@ -101,7 +96,13 @@ void Transform::local_scale(const Vec2& local_scale)
 void Transform::parent(Transform *parent)
 {
     std::scoped_lock _sl(this->_mutex);
+
+    if (this->_parent) {
+        this->_parent->rem_child(this);
+    }
+
     this->_parent = parent;
+    this->_parent->add_child(this);
 }
 
 const std::list<Transform *>& Transform::children() const
@@ -119,6 +120,12 @@ void Transform::add_child(Transform *child)
 {
     std::scoped_lock _sl(this->_mutex);
     this->_children.push_back(child);
+}
+
+void Transform::rem_child(Transform *child)
+{
+    std::scoped_lock _sl(this->_mutex);
+    this->_children.remove(child);
 }
 
 void Transform::enable()
@@ -169,4 +176,26 @@ bool Transform::is_static() const
 {
     std::scoped_lock _sl(this->_mutex);
     return this->_static_positioning;
+}
+
+const Transform *Transform::root() const
+{
+    std::scoped_lock _sl(this->_mutex);
+    if (this->_parent) {
+        return this->_parent->root();
+    }
+    else {
+        return this;
+    }
+}
+
+Transform *Transform::root()
+{
+    std::scoped_lock _sl(this->_mutex);
+    if (this->_parent) {
+        return this->_parent->root();
+    }
+    else {
+        return this;
+    }
 }
