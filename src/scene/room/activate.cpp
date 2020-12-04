@@ -5,7 +5,6 @@
 void Room::activate()
 {
     auto *game = Game::singleton();
-    Vec2 pos = this->tunnel_positions[game->get_tunnel_tag()];
 
     Player *p = game->get_player();
     if (!p) {
@@ -16,9 +15,13 @@ void Room::activate()
         p->parent(this);
     }
 
-    Vec3 pos3 = pos.promote(0.0f);
-    p->absolute_position(pos3);
+    // if tag unset or not in tunnel positions, don't reposition player!
+    auto it = this->tunnel_positions.find(game->get_tunnel_tag());
+    if (it != this->tunnel_positions.end()) {
+        Vec3 pos3 = it->second.promote(0.0f);
+        p->absolute_position(pos3);
+    }
     this->camera()->target(p);
-    this->camera()->absolute_position(pos3);
+    this->camera()->absolute_position(p->absolute_position());
     Scene::activate();
 }
