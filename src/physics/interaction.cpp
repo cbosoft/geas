@@ -48,6 +48,7 @@ void Physics::interact_with(Physics *other)
 
 
     const float elasticity = (this->material->elasticity() + other->material->elasticity()) * 0.5f;
+    const float epsilon = 1e-4f;
 
     if (this->fixed || other->fixed) {
 
@@ -72,10 +73,11 @@ void Physics::interact_with(Physics *other)
                             (freebody->momentum.x() * freebody->_inv_mass * elasticity) * Physics::time_scale();
                 freebody->maybe_new_position.x(npx);
 
-                if (dr.x() > 0.0f) {
+                if (dr.x() > epsilon) {
                     freebody->owner.contact_right(true);
                     fixedbody->owner.contact_left(true);
-                } else {
+                }
+                else if (dr.x() < -epsilon) {
                     freebody->owner.contact_left(true);
                     fixedbody->owner.contact_right(true);
                 }
@@ -95,10 +97,11 @@ void Physics::interact_with(Physics *other)
                             (freebody->momentum.y() * freebody->_inv_mass * elasticity) * Physics::time_scale();
                 freebody->maybe_new_position.y(npy);
 
-                if (dr.y() > 0.0f) {
+                if (dr.y() > epsilon) {
                     freebody->owner.contact_top(true);
                     fixedbody->owner.contact_bottom(true);
-                } else {
+                }
+                else if (dr.y() < -epsilon) {
                     freebody->owner.contact_bottom(true);
                     fixedbody->owner.contact_top(true);
                 }
