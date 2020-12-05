@@ -66,3 +66,28 @@ void AudioSource::play()
 {
     alSourcePlay(this->_source);
 }
+
+void AudioSource::set_gain(float v) const
+{
+    alSourcef(this->_source, AL_GAIN, v);
+}
+
+void AudioSource::set_looping() const
+{
+    alSourcei(this->_source, AL_LOOPING, AL_TRUE);
+}
+
+void AudioSource::set_pitch(float v) const
+{
+    alSourcef(this->_source, AL_PITCH, v);
+}
+
+void AudioSource::set_position(const Vec3 &position) const
+{
+    alSource3f(this->_source, AL_POSITION, position.x(), position.y(), position.z());
+}
+
+void AudioSource::set_velocity(const Vec3 &velocity) const
+{
+    alSource3f(this->_source, AL_POSITION, velocity.x(), velocity.y(), velocity.z());
+}
