@@ -25,16 +25,6 @@ public:
         this->renderable(r);
     }
 
-    void disable() override {
-        std::cerr << "disabled!" << std::endl;
-        Transform::enable();
-    }
-
-    void enable() override {
-        std::cerr << "enabled!" << std::endl;
-        Transform::enable();
-    }
-
 };
 
 int main()
