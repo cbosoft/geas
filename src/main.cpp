@@ -10,6 +10,7 @@
 #include "ui/main_menu/main_menu.hpp"
 #include "ui/pause_menu/pause_menu.hpp"
 #include "scene/room/room.hpp"
+#include "sound_manager/sound_manager.hpp"
 
 class PatrollingEnemy : public Enemy {
 public:
@@ -31,7 +32,7 @@ int main()
 {
     Game *game = Game::singleton();
 #ifdef DEBUG
-    game->show_colliders(true);
+    //game->show_colliders(true);
 #endif
     auto *test_room = Room::from_file("assets/rooms/test.json");
     auto *another = Room::from_file("assets/rooms/test2.json");
@@ -41,6 +42,9 @@ int main()
     game->add_scene(test_room);
     game->add_scene(another);
     game->add_scene(pause_menu);
+
+    auto sm = SoundManager::singleton();
+    sm->play("beep.wav", Vec3(0.0f));
 
     auto *p = new PatrollingEnemy(test_room->layers["main"]);
     p->absolute_position(Vec3({500.0f, 512.0f, 0.0f}));

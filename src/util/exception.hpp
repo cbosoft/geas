@@ -126,6 +126,7 @@ EXCEPTION(PositionError, "PositionError");
 EXCEPTION(NotFound, "NotFound");
 EXCEPTION(UnexpectedNullPointer, "UnexpectedNullPointer");
 EXCEPTION(NameConflict, "NameConflict");
+EXCEPTION(AudioFormat, "AudioFormat");
 
 
 

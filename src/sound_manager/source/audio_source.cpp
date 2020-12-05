@@ -1,0 +1,68 @@
+#include "audio_source.hpp"
+#include "../../util/exception.hpp"
+
+AudioSource::AudioSource(const AudioSample *sample)
+{
+    alGenBuffers(1, &this->_buffer);
+    ALenum format = 0;
+    unsigned int n_channels = sample->channels(), bits_per_sample = sample->bits_per_sample();
+    if (n_channels == 1) {
+        if (bits_per_sample == 8) {
+            format = AL_FORMAT_MONO8;
+        }
+        else if (bits_per_sample == 16) {
+            format = AL_FORMAT_MONO16;
+        }
+        else {
+            // error: unknown format
+            throw AudioFormat(Formatter() << "unrecognised format: channels=" << n_channels << ", samplerate=" << bits_per_sample << ".");
+        }
+    }
+    else if (n_channels == 2) {
+        if (bits_per_sample == 8) {
+            format = AL_FORMAT_STEREO8;
+        }
+        else if (bits_per_sample == 16) {
+            format = AL_FORMAT_STEREO16;
+        }
+        else {
+            // error: unknown format
+            throw AudioFormat(Formatter() << "unrecognised format: channels=" << n_channels << ", samplerate=" << bits_per_sample << ".");
+        }
+    }
+    else {
+        // error: unknown format
+        throw AudioFormat(Formatter() << "unrecognised format: channels=" << n_channels << ", samplerate=" << bits_per_sample << ".");
+    }
+
+    alBufferData(this->_buffer, format, sample->data(), sample->size(), sample->sample_rate());
+
+    alGenSources(1, &this->_source);
+
+    // default settings for this source
+    alSourcef(this->_source, AL_PITCH, 1);
+    alSourcef(this->_source, AL_GAIN, 1.0f);
+    alSource3f(this->_source, AL_POSITION, 0, 0, 0);
+    alSource3f(this->_source, AL_VELOCITY, 0, 0, 0);
+    alSourcei(this->_source, AL_LOOPING, AL_FALSE);
+    alSourcei(this->_source, AL_BUFFER, this->_buffer);
+
+}
+
+AudioSource::~AudioSource()
+{
+    alDeleteSources(1, &this->_source);
+    alDeleteBuffers(1, &this->_buffer);
+}
+
+int AudioSource::status() const
+{
+    int state = -1;
+    alGetSourcei(this->_source, AL_SOURCE_STATE, &state);
+    return state;
+}
+
+void AudioSource::play()
+{
+    alSourcePlay(this->_source);
+}
