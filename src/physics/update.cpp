@@ -45,8 +45,8 @@ void Physics::update()
 
         float drag_dv = entity->momentum.x() * entity->drag;
         Vec2 accel({
-            drag_dv + entity->force_total.x()*entity->_inv_mass,
-            (entity->force_total.y() - entity->gravity_scale)*entity->_inv_mass
+            entity->force_total.x()*entity->_inv_mass + drag_dv,
+            entity->force_total.y()*entity->_inv_mass - entity->gravity_scale*Physics::global_gravity_scale()
         });
         entity->force_total.zero();
         entity->momentum += accel*dt;
