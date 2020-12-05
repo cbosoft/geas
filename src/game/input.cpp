@@ -153,12 +153,13 @@ void Game::input_thread_worker()
     while(this->is_alive()) {
         PlayerInput *input = this->input_queue.pop();
 
-        if (input) {
+        while (input) {
             this->process_input(input->keycode, input->scancode, input->action, input->mods);
             delete input;
+            input = this->input_queue.pop();
         }
 
-        //std::this_thread::sleep_for(std::chrono::microseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
     }
 }
