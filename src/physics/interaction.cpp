@@ -48,7 +48,7 @@ void Physics::interact_with(Physics *other)
 
 
     const float elasticity = (this->material->elasticity() + other->material->elasticity()) * 0.5f;
-    const float epsilon = 1e-4f;
+    const float epsilon = 1e-8f;
 
     if (this->fixed || other->fixed) {
 
