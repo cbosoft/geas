@@ -38,3 +38,22 @@ std::string ResourceManager::read_text_file(const std::string &filename) const
 
     return ss.str();
 }
+
+std::vector<char> ResourceManager::read_binary_file(const std::string &file_name) const
+{
+    std::string abs = this->get_abs_path(file_name);
+    std::ifstream ifs(abs);
+
+    if (!ifs) {
+        throw IOError(Formatter() << "Could not read file \"" << file_name << "\"");
+    }
+
+    std::vector<char> rv;
+    char c[1];
+    while (!ifs.eof()) {
+        ifs.read(c, 1);
+        rv.push_back(c[0]);
+    }
+
+    return rv;
+}
