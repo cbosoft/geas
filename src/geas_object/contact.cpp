@@ -1,6 +1,9 @@
 #include "geas_object.hpp"
 
-enum DIRENUM{none, BOTTOM, TOP, LEFT, RIGHT};
+static const unsigned int BOTTOM = (1 << 1);
+static const unsigned int TOP = (1 << 2);
+static const unsigned int LEFT = (1 << 3);
+static const unsigned int RIGHT = (1 << 4);
 
 void GeasObject::contact_bottom(bool v)
 {
