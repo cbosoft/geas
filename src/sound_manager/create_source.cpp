@@ -2,7 +2,7 @@
 #include "source/audio_source.hpp"
 #include "../util/audio/audio.hpp"
 
-void SoundManager::play(const std::string &clipname, const Vec3 &at)
+AudioSource *SoundManager::create_source(const std::string &clipname, Transform *parent)
 {
     AudioSample *to_play = nullptr;
     {
@@ -17,18 +17,18 @@ void SoundManager::play(const std::string &clipname, const Vec3 &at)
         }
     }
 
-    this->play(to_play, at);
+    return this->create_source(to_play, parent);
 }
 
-void SoundManager::play(AudioSample *audio, const Vec3 &at)
+AudioSource *SoundManager::create_source(AudioSample *audio, Transform *parent)
 {
     if (!audio)
-        return;
+        return nullptr;
 
-    auto *as = new AudioSource(audio);
-    as->play();
-    (void) at;
+    auto *as = new AudioSource(parent, audio);
+    as->pause();
 
     std::scoped_lock<std::mutex> _sl(this->_mutex);
     this->_sources.push_back(as);
+    return as;
 }

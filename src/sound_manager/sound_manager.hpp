@@ -9,8 +9,9 @@
 #include <AL/alc.h>
 
 #include "../vector/vector.hpp"
+#include "../transform/transform.hpp"
+#include "source/audio_source.hpp"
 
-class AudioSource;
 class AudioSample;
 
 class SoundManager {
@@ -18,11 +19,13 @@ public:
     static SoundManager *singleton();
     ~SoundManager();
 
-    void play(const std::string& clipname, const Vec3 &at);
+    AudioSource *create_source(const std::string& clipname, Transform *parent);
+
+    void update();
 
 private:
 
-    void play(AudioSample *audio, const Vec3 &at);
+    AudioSource *create_source(AudioSample *audio, Transform *parent);
     void clean_up();
     SoundManager();
 
