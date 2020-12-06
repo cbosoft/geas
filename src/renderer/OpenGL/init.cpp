@@ -96,7 +96,7 @@ void OpenGLRenderer::init()
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 #endif
 
-    float s = 2.5f;
+    float s = 2.0f;
     int w = 640, h = 480;
     GLFWmonitor *monitor = nullptr;
     if (fullscreen) {
