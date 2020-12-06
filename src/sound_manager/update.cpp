@@ -21,7 +21,7 @@ void SoundManager::update()
         std::scoped_lock<std::mutex> _sl(this->_mutex);
         // update sound pos and play/paused based on its transform
         for (auto *source : this->_sources) {
-            if (source->is_enabled() && source->status() == AL_PAUSED) {
+            if (source->is_enabled() && (source->status() == AL_PAUSED || source->status() == AL_INITIAL)) {
                 source->play();
             }
             else if (!source->is_enabled() && source->status() == AL_PLAYING) {
