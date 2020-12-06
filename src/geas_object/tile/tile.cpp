@@ -1,16 +1,16 @@
 #include "tile.hpp"
 
-Tile::Tile(Transform *parent, float s, const std::string &texture_path)
+Tile::Tile(Transform *parent, const Vec2 &size, const std::string &texture_path)
         : GeasObject(parent)
 {
     auto *r = new Renderable(this);
     r->set_texture(texture_path);
     this->renderable(r);
-    r->size(Vec2(s));
+    r->size(size);
     r->colour(Vec4(1.0f));
 }
 
-Tile::Tile(Transform *parent, float s, const std::string &texture_path, Vec4 rect)
+Tile::Tile(Transform *parent, const Vec2 &size, const std::string &texture_path, Vec4 rect)
         : GeasObject(parent)
 {
     this->physics = new Physics(*this);
@@ -21,7 +21,7 @@ Tile::Tile(Transform *parent, float s, const std::string &texture_path, Vec4 rec
     auto *r = new Renderable(this);
     r->set_texture(texture_path);
     this->renderable(r);
-    r->size(Vec2(s));
+    r->size(size);
     r->colour(Vec4(1.0f));
 }
 
