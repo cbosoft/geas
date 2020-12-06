@@ -10,7 +10,7 @@ void SoundManager::clean_up()
     std::scoped_lock<std::mutex> _sl(this->_mutex);
     std::list<AudioSource *> surviving_sources;
     for (AudioSource *source : this->_sources) {
-        if (source->status() != AL_PLAYING) {
+        if (source->status() == AL_STOPPED) {
              delete source;
         }
         else {
