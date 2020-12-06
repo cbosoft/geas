@@ -2,6 +2,7 @@
 
 Actor::Actor(Transform *parent, float max_HP)
     : GeasObject(parent)
+    , HP(max_HP)
     , max_HP(max_HP)
     , melee_hitbox(nullptr)
 {
