@@ -43,11 +43,12 @@ int main()
     game->add_scene(another);
     game->add_scene(pause_menu);
 
-    auto sm = SoundManager::singleton();
-    sm->play("beep.wav", Vec3(0.0f));
-
     auto *p = new PatrollingEnemy(test_room->layers["main"]);
     p->absolute_position(Vec3({500.0f, 512.0f, 0.0f}));
+
+    auto *sm = SoundManager::singleton();
+    auto *beep = sm->create_source("beep.wav", p);
+    beep->set_looping();
 
     Physics::update_rate_hz(500);
     Physics::time_scale(1.0f);
