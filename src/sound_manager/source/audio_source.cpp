@@ -100,6 +100,11 @@ void AudioSource::set_looping() const
     alSourcei(this->_source, AL_LOOPING, AL_TRUE);
 }
 
+void AudioSource::set_play_once() const
+{
+    alSourcei(this->_source, AL_LOOPING, AL_FALSE);
+}
+
 void AudioSource::set_pitch(float v) const
 {
     alSourcef(this->_source, AL_PITCH, v);
