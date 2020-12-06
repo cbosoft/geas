@@ -63,6 +63,7 @@ class Game {
     void physics_thread_worker();
     void input_thread_worker();
     void behaviour_thread_worker();
+    void audio_thread_worker();
 
     void set_recently_transitioned();
 
