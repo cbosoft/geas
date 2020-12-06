@@ -7,8 +7,8 @@ MainMenu::MainMenu()
 {
     auto *background = new AnimatedTile(this, Vec2({640.0f, 480.0f}), "assets/ui/backgrounds/main_menu.png");
     background->relative_position(Vec3({-320,-240,0}));
-    auto *continue_button = new SceneTransitButton(this, Vec2(0.0f), "continue", "assets/fonts/vict.png", "continue", "test_room");
-    auto *quit_button = new QuitButton(this, Vec2({0.0f, -32.0f}), "quit", "assets/fonts/vict.png", "quit");
+    auto *continue_button = new SceneTransitButton(this, Vec2({24.0f, -24.0f}), "continue", "assets/fonts/vict.png", "continue", "test_room");
+    auto *quit_button = new QuitButton(this, Vec2({24.0f, -56.0f}), "quit", "assets/fonts/vict.png", "quit");
 
     continue_button->set_direction(UIDir_Down, quit_button);
     quit_button->set_direction(UIDir_Up, continue_button);
