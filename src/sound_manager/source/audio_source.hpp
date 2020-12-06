@@ -8,7 +8,6 @@
 
 class AudioSource : public Transform {
 public:
-    AudioSource(Transform *parent, const AudioSample *sample);
     ~AudioSource();
 
     void play() const;
@@ -23,7 +22,10 @@ public:
 
     [[nodiscard]] int status() const;
 
+    friend class SoundManager;
+
 private:
+    AudioSource(Transform *parent, const AudioSample *sample);
 
     unsigned int _source;
     unsigned int _buffer;
