@@ -8,7 +8,14 @@ void HUD::update() const
 {
     auto *g = Game::singleton();
     auto *p = g->get_player();
-    (void) p;
+
+    if (!p) {
+        this->_text->disable();
+        return;
+    }
+    else {
+        this->_text->enable();
+    }
 
     auto t1 = std::chrono::system_clock::now();
     auto dt = t1 - this->t0;
@@ -17,8 +24,8 @@ void HUD::update() const
     if (dt_ms > 500) {
         const Vec3 pos = p->absolute_position();
         std::string s = "hp: ";
-        for (int i = 0; i < 3; i++)
-            s += "o";
+        for (int i = 0; i < p->get_HP(); i++)
+            s += "^";
         this->_text->set_text(s);
         this->t0 = t1;
     }
