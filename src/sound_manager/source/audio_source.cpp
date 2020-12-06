@@ -1,7 +1,9 @@
 #include "audio_source.hpp"
+#include "../../game/game.hpp"
 #include "../../util/exception.hpp"
 
-AudioSource::AudioSource(const AudioSample *sample)
+AudioSource::AudioSource(Transform *parent, const AudioSample *sample)
+    :   Transform(parent)
 {
     alGenBuffers(1, &this->_buffer);
     ALenum format = 0;
@@ -46,6 +48,17 @@ AudioSource::AudioSource(const AudioSample *sample)
     alSource3f(this->_source, AL_VELOCITY, 0, 0, 0);
     alSourcei(this->_source, AL_LOOPING, AL_FALSE);
     alSourcei(this->_source, AL_BUFFER, this->_buffer);
+
+    Vec3 pos = this->absolute_position();
+    auto *game = Game::singleton();
+    auto *scene = game->active_scene();
+    if (scene) {
+        auto *cam = scene->camera();
+        if (cam) {
+            pos = pos - cam->absolute_position();
+        }
+    }
+    this->set_position(pos);
 
 }
 

@@ -4,10 +4,11 @@
 
 #include "../../util/audio/audio.hpp"
 #include "../../vector/vector.hpp"
+#include "../../transform/transform.hpp"
 
-class AudioSource {
+class AudioSource : public Transform {
 public:
-    AudioSource(const AudioSample *sample);
+    AudioSource(Transform *parent, const AudioSample *sample);
     ~AudioSource();
 
     void play();
