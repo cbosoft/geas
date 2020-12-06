@@ -75,9 +75,19 @@ int AudioSource::status() const
     return state;
 }
 
-void AudioSource::play()
+void AudioSource::play() const
 {
     alSourcePlay(this->_source);
+}
+
+void AudioSource::pause() const
+{
+    alSourcePause(this->_source);
+}
+
+void AudioSource::stop() const
+{
+    alSourceStop(this->_source);
 }
 
 void AudioSource::set_gain(float v) const

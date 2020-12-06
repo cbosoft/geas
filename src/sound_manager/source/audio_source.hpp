@@ -11,7 +11,9 @@ public:
     AudioSource(Transform *parent, const AudioSample *sample);
     ~AudioSource();
 
-    void play();
+    void play() const;
+    void pause() const;
+    void stop() const;
     void set_pitch(float v) const;
     void set_gain(float v) const;
     void set_position(const Vec3 &position) const;
