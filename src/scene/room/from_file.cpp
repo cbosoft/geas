@@ -146,7 +146,9 @@ Room *Room::from_file(const std::string &path)
         }
     }
 
-    const float camoff = 240.0f;
+    // TODO get camera size from Camera
+    const float camoff_x = 320.0f;
+    const float camoff_y = 240.0f;
     auto it = room_spec.find("camera_bounds");
     if (it != room_spec.end()) {
         json bounds = *it;
@@ -155,7 +157,7 @@ Room *Room::from_file(const std::string &path)
         tr.x(bounds[2]);
         tr.y(bounds[3]);
     }
-    Vec4 camera_area({bl.x() + camoff, bl.y()+camoff, tr.x() - bl.x() - camoff*2, tr.y() - bl.y() - camoff*2});
+    Vec4 camera_area({bl.x() + camoff_x, bl.y()+camoff_y, tr.x() - bl.x() - camoff_x*2, tr.y() - bl.y() - camoff_y*2});
     room->set_camera_area(camera_area);
     return room;
 }
