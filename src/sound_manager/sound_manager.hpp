@@ -19,7 +19,7 @@ public:
     static SoundManager *singleton();
     ~SoundManager();
 
-    AudioSource *create_source(const std::string& clipname, Transform *parent);
+    AudioSource *create_source(const std::string& clipname, Transform *parent=nullptr);
 
     void update();
 
