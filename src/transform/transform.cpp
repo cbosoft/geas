@@ -102,7 +102,8 @@ void Transform::parent(Transform *parent)
     }
 
     this->_parent = parent;
-    this->_parent->add_child(this);
+    if (this->_parent)
+        this->_parent->add_child(this);
 }
 
 const std::list<Transform *>& Transform::children() const
