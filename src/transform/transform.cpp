@@ -102,8 +102,10 @@ void Transform::parent(Transform *parent)
     }
 
     this->_parent = parent;
-    if (this->_parent)
+    if (this->_parent) {
         this->_parent->add_child(this);
+        this->_static_positioning = parent->_static_positioning;
+    }
 }
 
 const std::list<Transform *>& Transform::children() const
