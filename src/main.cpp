@@ -2,15 +2,12 @@
 #include <chrono>
 
 #include "game/game.hpp"
-#include "geas_object/tile/tile.hpp"
 #include "behaviour/patroller/patroller.hpp"
 #include "geas_object/actor/enemy/enemy.hpp"
-#include "resourcemanager/resourcemanager.hpp"
 #include "geas_object/actor/player/player.hpp"
 #include "ui/main_menu/main_menu.hpp"
 #include "ui/pause_menu/pause_menu.hpp"
 #include "scene/room/room.hpp"
-#include "sound_manager/sound_manager.hpp"
 
 class PatrollingEnemy : public Enemy {
 public:
