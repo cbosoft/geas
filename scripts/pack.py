@@ -19,17 +19,21 @@ def all_files(d: str, ignore=None):
 
     return rv
 
-
-def pack_assets(assets_dir='assets', db_path='geas_files.db'):
-    ase_json_undo = re.compile('.*\\.aseprite|.*~|.*\\.json')
-    asset_paths = all_files(assets_dir, ignore = ase_json_undo)
-
+def clean_db(db_path):
     if os.path.exists(db_path):
         os.remove(db_path)
 
     with sqlite3.connect(db_path) as conn:
         cursor = conn.cursor()
-        cursor.execute('CREATE TABLE Resources (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Path TEXT NOT NULL UNIQUE, Data BLOB NOT NULL, MetaData TEXT);')
+        cursor.execute('CREATE TABLE Resources (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Path TEXT NOT NULL UNIQUE, Data BLOB, MetaData TEXT);')
+
+
+def pack_assets(db_path):
+    ase_json_undo = re.compile('.*\\.aseprite|.*~|.*\\.json')
+    asset_paths = all_files('assets', ignore = ase_json_undo)
+
+    with sqlite3.connect(db_path) as conn:
+        cursor = conn.cursor()
         cmd = 'INSERT INTO Resources (Path,Data,MetaData) VALUES (?,?,?);'
         cmd_nometa = 'INSERT INTO Resources (Path,Data) VALUES (?,?);'
 
@@ -46,12 +50,49 @@ def pack_assets(assets_dir='assets', db_path='geas_files.db'):
 
             if meta:
                 cursor.execute(cmd, (asset_path,asset, meta))
-                print(f'Packed "{asset_path}" with its meta data.')
+                print(f'Packed asset "{asset_path}" with its meta data.')
             else:
                 cursor.execute(cmd_nometa, (asset_path,asset))
-                print(f'Packed "{asset_path}".')
+                print(f'Packed asset "{asset_path}".')
+
+def pack_rooms(db_path):
+    not_json = re.compile('.*(?<!.json)$')
+    room_paths = all_files('assets/rooms', ignore=not_json)
+
+    with sqlite3.connect(db_path) as conn:
+        cursor = conn.cursor()
+        cmd = 'INSERT INTO Resources (Path,MetaData) VALUES (?,?);'
+
+        for room_path in room_paths:
+            room_path = f'assets/{room_path}'
+
+            with open(room_path, 'r') as f:
+                room = f.read()
+
+            cursor.execute(cmd, (room_path, room))
+            print(f'Packed room "{room_path}".')
+
+def pack_shaders(db_path):
+    undo = re.compile('.*~')
+    shader_paths = all_files('shaders', ignore=undo)
+
+    with sqlite3.connect(db_path) as conn:
+        cursor = conn.cursor()
+        cmd = 'INSERT INTO Resources (Path,Data) VALUES (?,?);'
+
+        for shader_path in shader_paths:
+            with open(shader_path, 'rb') as f:
+                shader = f.read()
+
+            cursor.execute(cmd, (shader_path,shader))
+            print(f'Packed shader "{shader_path}".')
 
 
 
 if __name__ == '__main__':
-    pack_assets()
+    db_path = 'geas_files.db'
+
+    clean_db(db_path)
+    pack_assets(db_path)
+    pack_rooms(db_path)
+    pack_shaders(db_path)
