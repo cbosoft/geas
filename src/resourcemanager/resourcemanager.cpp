@@ -5,55 +5,38 @@
 #include "resourcemanager.hpp"
 
 ResourceManager::ResourceManager()
+    :   _db("geas_files.db")
 {
     // initialise: open necessary files
 }
 
 ResourceManager::~ResourceManager()
 {
-    // do nothing?
+    for (const auto &kv : this->_entries_cache) {
+        delete kv.second;
+    }
 }
 
-std::string ResourceManager::get_abs_path(const std::string &relative_path) const
+DatabaseEntry *ResourceManager::get_entry(const std::string &path)
 {
-    // TODO: abstract away filesystem
-    return relative_path;
+    auto it = this->_entries_cache.find(path);
+    if (it != this->_entries_cache.end()) {
+        return it->second;
+    }
+
+    auto *de = this->_db.get(path);
+    this->_entries_cache[path] = de;
+    return de;
 }
 
-std::string ResourceManager::read_text_file(const std::string &filename) const
+std::string ResourceManager::read_text_file(const std::string &path)
 {
-    std::string abs = this->get_abs_path(filename);
-    std::ifstream ifs(abs);
-
-    if (!ifs) {
-      throw IOError(Formatter() << "Could not read file \"" << filename << "\"");
-    }
-
-    std::string s;
-    std::stringstream ss;
-
-    while (std::getline(ifs, s)) {
-      ss << s << "\n";
-    }
-
-    return ss.str();
+    auto *de = this->get_entry(path);
+    return de->data_as_string();
 }
 
-std::vector<char> ResourceManager::read_binary_file(const std::string &file_name) const
+const std::vector<char> &ResourceManager::read_binary_file(const std::string &path)
 {
-    std::string abs = this->get_abs_path(file_name);
-    std::ifstream ifs(abs);
-
-    if (!ifs) {
-        throw IOError(Formatter() << "Could not read file \"" << file_name << "\"");
-    }
-
-    std::vector<char> rv;
-    char c[1];
-    while (!ifs.eof()) {
-        ifs.read(c, 1);
-        rv.push_back(c[0]);
-    }
-
-    return rv;
+    auto *de = this->get_entry(path);
+    return de->data();
 }

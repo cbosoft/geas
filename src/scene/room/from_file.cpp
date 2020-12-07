@@ -8,7 +8,7 @@
 
 Room *Room::from_file(const std::string &path)
 {
-    json room_spec = ResourceManager::singleton().get_json(path);
+    json room_spec = ResourceManager::singleton().get_metadata(path);
 
     std::string name = room_spec["name"];
     std::cerr << "Loading room \"" << name << "\"" << std::endl;

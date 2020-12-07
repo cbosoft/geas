@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "../util/json.hpp"
+#include "../util/database/database.hpp"
 
 class ResourceManager {
 
@@ -16,14 +17,15 @@ class ResourceManager {
     }
     ~ResourceManager();
 
-    [[nodiscard]] std::string read_text_file(const std::string &file_name) const;
-    [[nodiscard]] std::vector<char> read_binary_file(const std::string &file_name) const;
-    [[nodiscard]] std::string get_abs_path(const std::string &relative_path) const;
-    [[nodiscard]] json get_metadata(const std::string &filename) const;
-    [[nodiscard]] json get_json(const std::string &filename) const;
-    // TODO: animation management and caching here
+    [[nodiscard]] std::string read_text_file(const std::string &file_name);
+    [[nodiscard]] const std::vector<char> &read_binary_file(const std::string &file_name);
+    [[nodiscard]] json get_metadata(const std::string &filename);
 
   private:
     ResourceManager();
-    [[nodiscard]] std::string get_metadataname(const std::string &filename) const;
+
+    DatabaseEntry *get_entry(const std::string &path);
+
+    Database _db;
+    std::map<std::string, DatabaseEntry *> _entries_cache;
 };
