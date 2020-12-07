@@ -409,3 +409,4 @@ tags
 build
 depr
 assets
+*.db
