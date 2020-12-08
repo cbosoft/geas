@@ -6,10 +6,15 @@
 #include "../../tunnel/tunnel.hpp"
 #include "room.hpp"
 
-Room *Room::from_file(const std::string &path)
-{
-    json room_spec = ResourceManager::singleton().get_metadata(path);
 
+Room *Room::from_file(const std::string &path) {
+    json room_spec = ResourceManager::singleton().get_metadata(path);
+    return Room::from_json(room_spec);
+}
+
+
+Room *Room::from_json(const json &room_spec)
+{
     std::string name = room_spec["name"];
     std::cerr << "Loading room \"" << name << "\"" << std::endl;
     auto *room = new Room(name);

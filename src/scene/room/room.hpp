@@ -8,6 +8,7 @@
 class Room : public Scene {
 public:
     static Room *from_file(const std::string &path);
+    static Room *from_json(const json &room_spec);
 
     void activate() override;
 
