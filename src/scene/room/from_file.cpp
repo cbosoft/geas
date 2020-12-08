@@ -3,6 +3,7 @@
 #include "../../game/game.hpp"
 #include "../../resourcemanager/resourcemanager.hpp"
 #include "../../geas_object/tile/tile.hpp"
+#include "../../geas_object/actor/enemy/enemy.hpp"
 #include "../../tunnel/tunnel.hpp"
 #include "room.hpp"
 
@@ -164,5 +165,12 @@ Room *Room::from_json(const json &room_spec)
     }
     Vec4 camera_area({bl.x() + camoff_x, bl.y()+camoff_y, tr.x() - bl.x() - camoff_x*2, tr.y() - bl.y() - camoff_y*2});
     room->set_camera_area(camera_area);
+
+    it = room_spec.find("enemies");
+    if (it != room_spec.end()) {
+        for (const auto &enemy_spec : room_spec["enemies"]) {
+            Enemy::from_spec(room, enemy_spec);
+        }
+    }
     return room;
 }
