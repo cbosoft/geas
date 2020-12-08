@@ -1,7 +1,7 @@
 CC = g++
 BUILDTYPE = release
 USER_DEFINES =
-CFLAGS = -Wall -Wextra -Werror -g -std=c++17 $(USER_DEFINES) $(DEFS)
+CFLAGS = -Wall -Wextra -Werror -g -std=c++17 $(USER_DEFINES) $(DEFS) -O2
 LINK = -I/usr/local/include `pkg-config --libs glfw3` `pkg-config --static --libs glfw3` `pkg-config --libs glew` -lpthread -lopenal -lsqlite3
 
 HDR = $(shell find src -name '*.hpp')
