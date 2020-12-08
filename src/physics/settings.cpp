@@ -1,6 +1,6 @@
 #include "physics.hpp"
 
-static float _global_gravity_scale = 3e-5;
+static float _global_gravity_scale = 1e-2;
 float Physics::global_gravity_scale()
 {
     return _global_gravity_scale;
@@ -12,7 +12,7 @@ void Physics::global_gravity_scale(float v)
 }
 
 
-static int _update_period_us = 500;
+static int _update_period_us = 2000;
 int Physics::update_period_us()
 {
     return _update_period_us;
