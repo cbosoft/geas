@@ -1,16 +1,15 @@
 # TODO
 
  - [ ] level editor would be nice
- - [ ] sound
- - [ ] ui
- - [ ] level/room transition/warp
- - [ ] HUD
+ - [ ] HUD (hp indicator, ammo, others?)
  - [ ] saving/loading
  - [ ] simple walking enemy
  - [ ] simple flying enemy
  - [ ] tactical walking enemy
  - [ ] tactical flying enemy
  - [ ] environmental hazards
- - [ ] doors
+ - [x] ui (menus etc)
+ - [x] level/room transition/warp
+ - [x] sound
  - [x] text rendering
  - [x] flexible animation system
