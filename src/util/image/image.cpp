@@ -6,39 +6,42 @@
 ImageData::ImageData(const std::string &filename)
     : _number_layers(1)
 {
-  const char *path_cstr = filename.c_str();
-  stbi_set_flip_vertically_on_load(true);
-  int w, h, n;
-  this->_data = nullptr;
-  this->_data = stbi_load(path_cstr, &w, &h, &n, 0);
-  this->_width = w;
-  this->_height = h;
-  this->_number_channels = n;
+    auto &rm = ResourceManager::singleton();
+    std::vector<char> imdata = rm.read_binary_file(filename);
+    json metadata = rm.get_metadata(filename);
 
-  json metadata = ResourceManager::singleton().get_metadata(filename);
-  // linter (clangd) erroneously gives error on json.items(). Ignore it.
-  this->_number_frames_x = 1;
-  this->_number_frames_y = 1;
-  for (auto& [key, value] : metadata.items()) {
-      std::string s_key = std::string(key);
-      if (s_key == "number_frames") {
-          if (value.is_number()) {
-              this->_number_frames_x = value;
-          }
-          else if (value.is_array()) {
-              this->_number_frames_x = value[0];
-              this->_number_frames_y = value[1];
-          }
-          else {
-              // TODO exception
-          }
-      }
-      else if (s_key == "number_layers") {
-          this->_number_layers = value;
-      }
-  }
+    stbi_set_flip_vertically_on_load(true);
+    int w, h, n;
+    this->_data = nullptr;
 
-  //std::cerr << this->_number_frames << " frames for " << filename << " " << this->width() << std::endl;
+    auto *data = (unsigned char *)imdata.data();
+    this->_data = stbi_load_from_memory(data, imdata.size(), &w, &h, &n, 0);
+    this->_width = w;
+    this->_height = h;
+    this->_number_channels = n;
+
+    // linter (clangd) erroneously gives error on json.items(). Ignore it.
+    this->_number_frames_x = 1;
+    this->_number_frames_y = 1;
+    for (auto& [key, value] : metadata.items()) {
+        std::string s_key = std::string(key);
+        if (s_key == "number_frames") {
+            if (value.is_number()) {
+                this->_number_frames_x = value;
+            }
+            else if (value.is_array()) {
+                this->_number_frames_x = value[0];
+                this->_number_frames_y = value[1];
+            }
+            else {
+                // TODO exception
+            }
+        }
+        else if (s_key == "number_layers") {
+            this->_number_layers = value;
+        }
+    }
+
 }
 
 ImageData::~ImageData()
