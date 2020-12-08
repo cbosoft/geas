@@ -12,7 +12,7 @@ ShaderProgram::ShaderProgram()
 {
     this->prog_id = glCreateProgram();
     debug_msg(Formatter() << "Created new gl shader program " << this->prog_id);
-    GL_ERROR_CHECK_DBG("ShaderProgram::link() -> before link");
+    GL_ERROR_CHECK_DBG("ShaderProgram::ShaderProgram(), constructor end");
     this->linked = false;
 }
 
@@ -81,9 +81,9 @@ unsigned int ShaderProgram::link()
 
 void ShaderProgram::use()
 {
-    GL_ERROR_CHECK_DBG("ShaderProgram::use() -> before use program");
+    GL_ERROR_CHECK_DBG("ShaderProgram::use(), before use program");
     glUseProgram(this->link());
-    GL_ERROR_CHECK_DBG("ShaderProgram::link() -> after use program");
+    GL_ERROR_CHECK_DBG("ShaderProgram::link(), after use program");
 }
 
 ShaderProgram *ShaderProgram::from_file(std::string vert_source_path, std::string frag_source_path)
