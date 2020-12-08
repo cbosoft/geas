@@ -37,7 +37,7 @@ DEFS += -DARCH=\"$(ARCH)\"
 
 .PHONY: all options debug
 
-all: geas
+all: geas geas_files.db
 
 debug:
 	@$(MAKE) USER_DEFINES="-DDEBUG" BUILDTYPE="debug"
@@ -53,6 +53,9 @@ obj/%.o: src/%.cpp $(HDR)
 	@printf "$(COL_OBJ)ASSEMBLING OBJECT $@$(COL_RST)\n"
 	@mkdir -p `dirname $@`
 	@$(CC) $(CFLAGS) -c $< -o $@ -DGL_SILENCE_DEPRECATION
+
+geas_files.db: $(shell find assets -name '*')
+	python scripts/pack.py
 
 clean:
 	rm -rf obj/* geas
