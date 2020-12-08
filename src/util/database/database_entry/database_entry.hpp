@@ -2,11 +2,14 @@
 
 #include <string>
 #include <vector>
+
+#include <sqlite3.h>
+
 #include "../../json.hpp"
 
 class DatabaseEntry {
 public:
-    DatabaseEntry(const std::string &path, const std::vector<char> &data, const std::string &meta);
+    explicit DatabaseEntry(sqlite3_stmt *s);
 
     [[nodiscard]] const std::string &path() const;
     [[nodiscard]] const std::vector<char> &data() const;
