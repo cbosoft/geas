@@ -4,6 +4,7 @@
 
 class Enemy : public Actor {
 public:
+    static Enemy *from_spec(Transform *parent, const json &spec);
     Enemy(Transform *parent, float max_HP);
 
     void move(int dir) override;
@@ -11,6 +12,9 @@ public:
     void crouch(bool v) override;
 
     void update() override;
+
+    int get_driving_direction() const;
+
 
 private:
     float jump_force;

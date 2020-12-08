@@ -31,3 +31,8 @@ void Enemy::crouch(bool v)
 {
     this->crouching = v;
 }
+
+int Enemy::get_driving_direction() const
+{
+    return this->driving_direction;
+}
