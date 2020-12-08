@@ -12,6 +12,7 @@ public:
     ~Database();
 
     DatabaseEntry *get(const std::string &path);
+    std::vector<DatabaseEntry *> get_matching(const std::string &pattern);
 
 private:
 

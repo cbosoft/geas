@@ -31,28 +31,32 @@ DatabaseEntry *Database::get(const std::string &path)
         throw SQLiteError(Formatter() << "Error reading SQLite query result: result not a row. The specified entry does not exist in the database.");
     }
 
-    // column 0: id
-    //int id = sqlite3_column_int(s, 0);
-
-    // column 1: path
-    std::string data_path((const char *)sqlite3_column_text(s, 1));
-
-    // column 2: data blob
-    std::vector<char> data;
-    if (sqlite3_column_type(s, 2) != SQLITE_NULL) {
-        int data_size = sqlite3_column_bytes(s, 2);
-        auto *data_raw = (char *) sqlite3_column_blob(s, 2);
-        for (int i = 0; i < data_size; i++)
-            data.push_back(data_raw[i]);
-    }
-
-    // column 3: metadata
-    std::string meta;
-    if (sqlite3_column_type(s, 3) != SQLITE_NULL) {
-        auto *meta_raw = (const char *)sqlite3_column_text(s, 3);
-        meta = meta_raw;
-    }
-
-    auto *ent = new DatabaseEntry(data_path, data, meta);
+    auto *ent = new DatabaseEntry(s);
     return ent;
+}
+
+
+std::vector<DatabaseEntry *> Database::get_matching(const std::string &pattern)
+{
+    std::string command = "SELECT * FROM Resources WHERE Path LIKE \"" + pattern + "\";";
+    const char *cmd = command.c_str();
+
+    sqlite3_stmt *s = nullptr;
+    if (sqlite3_prepare_v2(this->_db, cmd, command.size(), &s, nullptr) != SQLITE_OK) {
+        throw SQLiteError(Formatter() << "Error preparing SQLite statement \"" << command << "\" (" << sqlite3_errmsg(this->_db) << ").");
+    }
+
+    int result = sqlite3_step(s);
+    if (result != SQLITE_ROW) {
+        throw SQLiteError(Formatter() << "Error reading SQLite query result: result not a row. The specified entry does not exist in the database.");
+    }
+
+    std::vector<DatabaseEntry *> rv;
+    while (result == SQLITE_ROW) {
+        auto *ent = new DatabaseEntry(s);
+        rv.push_back(ent);
+        result = sqlite3_step(s);
+    }
+
+    return rv;
 }
