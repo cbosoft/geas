@@ -1,66 +1,40 @@
 #include <iostream>
 
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
 
+#include "../../../util/exception.hpp"
 
 #include "texture.hpp"
 
-// Texture *Texture::from_file(std::string image_path)
-// {
-//   ImageData image(image_path);
-//   Texture *texture = new Texture(image);
-//   json meta = ResourceManager::singleton().get_metadata(image_path);
-//
-//   if (!meta.is_null()) {
-//     std::cout << "found metadata for " << image_path << std::endl;
-//     for (auto &[key, value] : meta.items()) {
-//       if (key.compare("number_frames") == 0) {
-//         texture->n_animation_frames = value;
-//       }
-//       else if (key.compare("named_loops") == 0) {
-//         json named_loops = value;
-//         for (auto &[name, lbub] : named_loops.items()) {
-//           texture->animation_bounds_by_name[name] = std::make_pair(lbub[0], lbub[1]);
-//         }
-//       }
-//       else {
-//         // other information in meta file: ignore
-//       }
-//     }
-//   }
-//
-//   return texture;
-// }
-
 Texture::Texture(const ImageData &image)
-  : glid(0)
-  , _number_frames_x(image.number_frames_x())
-  , _number_frames_y(image.number_frames_y())
-  , _number_layers(image.number_layers())
+    :   glid(0)
+    ,   _number_frames_x(image.number_frames_x())
+    ,   _number_frames_y(image.number_frames_y())
+    ,   _number_layers(image.number_layers())
 {
-  glGenTextures(1, &this->glid);
-  glBindTexture(GL_TEXTURE_2D, this->glid);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glGenTextures(1, &this->glid);
+    glBindTexture(GL_TEXTURE_2D, this->glid);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-  unsigned int imtype = image.number_channels() == 3?GL_RGB:GL_RGBA;
-  glTexImage2D(GL_TEXTURE_2D,
-      0,
-      imtype,
-      image.width(),
-      image.height(),
-      0,
-      imtype,
-      GL_UNSIGNED_BYTE,
-      image.data());
+    unsigned int imtype = image.number_channels() == 3?GL_RGB:GL_RGBA;
+    glTexImage2D(GL_TEXTURE_2D,
+        0,
+        imtype,
+        image.width(),
+        image.height(),
+        0,
+        imtype,
+        GL_UNSIGNED_BYTE,
+        image.data());
 
-  glGenerateMipmap(GL_TEXTURE_2D);
+    glGenerateMipmap(GL_TEXTURE_2D);
 
-  this->framewidth = 1.0f/static_cast<float>(this->_number_frames_x);
-  this->frameheight = 1.0f/static_cast<float>(this->_number_frames_y*this->_number_layers);
+    this->framewidth = 1.0f/static_cast<float>(this->_number_frames_x);
+    this->frameheight = 1.0f/static_cast<float>(this->_number_frames_y*this->_number_layers);
+    GL_ERROR_CHECK_DBG("Texture::Texture(), constructor end");
 }
 
 Vec4 Texture::get_rect(unsigned int l, unsigned int i) const
@@ -79,5 +53,7 @@ Vec4 Texture::get_rect(unsigned int l, unsigned int r, unsigned int c) const
 
 void Texture::use() const
 {
-  glBindTexture(GL_TEXTURE_2D, this->glid);
+    GL_ERROR_CHECK_DBG("Texture::use(), before use");
+    glBindTexture(GL_TEXTURE_2D, this->glid);
+    GL_ERROR_CHECK_DBG("Texture::use(), after use");
 }
