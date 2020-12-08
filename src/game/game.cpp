@@ -29,6 +29,10 @@ Game::~Game()
         delete sceneptr;
     }
 
+    for (const auto &event : this->events_queue) {
+        delete event;
+    }
+
 }
 
 void Game::play()
@@ -39,6 +43,7 @@ void Game::play()
     this->threads.emplace_back(&Game::animator_thread_worker, this);
     this->threads.emplace_back(&Game::behaviour_thread_worker, this);
     this->threads.emplace_back(&Game::audio_thread_worker, this);
+    this->threads.emplace_back(&Game::events_thread_worker, this);
 
     this->graphics_thread_worker();
 

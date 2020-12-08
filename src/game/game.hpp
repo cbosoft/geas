@@ -8,6 +8,7 @@
 #include "../geas_object/actor/player/player.hpp"
 #include "../renderer/renderer.hpp"
 #include "../util/tsq.hpp"
+#include "../event/event.hpp"
 #include "input.hpp"
 
 class Game {
@@ -50,6 +51,8 @@ class Game {
 
     bool recently_transitioned();
 
+    void push_event(Event *event);
+
 #ifdef DEBUG
     void show_colliders(bool v);
     [[nodiscard]] bool should_show_colliders() const;
@@ -67,6 +70,7 @@ class Game {
     void input_thread_worker();
     void behaviour_thread_worker();
     void audio_thread_worker();
+    void events_thread_worker();
 
     void set_recently_transitioned();
 
@@ -78,6 +82,7 @@ class Game {
     Scene *_active_scene, *_previous_scene;
     bool _is_alive;
     ThreadedQueue<PlayerInput *> input_queue;
+    std::list<Event *> events_queue;
     typedef std::lock_guard<std::mutex> lock_guard;
     mutable std::mutex mutex;
     Player *player;
