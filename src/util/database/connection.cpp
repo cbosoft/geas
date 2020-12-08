@@ -1,4 +1,5 @@
 #include "database.hpp"
+#include "../exception.hpp"
 
 void Database::connect()
 {
@@ -6,7 +7,7 @@ void Database::connect()
     int rc = sqlite3_open(path, &this->_db);
 
     if (rc) {
-        // TODO error
+        throw SQLiteError(Formatter() << "Could not connect to database \"" << this->_path << "\".");
     }
 }
 
@@ -22,12 +23,12 @@ DatabaseEntry *Database::get(const std::string &path)
 
     sqlite3_stmt *s = nullptr;
     if (sqlite3_prepare_v2(this->_db, cmd, command.size(), &s, 0) != SQLITE_OK) {
-        // TODO ERROR
+        throw SQLiteError(Formatter() << "Error preparing SQLite statement \"" << command << "\" (" << sqlite3_errmsg(this->_db) << ").");
     }
 
     int result = sqlite3_step(s);
     if (result != SQLITE_ROW) {
-        // TODO error
+        throw SQLiteError(Formatter() << "Error reading SQLite query result: result not a row. The specified entry does not exist in the database.");
     }
 
     // column 0: id

@@ -127,6 +127,7 @@ EXCEPTION(NotFound, "NotFound");
 EXCEPTION(UnexpectedNullPointer, "UnexpectedNullPointer");
 EXCEPTION(NameConflict, "NameConflict");
 EXCEPTION(AudioFormat, "AudioFormat");
+EXCEPTION(SQLiteError, "SQLiteError");
 
 
 
