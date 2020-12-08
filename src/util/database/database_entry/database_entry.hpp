@@ -6,7 +6,7 @@
 
 class DatabaseEntry {
 public:
-    DatabaseEntry(int argc, char **argv, char **colv);
+    DatabaseEntry(const std::string &path, const std::vector<char> &data, const std::string &meta);
 
     [[nodiscard]] const std::string &path() const;
     [[nodiscard]] const std::vector<char> &data() const;
@@ -14,7 +14,7 @@ public:
     [[nodiscard]] const json &meta() const;
 
 private:
+    std::string _path;
     std::vector<char> _data;
     json _meta;
-    std::string _path;
 };

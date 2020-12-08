@@ -18,8 +18,6 @@ private:
     void connect();
     void disconnect() const;
 
-    static int entry_factory_callback(void *data, int argc, char **argv, char **col);
-
     std::string _path;
     sqlite3 *_db;
 };

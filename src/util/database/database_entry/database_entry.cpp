@@ -1,30 +1,12 @@
 #include <sstream>
 #include "database_entry.hpp"
 
-DatabaseEntry::DatabaseEntry(int argc, char **argv, char **colv)
+DatabaseEntry::DatabaseEntry(const std::string &path, const std::vector<char> &data, const std::string &meta)
+    :   _path(path)
+    ,   _data(data)
 {
-    (void) argc; // number of columns
-    (void) colv; // column names
-
-    // ID = argv[0];
-
-    _path = argv[1];
-
-    if (argv[2]) {
-        char c = argv[2][0];
-        int i = 1;
-        while (c != 0) {
-            this->_data.push_back(c);
-            c = argv[2][i];
-            i++;
-        }
-    }
-
-    if (argv[3]) {
-        std::stringstream ss;
-        ss << argv[3];
-        ss >> this->_meta;
-    }
+    if (!meta.empty())
+        this->_meta = json::parse(meta);
 }
 
 
