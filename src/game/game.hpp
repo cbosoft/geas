@@ -16,6 +16,9 @@ class Game {
     ~Game();
     static Game *singleton();
 
+    void load_rooms();
+    void init_menus();
+
     void play();
     void push_input(PlayerInput *input);
 
