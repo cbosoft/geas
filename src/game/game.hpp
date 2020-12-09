@@ -31,8 +31,8 @@ class Game {
     float get_time() const;
 
     [[nodiscard]] Scene *active_scene() const;
-    void active_scene(Scene *scene);
-    void active_scene(const std::string& scene_name);
+    void active_scene(Scene *scene, bool fade_in=false);
+    void active_scene(const std::string& scene_name, bool fade_in=false);
     [[nodiscard]] Scene *previously_active_scene() const;
     void add_scene(Scene *scene);
     void transition_to(Scene *scene, unsigned int delay_ms=100);

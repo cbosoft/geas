@@ -8,7 +8,7 @@ Scene *Game::active_scene() const
     return this->_active_scene;
 }
 
-void Game::active_scene(Scene *scene)
+void Game::active_scene(Scene *scene, bool fade_in)
 {
     if (this->_active_scene) {
         this->_previous_scene = this->_active_scene;
@@ -25,18 +25,30 @@ void Game::active_scene(Scene *scene)
                                 << it->first << "\").");
         }
         this->_active_scene = scene;
-        this->_active_scene->enable();
+
+        if (fade_in) {
+            auto *cam = this->_active_scene->camera();
+            cam->fade_in();
+        }
+
+        this->_active_scene->activate();
     }
     else {
         this->_active_scene = nullptr;
     }
 }
 
-void Game::active_scene(const std::string &scene_name)
+void Game::active_scene(const std::string &scene_name, bool fade_in)
 {
     auto it = this->scenes.find(scene_name);
     if (it != this->scenes.end()) {
         this->_active_scene = this->scenes[scene_name];
+
+        if (fade_in) {
+            auto *cam = this->_active_scene->camera();
+            cam->fade_in();
+        }
+
         this->_active_scene->activate();
     }
     else {
@@ -46,22 +58,16 @@ void Game::active_scene(const std::string &scene_name)
 
 void Game::transition_to(Scene *scene, unsigned int delay_ms)
 {
-    Camera *c = nullptr;
     if (this->active_scene()) {
-        c = this->active_scene()->camera();
-        c->fade_out();
+        this->active_scene()->camera()->fade_out();
         std::this_thread::sleep_for(std::chrono::milliseconds(delay_ms));
         this->active_scene()->disable();
         this->active_scene(nullptr);
-        c = nullptr;
     }
     else {
         std::this_thread::sleep_for(std::chrono::milliseconds(delay_ms));
     }
-    this->active_scene(scene);
-    scene->activate();
-    c = scene->camera();
-    c->fade_in();
+    this->active_scene(scene, true);
 
     this->set_recently_transitioned();
 }
