@@ -22,3 +22,8 @@ void SplashTransit::run()
     game->transition_to(this->_dest);
     this->should_delete(true);
 }
+
+void SplashTransit::end()
+{
+    this->_trigger_time = -1.0;
+}

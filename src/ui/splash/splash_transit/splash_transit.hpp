@@ -10,7 +10,10 @@ public:
     bool should_run(float time) override;
     void run() override;
 
+    void end();
+
 private:
     std::string _dest;
     float _trigger_time;
+
 };
