@@ -4,6 +4,7 @@
 #include "../scene/room/room.hpp"
 #include "../ui/main_menu/main_menu.hpp"
 #include "../ui/pause_menu/pause_menu.hpp"
+#include "../ui/splash/splash.hpp"
 
 void Game::load_rooms()
 {
@@ -18,4 +19,5 @@ void Game::init_menus()
 {
     this->add_scene(new MainMenu());
     this->add_scene(new PauseMenu());
+    this->add_scene(new SplashScreen());
 }
