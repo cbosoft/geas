@@ -1,9 +1,9 @@
 #include "event.hpp"
 
 Event::Event()
-    :   _should_delete(true)
+    :   _should_delete(false)
 {
-
+    // do nothing
 }
 
 bool Event::should_delete() const
