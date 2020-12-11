@@ -5,6 +5,7 @@ class Layer:
 
     def __init__(self, data):
         self.tileset = Tileset(data['tileset'])
+        self.name = data['name']
         self.tile_size = data['size']
         if isinstance(self.tile_size, (float, int)):
             self.tile_size = [self.tile_size, self.tile_size]

@@ -2,7 +2,8 @@ class TextBox:
 
     def __init__(self, x, y, w, h, title, text,
                  text_colour=(255, 255, 255),
-                 bg_colour=(0, 0, 0)):
+                 bg_colour=(0, 0, 0),
+                 on_edit=None):
         self.pos = x, y
         self.size = w, h
         self.title = title
@@ -10,6 +11,7 @@ class TextBox:
         self.active = False
         self.text_colour = text_colour
         self.bg_colour = bg_colour
+        self.on_edit = on_edit
 
     def mouse_up(self, button, pos):
         if button == 1:
@@ -28,3 +30,6 @@ class TextBox:
             self.text = self.text[:-1]
         else:
             self.text = self.text + unicode
+
+        if self.on_edit:
+            self.on_edit(self.text)

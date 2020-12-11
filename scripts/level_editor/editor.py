@@ -25,6 +25,8 @@ class Editor:
     def load(self, path):
         self.room = Room(path)
         self.settings_panel.panels['load_save'].filename_box.text = path
+        self.settings_panel.panels['room_settings'].room_name_box.text = self.room.name
+        self.settings_panel.panels['room_settings'].update_layers()
         self.select_tile(1)
         self.select_all_layers()
 

@@ -9,6 +9,7 @@ from canvas import Canvas
 from side_panel.settings_panel import SettingsPanel, RoomSettings, LayerSettings, TilePalette, LoadSavePanel
 from side_panel.uielements.textbox import TextBox
 from side_panel.uielements.button import Button
+from side_panel.layerlist import LayerButtonSet
 
 
 class Renderer:
@@ -54,6 +55,8 @@ class Renderer:
             self.draw_tile_palette(obj, *args, **kwargs)
         elif isinstance(obj, TextBox):
             self.draw_textbox(obj)
+        elif isinstance(obj, LayerButtonSet):
+            self.draw_layer_button_set(obj)
         elif isinstance(obj, Button):
             self.draw_button(obj)
 
@@ -153,6 +156,11 @@ class Renderer:
         self.win.blit(bg, button.pos)
 
     def draw_roomsettings(self, panel: RoomSettings, x, y):
-        layers_text = self.font.render('Layers:', True, [255, 255, 255])
-        layers_text_pos = [x, y]
-        self.win.blit(layers_text, layers_text_pos)
+        for widget in panel.clickables:
+            self.draw(widget)
+        for buttonset in panel.layer_buttons:
+            self.draw(buttonset)
+
+    def draw_layer_button_set(self, buttonset):
+        for button in buttonset.buttons:
+            self.draw(button)
