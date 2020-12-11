@@ -19,6 +19,7 @@ class Renderer:
         self.centre = view_width*0.5, view_height*0.5
         self.win = pg.display.set_mode([view_width, view_height])
         self.reset_window()
+        self.font = pg.font.Font('freesansbold.ttf', 16)
 
     def reset_window(self):
         self.win.fill([0, 0, 0])

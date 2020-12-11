@@ -9,8 +9,6 @@ class TextBox:
         self.size = w, h
         self.text = text
         self.active = False
-        self.font_name = font_name
-        self.font_size = font_size
         self.text_colour = text_colour
         self.bg_colour = bg_colour
 

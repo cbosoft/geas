@@ -15,8 +15,6 @@ class SettingsPanel:
         self.bg_colour = [50, 50, 50]
         self.text_colour = [200, 200, 200]
 
-        self.font_name = 'freesansbold.ttf'
-        self.font_size = 10
 
         self.panels = {
             'load_save': LoadSavePanel(self),
