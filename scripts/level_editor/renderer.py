@@ -8,6 +8,7 @@ from layer import Layer
 from canvas import Canvas
 from side_panel.settings_panel import SettingsPanel, RoomSettings, LayerSettings, TilePalette, LoadSavePanel
 from side_panel.uielements.textbox import TextBox
+from side_panel.uielements.button import Button
 
 
 class Renderer:
@@ -45,12 +46,16 @@ class Renderer:
             self.draw_canvas(obj)
         elif isinstance(obj, SettingsPanel):
             self.draw_settings_panel(obj)
+        elif isinstance(obj, RoomSettings):
+            self.draw_roomsettings(obj, *args, **kwargs)
         elif isinstance(obj, LoadSavePanel):
             self.draw_loadsave_panel(obj, *args, **kwargs)
         elif isinstance(obj, TilePalette):
             self.draw_tile_palette(obj, *args, **kwargs)
         elif isinstance(obj, TextBox):
             self.draw_textbox(obj)
+        elif isinstance(obj, Button):
+            self.draw_button(obj)
 
     def draw_room(self, room: Room, selected_layer: int, offset, scale):
         if selected_layer < 0:
@@ -96,10 +101,9 @@ class Renderer:
         self.draw(settings_panel.current_panel, x, y)
 
     def draw_tile_palette(self, tile_palette, x, y):
-        font = pg.font.Font(tile_palette.get_font_name(), tile_palette.get_font_size())
-        self.win.blit(font.render('Selected Brush:', True, tile_palette.get_text_colour()), [x, y])
+        self.win.blit(self.font.render('Selected Brush:', True, tile_palette.get_text_colour()), [x, y])
 
-        y += tile_palette.get_margin() + font.get_height()
+        y += tile_palette.get_margin() + self.font.get_height()
 
         if tile_palette.get_brush():
             self.win.blit(tile_palette.get_brush(), [x, y])
@@ -112,11 +116,43 @@ class Renderer:
         #    self.tileset.draw((self.margin, self.panel.get_height()-self.margin), renderer, room.layers[self.selected_layer_index].layer_index, self.tileset_width)
 
     def draw_loadsave_panel(self, loadsave_panel, x, y):
-        self.draw(loadsave_panel.filename_box)
+        for widget in loadsave_panel.clickables:
+            self.draw(widget)
 
     def draw_textbox(self, textbox: TextBox):
-        bg = pg.surface.Surface(textbox.size)
+        title_text = self.font.render(textbox.title, True, [255, 255, 255])
+        title_text_pos = np.subtract(textbox.pos, [0, 20])
+        self.win.blit(title_text, title_text_pos)
+
+        txt = textbox.text
+        if textbox.active:
+            txt += '|'
+        text = self.font.render(txt, True, textbox.text_colour)
+        bg_size = list(textbox.size)
+        if textbox.active:
+            bg_size[0] = max([text.get_width() + 10, textbox.size[0]])
+
+        text_pos = [5, (textbox.size[1] - text.get_height())/2]
+        bg = pg.surface.Surface(bg_size)
         bg.fill(textbox.bg_colour)
+        if textbox.active:
+            pg.draw.rect(bg, textbox.text_colour, [0, 0, *bg_size], width=1)
+        bg.blit(text, text_pos)
         self.win.blit(bg, textbox.pos)
-        font = pg.font.Font(textbox.font_name, textbox.font_size)
-        self.win.blit(font.render(textbox.text, True, textbox.text_colour), textbox.pos)
+
+    def draw_button(self, button: Button):
+        bg = pg.surface.Surface(button.size)
+        bgcolor = button.bg_colour if not button.pushed else button.pushed_colour
+        bg.fill(bgcolor)
+        text = self.font.render(button.text, True, button.text_colour)
+        text_pos = [
+            (button.size[0] - text.get_width())/2,
+            (button.size[1] - text.get_height())/2
+        ]
+        bg.blit(text, text_pos)
+        self.win.blit(bg, button.pos)
+
+    def draw_roomsettings(self, panel: RoomSettings, x, y):
+        layers_text = self.font.render('Layers:', True, [255, 255, 255])
+        layers_text_pos = [x, y]
+        self.win.blit(layers_text, layers_text_pos)

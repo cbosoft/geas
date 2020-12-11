@@ -10,11 +10,11 @@ class SettingsPanel:
 
         self.margin = 10
         self.brush_size = 64
-        self.width = 100
+        self.width = 300
+        self.height = 500
 
         self.bg_colour = [50, 50, 50]
         self.text_colour = [200, 200, 200]
-
 
         self.panels = {
             'load_save': LoadSavePanel(self),

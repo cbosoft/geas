@@ -12,6 +12,9 @@ class SubPanel:
     def get_text_colour(self):
         return self.panel.text_colour
 
+    def get_height(self):
+        return self.panel.height
+
     def get_width(self):
         return self.panel.width
 
