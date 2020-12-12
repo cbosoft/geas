@@ -15,7 +15,7 @@ class RoomSettings(SubPanel):
         self.layer_buttons = []
 
     def back(self):
-        self.panel.current_panel = self.panel.panels['load_save']
+        self.panel.show_panel('load_save')
 
     def key_down(self, **kwargs):
         if self.room_name_box.active:
@@ -40,9 +40,11 @@ class RoomSettings(SubPanel):
     def edit_layer(self, i):
         # TODO check i is a valid layer index
         self.panel.editor.selected_layer = i
-        self.panel.current_panel = self.panel.panels['layer_settings']
-        name = self.panel.editor.room.layers[i].name
-        print(f'selected_layer = {i}:{name}')
+        self.panel.show_panel('layer_settings')
 
     def delete_layer(self, i):
         print(f'Tried to delete {i}, not sure I want to include delete in editor so no doing anything')
+
+    def on_show(self):
+        self.panel.editor.selected_layer = -1
+        self.update_layers()

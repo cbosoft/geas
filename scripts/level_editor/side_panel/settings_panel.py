@@ -55,3 +55,8 @@ class SettingsPanel:
 
     def key_down(self, **kwargs):
         self.current_panel.key_down(**kwargs)
+
+    def show_panel(self, name):
+        self.current_panel.on_hide()
+        self.current_panel = self.panels[name]
+        self.current_panel.on_show()

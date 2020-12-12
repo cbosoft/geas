@@ -24,7 +24,7 @@ class Renderer:
         self.font = pg.font.Font('freesansbold.ttf', 16)
 
     def reset_window(self):
-        self.win.fill([0, 0, 0])
+        self.win.fill([200, 0, 200])
 
     def add_image(self, img, at, final_size):
         fs = [int(i) for i in final_size]
@@ -36,7 +36,7 @@ class Renderer:
 
     def draw(self, obj, *args, **kwargs):
         if isinstance(obj, Tileset):
-            pass
+            self.draw_tileset(obj, *args, **kwargs)
         elif isinstance(obj, TileGrid):
             self.draw_tilegrid(obj, *args, **kwargs)
         elif isinstance(obj, Room):
@@ -49,6 +49,8 @@ class Renderer:
             self.draw_settings_panel(obj)
         elif isinstance(obj, RoomSettings):
             self.draw_roomsettings(obj, *args, **kwargs)
+        elif isinstance(obj, LayerSettings):
+            self.draw_layersettings(obj, *args, **kwargs)
         elif isinstance(obj, LoadSavePanel):
             self.draw_loadsave_panel(obj, *args, **kwargs)
         elif isinstance(obj, TilePalette):
@@ -161,6 +163,46 @@ class Renderer:
         for buttonset in panel.layer_buttons:
             self.draw(buttonset)
 
+    def draw_layersettings(self, panel: LayerSettings, x, y):
+        for widget in panel.clickables:
+            self.draw(widget)
+
+        layer = panel.panel.editor.get_selected_layer()
+        if layer:
+            self.draw(layer.tileset, *panel.tileset_position, *panel.scaled_tileset_size, layer.tile_layer_index,
+                      selected=panel.panel.editor.selected_variant-1)
+
     def draw_layer_button_set(self, buttonset):
         for button in buttonset.buttons:
             self.draw(button)
+
+    def draw_tileset(self, tileset: Tileset, x, y, scaled_w, scaled_h, layer, selected=None):
+        layer_offset = tileset.layer_height*layer
+        surf = pg.surface.Surface([tileset.img.get_width(), tileset.layer_height])
+        surf.fill([200, 0, 200])
+        layerimg = tileset.img.subsurface(
+            [0, layer_offset,
+             tileset.img.get_width(),
+             tileset.layer_height])
+        surf.blit(layerimg, [0, 0])
+
+        for hi in range(1,tileset.number_frames[0]):
+            y1 = 0
+            y2 = tileset.layer_height
+            xx = hi*tileset.tile_size[0]
+            pg.draw.line(surf, (150, 150, 150), (xx, y1), (xx, y2))
+
+        for vi in range(1,tileset.number_frames[0]):
+            x1 = 0
+            x2 = tileset.img.get_width()
+            yy = vi*tileset.tile_size[1]
+            pg.draw.line(surf, (150, 150, 150), (x1, yy), (x2, yy))
+
+        if selected is not None:
+            rw, rh = tileset.tile_size
+            rx = (selected % tileset.number_frames[0])*rw
+            ry = tileset.layer_height - rh - (selected // tileset.number_frames[1])*rh
+            pg.draw.rect(surf, (255, 255, 255), (rx, ry, rw, rh), width=5)
+
+        surf = pg.transform.scale(surf, [scaled_w, scaled_h])
+        self.win.blit(surf, [x, y])

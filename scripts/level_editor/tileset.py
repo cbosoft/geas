@@ -40,31 +40,11 @@ class Tileset:
         rect = (x, y, wpf, hpf)
         return self.img.subsurface(rect)
 
-    # def draw(self, bl, renderer, layer, size):
-    #     wpf, hpf = self.tile_size
-    #     surf = pg.surface.Surface((self.img.get_width(), self.layer_height))
-    #     surf.fill([150, 150, 150])
-    #     layer_offset = self.layer_height*layer
-    #     layerimg = self.img.subsurface([0, layer_offset, self.img.get_width(), self.layer_height])
-    #     surf.blit(layerimg, [0,0])
-    #     for variant in range(self.number_variants):
-    #         xf = variant % self.number_frames[0]
-    #         yf = variant // self.number_frames[1]
-    #         x = wpf*xf
-    #         y = hpf*yf
-    #         y = self.img.get_height()//self.number_layers - y - hpf
-    #         pg.draw.rect(surf, (205, 205, 205), (x, y, wpf, hpf), width=1)
-    #     surf = pg.transform.scale(surf, [size, size])
-    #     tl = [bl[0], bl[1] - self.layer_height]
-    #     renderer.win.blit(surf, tl)
-
     def get_variant_from_coord(self, pos):
         # TODO error checking
         pos = list(pos)
         pos[1] = self.layer_height - pos[1]
-        pos = np.divide(pos, self.tile_size)
         row = pos[1]//self.tile_size[1]
         col = pos[0]//self.tile_size[0]
-        variant = row*self.number_frames[0] + col
-        print(pos, variant)
+        variant = int(row*self.number_frames[0] + col)
         return variant

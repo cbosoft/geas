@@ -60,4 +60,4 @@ class LoadSavePanel(SubPanel):
         self.panel.editor.quit()
 
     def edit(self):
-        self.panel.current_panel = self.panel.panels['room_settings']
+        self.panel.show_panel('room_settings')

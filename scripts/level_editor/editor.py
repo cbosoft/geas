@@ -118,6 +118,13 @@ class Editor:
         self.renderer.draw(self.settings_panel)
         self.renderer.update()
 
+    def get_selected_layer(self):
+        if not self.room:
+            return None
+        if self.selected_layer < 0:
+            return None
+        return self.room.layers[self.selected_layer]
+
     def check_input(self):
         for event in pg.event.get():
             if event.type == pg.MOUSEBUTTONDOWN:

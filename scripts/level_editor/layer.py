@@ -13,3 +13,10 @@ class Layer:
         self.tile_layer_index = 0 if 'tile_layer' not in data else data['tile_layer']
         print(self.tile_layer_index, self.offset)
         self.grid = TileGrid(data['tiles'])
+
+    def set_tileset(self, path):
+        try:
+            newtileset = Tileset(path)
+            self.tileset = newtileset
+        except Exception as e:
+            print(f'error creating tileset: {e}')

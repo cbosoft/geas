@@ -32,3 +32,9 @@ class SubPanel:
 
     def mouse_up(self, button, pos):
         pass
+
+    def on_show(self):
+        pass
+
+    def on_hide(self):
+        pass
