@@ -1,7 +1,10 @@
-class SubPanel:
+from side_panel.widget_collection import WidgetCollection
+
+class SubPanel(WidgetCollection):
 
     def __init__(self, panel):
         self.panel = panel
+        super().__init__()
 
     def get_font_name(self):
         return self.panel.font_name
@@ -23,15 +26,6 @@ class SubPanel:
 
     def get_margin(self):
         return self.panel.margin
-
-    def key_down(self, **kwargs):
-        pass
-
-    def mouse_down(self, button, pos):
-        pass
-
-    def mouse_up(self, button, pos):
-        pass
 
     def on_show(self):
         pass

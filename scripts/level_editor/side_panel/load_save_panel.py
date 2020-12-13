@@ -11,39 +11,28 @@ class LoadSavePanel(SubPanel):
 
         m = self.get_margin()
         self.filename_box = TextBox(m, m+40, self.get_width() - 2*m, 32, 'Room path:', '<filename>')
-        self.clickables.append(self.filename_box)
 
         self.load_button = Button(
             m, self.filename_box.pos[1]+45,
             self.get_width()/2 - 2*m, 32, 'Load', self.load)
-        self.clickables.append(self.load_button)
         self.save_button = Button(
             m+self.get_width()/2,
             self.filename_box.pos[1]+45,
             self.get_width()/2 - 2*m, 32, 'Save', self.save)
-        self.clickables.append(self.save_button)
-
+        self.new_button = Button(
+            m,
+            self.save_button.pos[1]+45,
+            self.get_width() - 2*m, 32, 'New', self.new)
         self.quit_button = Button(
             m, self.get_height() - m - 32,
             self.get_width()/2 - 2*m, 32, 'Quit', self.quit)
-        self.clickables.append(self.quit_button)
         self.edit_button = Button(
             m+self.get_width()/2,
             self.get_height() - m - 32,
             self.get_width()/2 - 2*m, 32, 'Edit Room', self.edit)
-        self.clickables.append(self.edit_button)
 
-    def key_down(self, **kwargs):
-        if self.filename_box.active:
-            self.filename_box.key_down(**kwargs)
-
-    def mouse_up(self, button, pos):
-        for clickable in self.clickables:
-            clickable.mouse_up(button, pos)
-
-    def mouse_down(self, button, pos):
-        for clickable in self.clickables:
-            clickable.mouse_down(button, pos)
+        self.typeables = [self.filename_box]
+        self.clickables = [self.load_button, self.save_button, self.new_button, self.quit_button, self.edit_button]
 
     def load(self):
         path = self.filename_box.text
@@ -55,6 +44,9 @@ class LoadSavePanel(SubPanel):
     def save(self):
         path = self.filename_box.text
         print(f'would save to {path} but not implemented')
+
+    def new(self):
+        self.panel.editor.new()
 
     def quit(self):
         self.panel.editor.quit()

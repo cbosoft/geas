@@ -7,11 +7,22 @@ from layer import Layer
 
 class Room:
 
-    def __init__(self, path):
-        with open(path) as f:
-            data = json.load(f)
+    def __init__(self, path=None):
+        data = {
+            'name': '<name>',
+            'layers': [],
+            'tunnels': [],
+            'enemies': [],
+            'items': []
+        }
+        if path:
+            with open(path) as f:
+                loaded_data = json.load(f)
+            data = {**data, **loaded_data}
         self.name = data['name']
         self.layers = [Layer(l) for l in data['layers']]
+        self.tunnels = data['tunnels']
+        self.items = data['items']
 
     def screen_to_layer_coords(self, x, y, i):
         # x, y in screen coords
@@ -34,3 +45,13 @@ class Room:
         layer = self.layers[i]
         pos = self.screen_to_layer_coords(x, y, i)
         return layer.grid[pos]
+
+    def save(self, path):
+        obj = {
+            'name': self.name,
+            'layers': [layer.to_object() for layer in self.layers],
+            'tunnels': self.tunnels,
+            'items': self.items
+        }
+        with open(path, 'w') as f:
+            json.dump(obj, f)

@@ -5,6 +5,7 @@ from renderer import Renderer
 from room import Room
 from side_panel.settings_panel import SettingsPanel
 from canvas import Canvas
+from layer import Layer
 
 
 class Editor:
@@ -21,10 +22,17 @@ class Editor:
         self.selected_variant = 1  # aka brush
 
         self.down_in_canvas = False
+        self.popups = []
 
     def load(self, path):
-        self.room = Room(path)
+        self.set_room(Room(path))
         self.settings_panel.panels['load_save'].filename_box.text = path
+
+    def new(self):
+        self.set_room(Room())
+
+    def set_room(self, room):
+        self.room = room
         self.settings_panel.panels['room_settings'].room_name_box.text = self.room.name
         self.settings_panel.panels['room_settings'].update_layers()
         self.select_tile(1)
@@ -55,8 +63,8 @@ class Editor:
 
     def select_tile(self, variant_plus_one):
         self.selected_variant = variant_plus_one
-        layer = self.room.layers[self.selected_layer]
-        variant = variant_plus_one - 1
+        #layer = self.room.layers[self.selected_layer]
+        #variant = variant_plus_one - 1
         #self.side_panel.set_brush(layer.tileset.get_variant(variant, layer.layer_index))
 
     def select_next_layer(self):
@@ -116,6 +124,8 @@ class Editor:
         self.renderer.reset_window()
         self.renderer.draw(self.canvas)
         self.renderer.draw(self.settings_panel)
+        for popup in self.popups:
+            self.renderer.draw(popup)
         self.renderer.update()
 
     def get_selected_layer(self):
@@ -168,4 +178,16 @@ class Editor:
         while self.alive:
             self.draw()
             self.check_input()
+
+    def new_layer(self, name, path):
+        try:
+            self.room.layers.append(Layer({'name': name, 'tileset': path}))
+        except Exception as e:
+            print(f'error creating layer: {e}')
+
+    def add_popup(self, popup):
+        self.popups.append(popup)
+
+    def remove_popup(self, popup):
+        self.popups.remove(popup)
 

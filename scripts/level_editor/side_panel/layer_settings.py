@@ -29,7 +29,6 @@ class PalettePicker:
         pass
 
 
-
 class LayerSettings(SubPanel):
 
     def __init__(self, panel):
@@ -42,22 +41,9 @@ class LayerSettings(SubPanel):
         self.picker = PalettePicker(self)
         self.clickables = [self.layer_name_box, self.tileset_path_box, self.back_button, self.picker]
         self.typeables = [self.layer_name_box, self.tileset_path_box]
-        s = w -m*2
+        s = w - m*2
         self.tileset_position = (m, m+150)
         self.scaled_tileset_size = (s, s)
-
-    def key_down(self, **kwargs):
-        for typeable in self.typeables:
-            if typeable.active:
-                typeable.key_down(**kwargs)
-
-    def mouse_up(self, button, pos):
-        for clickable in self.clickables:
-            clickable.mouse_up(button, pos)
-
-    def mouse_down(self, button, pos):
-        for clickable in self.clickables:
-            clickable.mouse_down(button, pos)
 
     def on_show(self):
         i = self.panel.editor.selected_layer

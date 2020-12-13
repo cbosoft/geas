@@ -11,7 +11,8 @@ class RoomSettings(SubPanel):
         w = self.get_width()
         self.room_name_box = TextBox(m, m+40, w-2*m, 32, 'Room name:', '<name>')
         self.back_button = Button(m, 500 - 32 - m, w/2-m, 32, 'Back', self.back)
-        self.clickables = [self.room_name_box, self.back_button]
+        self.add_button = Button(m, 100, w-2*m, 32, 'Add Layer', self.add_layer)
+        self.clickables = [self.room_name_box, self.back_button, self.add_button]
         self.layer_buttons = []
 
     def back(self):
@@ -34,8 +35,12 @@ class RoomSettings(SubPanel):
 
     def update_layers(self):
         layers = self.panel.editor.room.layers
+        self.layer_buttons = []
         for i, layer in enumerate(layers):
-            self.layer_buttons.append(LayerButtonSet(self, layer.name, i, 100))
+            self.layer_buttons.append(LayerButtonSet(self, layer.name, i, 150))
+
+    def add_layer(self):
+        self.panel.show_panel('new_layer')
 
     def edit_layer(self, i):
         # TODO check i is a valid layer index

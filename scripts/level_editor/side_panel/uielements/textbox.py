@@ -32,7 +32,7 @@ class TextBox:
         if not self.active:
             return
 
-        if not unicode and self.text:
+        if not unicode and self.text and not mod:
             self.text = self.text[:-1]
         else:
             self.text = self.text + unicode
