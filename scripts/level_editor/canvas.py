@@ -12,8 +12,8 @@ class Canvas:
 
         self.offset = [0, 0]
         self.scale = [1, 1]
-        self.scales = [2.0, 1.5, 1.25, 1.0, 0.75, 0.5, 0.25]
-        self.scale_index = 3
+        self.scales = list(reversed([i*0.0625 for i in range(8, 32)]))
+        self.scale_index = self.scales.index(1.0)
 
     def mouse_down(self, button, pos):
         if button == 1:
@@ -26,8 +26,6 @@ class Canvas:
             self.is_panning = False
             if not self.has_panned:
                 self.paint_tile(*pos)
-        elif button == 3:
-            self.pick_tile(*pos)
         elif button > 3:
             self.mouse_wheel(button % 2 == 0)
 
