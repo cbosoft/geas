@@ -31,6 +31,9 @@ public:
     unsigned int layer() const;
     void layer(unsigned int i);
 
+    void set_texture_cached();
+    bool texture_changed() const;
+
 private:
 
     unsigned int _current_frame;
@@ -40,4 +43,5 @@ private:
     Vec4 _colour;
     Vec2 _size;
     void *renderer_data;
+    bool _texture_changed;
 };

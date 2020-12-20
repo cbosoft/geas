@@ -12,6 +12,7 @@ Renderable::Renderable(Transform *parent)
     , _colour(1.0)
     , _size({16.0f, 16.0f})
     , renderer_data(nullptr)
+    , _texture_changed(false)
 {
 
 }
@@ -69,6 +70,7 @@ void Renderable::set_texture(const std::string &path)
 {
     this->_has_texture = true;
     this->_texture_path = path;
+    this->_texture_changed = true;
 }
 
 unsigned int Renderable::current_frame() const
@@ -89,4 +91,14 @@ unsigned int Renderable::layer() const
 void Renderable::layer(unsigned int i)
 {
     this->_layer = i;
+}
+
+void Renderable::set_texture_cached()
+{
+    this->_texture_changed = false;
+}
+
+bool Renderable::texture_changed() const
+{
+    return this->_texture_changed;
 }

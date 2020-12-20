@@ -88,10 +88,11 @@ void OpenGLRenderer::draw(Renderable *renderable, const Vec3 &camera_position) {
         renderData->element.add(2);
         renderData->element.add(3);
 
-        if (renderable->has_texture()) {
-            renderData->texture = Texture::from_file(renderable->texture_path());
-        }
+    }
 
+    if (renderable->has_texture() && renderable->texture_changed()) {
+        renderData->texture = Texture::from_file(renderable->texture_path());
+        renderable->set_texture_cached();
     }
 
     if (renderData->texture) {
