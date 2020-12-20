@@ -4,7 +4,7 @@
 
 class CameraAnimator : public Animator {
 public:
-    CameraAnimator(GeasObject &owner);
+    explicit CameraAnimator(GeasObject &owner);
 
     void set_state(const std::string &anim);
 

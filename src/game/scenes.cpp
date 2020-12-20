@@ -56,10 +56,10 @@ void Game::active_scene(const std::string &scene_name, bool fade_in)
     }
 }
 
-void Game::transition_to(Scene *scene, unsigned int delay_ms)
+void Game::transition_to(Scene *scene, unsigned int delay_ms, const std::string &transition)
 {
     if (this->active_scene()) {
-        this->active_scene()->camera()->fade_out();
+        this->active_scene()->camera()->fade_out(transition);
         std::this_thread::sleep_for(std::chrono::milliseconds(delay_ms));
         this->active_scene()->disable();
         this->active_scene(nullptr);
@@ -72,13 +72,13 @@ void Game::transition_to(Scene *scene, unsigned int delay_ms)
     this->set_recently_transitioned();
 }
 
-void Game::transition_to(const std::string &scene_name, unsigned int delay_ms)
+void Game::transition_to(const std::string &scene_name, unsigned int delay_ms, const std::string &transition)
 {
     auto it = this->scenes.find(scene_name);
     if (it == this->scenes.end()) {
         throw OutOfRange(Formatter() << "Could not transition to unknown scene \"" << scene_name << "\". Have you definitely added it?");
     }
-    this->transition_to(it->second, delay_ms);
+    this->transition_to(it->second, delay_ms, transition);
 }
 
 void Game::add_scene(Scene *scene)

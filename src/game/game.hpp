@@ -35,8 +35,8 @@ class Game {
     void active_scene(const std::string& scene_name, bool fade_in=false);
     [[nodiscard]] Scene *previously_active_scene() const;
     void add_scene(Scene *scene);
-    void transition_to(Scene *scene, unsigned int delay_ms=100);
-    void transition_to(const std::string &scene_name, unsigned int delay_ms=800);
+    void transition_to(Scene *scene, unsigned int delay_ms=100, const std::string &transition="");
+    void transition_to(const std::string &scene_name, unsigned int delay_ms=800, const std::string &transition="");
 
     void process_input(int key, int scancode, int action, int mods);
 

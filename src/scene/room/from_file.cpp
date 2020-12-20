@@ -137,6 +137,12 @@ Room *Room::from_json(const json &room_spec)
         }
         std::string tag = Game::gen_tunnel_tag(room->name(), end, descriptor);
 
+        std::string transition = "fade";
+        tunit = tunnel_spec.find("transition");
+        if (tunit != tunnel_spec.end()) {
+            transition = *tunit;
+        }
+
         auto pos_json = tunnel_spec["position"];
         Vec2 pos({pos_json[0], pos_json[1]});
 
@@ -147,7 +153,7 @@ Room *Room::from_json(const json &room_spec)
 
         bool active = tunnel_spec["active"];
         if (active) {
-            auto *tunnel = new Tunnel(room, end, descriptor);
+            auto *tunnel = new Tunnel(room, end, descriptor, transition);
             tunnel->absolute_position(pos.promote(0.0f));
         }
     }

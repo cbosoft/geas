@@ -5,5 +5,5 @@
 
 class Tunnel : public GeasObject {
 public:
-    Tunnel(Transform *t, const std::string &destination, const std::string &description);
+    Tunnel(Transform *t, const std::string &destination, const std::string &description, const std::string &transition);
 };

@@ -6,7 +6,7 @@
 class Camera final : public GeasObject {
 public:
 
-    Camera(Transform *parent, Transform *target=nullptr);
+    explicit Camera(Transform *parent, Transform *target=nullptr);
 
     void update() override;
 
@@ -14,8 +14,9 @@ public:
     Transform *target() const;
 
     void area(const Vec4 &a);
-    void fade_out() const;
-    void fade_in() const;
+    void fade_out(const std::string &transition_name="") const;
+    void fade_in(const std::string &transition_name="") const;
+    void set_transition(const std::string &transition_name) const;
 
 private:
     Vec4 _area;
